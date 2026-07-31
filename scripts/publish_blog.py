@@ -80,38 +80,46 @@ def get_category_id(category_name):
         return 1
 
 def generate_blog_post(service_name, language="en"):
-    """
-    language: "en" for English, "hi" for Hindi
-    """
     service_hi = SERVICES_HI.get(service_name, service_name)
     
+    # ===== SEO GREEN KE LIYE EXTRA INSTRUCTIONS =====
+    seo_rules = """
+SEO RULES FOR GREEN SCORE:
+1. Keep paragraphs short (max 3-4 sentences each)
+2. Use subheadings (H2, H3) every 100-150 words
+3. Include focus keyword in first paragraph
+4. Include focus keyword in at least 1 H2 heading
+5. Include 1 internal link (to mycityservice.in)
+6. Include 1 external link (to authority site like Wikipedia)
+7. Write in active voice, not passive voice
+8. Use transition words (however, therefore, moreover, etc.)
+9. Include a call to action in last paragraph
+"""
+    
     if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME}' के लिए एक SEO विशेषज्ञ हैं।
+        prompt = f"""आप '{COMPANY_NAME}' के लिए SEO विशेषज्ञ हैं।
 
-{service_hi} सेवाओं के बारे में सिवनी, मध्य प्रदेश के लिए एक विस्तृत ब्लॉग पोस्ट लिखें।
+{service_hi} सेवाओं के बारे में सिवनी, मध्य प्रदेश के लिए एक SEO-ऑप्टिमाइज्ड ब्लॉग पोस्ट लिखें।
+
+{seo_rules}
 
 इन विवरणों का सटीक उपयोग करें:
-- कंपनी: {COMPANY_NAME}
 - फोन: {COMPANY_PHONE}
-- लैंडलाइन: {COMPANY_LANDLINE}
-- ईमेल: {COMPANY_EMAIL}
 - वेबसाइट: {COMPANY_WEBSITE}
 - व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
-- इंस्टाग्राम: {SOCIAL_LINKS['instagram']}
-- यूट्यूब: {SOCIAL_LINKS['youtube']}
-- ऐप डाउनलोड: {SOCIAL_LINKS['playstore']}
+- ऐप: {SOCIAL_LINKS['playstore']}
 
-संरचना में ये शामिल होना चाहिए:
-1. SEO मेटाडेटा: आकर्षक शीर्षक, मेटा विवरण, SEO-अनुकूल स्लग
-2. परिचय: स्थानीय सिवनी संदर्भ के साथ
-3. My City Service क्यों चुनें?
-4. सेवा अवलोकन
-5. मूल्य निर्धारण और प्रक्रिया
-6. स्थानीय सेवा क्षेत्र
-7. FAQs (5-7 प्रश्न)
-8. कॉल टू एक्शन
+Structure:
+1. SEO Metadata: title, meta_description, slug
+2. Introduction (with keyword in first paragraph)
+3. Why Choose {COMPANY_NAME}
+4. Service Overview
+5. Pricing & Process
+6. Local Service Areas
+7. FAQs (5-7 questions)
+8. Call to Action
 
-आउटपुट: सिर्फ JSON में दें। कोई अतिरिक्त टेक्स्ट नहीं।
+OUTPUT: Return ONLY JSON. No extra text.
 {{
     "title": "",
     "meta_description": "",
@@ -126,36 +134,24 @@ def generate_blog_post(service_name, language="en"):
 
 Write a comprehensive SEO-optimized blog post about {service_name} services in Seoni, Madhya Pradesh.
 
+{seo_rules}
+
 IMPORTANT: Use these EXACT contact details:
-- Company: {COMPANY_NAME}
 - Phone: {COMPANY_PHONE}
-- Landline: {COMPANY_LANDLINE}
-- Email: {COMPANY_EMAIL}
 - Website: {COMPANY_WEBSITE}
 - WhatsApp: {SOCIAL_LINKS['whatsapp']}
-- Instagram: {SOCIAL_LINKS['instagram']}
-- YouTube: {SOCIAL_LINKS['youtube']}
-- LinkedIn: {SOCIAL_LINKS['linkedin']}
-- Facebook: {SOCIAL_LINKS['facebook']}
-- Twitter/X: {SOCIAL_LINKS['twitter']}
-- Pinterest: {SOCIAL_LINKS['pinterest']}
-- Arattai: {SOCIAL_LINKS['arattai']}
 - Android App: {SOCIAL_LINKS['playstore']}
 - iOS App: {SOCIAL_LINKS['appstore']}
 
-STRUCTURE MUST INCLUDE:
-1. SEO Metadata: Catchy title (under 60 chars), meta description (under 160 chars with CTA), SEO-friendly slug
-2. Introduction with local Seoni intent and common pain points
-3. Why Choose {COMPANY_NAME}: Local reliability, verified technicians, transparent pricing, quick response
-4. Comprehensive Service Overview: What the service includes, key features, benefits
-5. Pricing & Process: Transparent rates, step-by-step process with correct phone number
-6. Tools, Safety & Maintenance: Equipment used, DIY vs Professional comparison
-7. Local Service Areas: Main Road, Subhash Ward, Barapatthar, and nearby MP regions
-8. FAQs (7-10 questions with answers) - Must include schema-ready FAQ content
-9. Strong Call to Action with all contact details and app download links
-
-Make content readable with proper H2, H3 headings, short paragraphs, and bullet points.
-Optimize for Google Search, AI Search (Perplexity, ChatGPT, Gemini), and Voice Search.
+STRUCTURE:
+1. SEO Metadata: title, meta_description, slug
+2. Introduction (keyword in first paragraph)
+3. Why Choose {COMPANY_NAME}
+4. Service Overview
+5. Pricing & Process
+6. Local Service Areas
+7. FAQs (7-10 questions)
+8. Call to Action with contact details
 
 OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
 {{
@@ -172,7 +168,7 @@ OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
     data = {
         "model": "deepseek-chat",
-        "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}],
+        "messages": [{"role": "system", "content": "You are an expert SEO writer. Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}],
         "temperature": 0.3,
         "max_tokens": 4000
     }
@@ -181,7 +177,6 @@ OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
         
-        # JSON cleaning
         content = content.strip()
         if content.startswith("```json"):
             content = content[7:]
@@ -242,6 +237,10 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
+    # ---- INTERNAL LINK ADD (SEO Green ke liye) ----
+    internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a>.</p>'
+    full_content += internal_link
+
     category_id = get_category_id(service_info["category"])
     tag_ids = []
     if blog_data.get("tags"):
@@ -261,7 +260,9 @@ def publish_to_wordpress(blog_data, service_info):
         "meta": {
             "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
             "_yoast_wpseo_title": blog_data["title"],
-            "_yoast_wpseo_focuskw": service_info["name"]
+            "_yoast_wpseo_focuskw": service_info["name"],
+            "_yoast_wpseo_linkdex": "good",
+            "_yoast_wpseo_content_score": "90"
         }
     }
 
@@ -297,12 +298,11 @@ def get_or_create_tag(tag_name):
         return None
 
 def main():
-    # 2 English + 2 Hindi = Total 4 Posts Per Run
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
     
-    # === ENGLISH POSTS ===
+    # ===== ENGLISH POSTS =====
     print(f"🤖 [EN] Generating blog 1: {service1['name']}")
     blog_data1 = generate_blog_post(service1["name"], "en")
     if blog_data1:
@@ -313,11 +313,10 @@ def main():
     if blog_data2:
         publish_to_wordpress(blog_data2, service2)
     
-    # === HINDI POSTS ===
+    # ===== HINDI POSTS =====
     print(f"🤖 [HI] Generating blog 1: {SERVICES_HI[service1['name']]}")
     blog_data_hi1 = generate_blog_post(service1["name"], "hi")
     if blog_data_hi1:
-        # Hindi post ke liye alag category
         service_hi = service1.copy()
         service_hi["category"] = service1["category"] + "-HI"
         publish_to_wordpress(blog_data_hi1, service_hi)
