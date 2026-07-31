@@ -31,21 +31,45 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ===== SERVICES LIST =====
+# ===== SERVICES LIST (Updated - 29 Services) =====
 SERVICES = [
+    # 🔧 Home Repair
     {"name": "Electrician", "category": "Electrician"},
-    {"name": "AC Repair", "category": "AC-Service"},
     {"name": "Plumber", "category": "Plumber"},
-    {"name": "Home Cleaning", "category": "Cleaning-Services"},
-    {"name": "Appliance Repair", "category": "Appliance-Repair"},
     {"name": "Carpenter", "category": "Carpenter"},
     {"name": "Painting", "category": "Painting-Services"},
     {"name": "Water Purifier", "category": "Water-Purifier"},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
+    
+    # 📱 Appliance Repair
+    {"name": "AC Repair", "category": "AC-Service"},
+    {"name": "Appliance Repair", "category": "Appliance-Repair"},
+    {"name": "TV Repair", "category": "TV-Repair"},
+    {"name": "Washing Machine Repair", "category": "Washing-Machine-Repair"},
+    {"name": "Microwave Repair", "category": "Microwave-Repair"},
+    {"name": "Inverter Repair", "category": "Inverter-Repair"},
     {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair"},
+    
+    # 🧹 Cleaning
+    {"name": "Home Cleaning", "category": "Cleaning-Services"},
+    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
     {"name": "Carpet Cleaning", "category": "Carpet-Cleaning"},
     {"name": "Commercial Cleaning", "category": "Commercial-Cleaning"},
-    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service"}
+    {"name": "Kitchen Cleaning", "category": "Kitchen-Cleaning"},
+    {"name": "Bathroom Cleaning", "category": "Bathroom-Cleaning"},
+    {"name": "Window Cleaning", "category": "Window-Cleaning"},
+    
+    # 💄 Beauty & Wellness
+    {"name": "Women Salon", "category": "Women-Salon"},
+    {"name": "Nail Art", "category": "Nail-Art"},
+    {"name": "Spa & Massage", "category": "Spa-Massage"},
+    
+    # 🏡 Other Services
+    {"name": "Pest Control", "category": "Pest-Control"},
+    {"name": "Waterproofing", "category": "Waterproofing"},
+    {"name": "Modular Kitchen", "category": "Modular-Kitchen"},
+    {"name": "Gardening", "category": "Gardening"},
+    {"name": "Laundry", "category": "Laundry"},
+    {"name": "Pick & Drop", "category": "Pick-Drop-Service"}
 ]
 
 def get_category_id(category_name):
@@ -64,66 +88,72 @@ def get_category_id(category_name):
         return 1
 
 def generate_blog_post(service_name):
-    prompt = f"""You are an expert Senior SEO, GEO, AEO, and Local Content Strategist for '{COMPANY_NAME}' ({COMPANY_WEBSITE}).
+    prompt = f"""You are an expert SEO content writer.
 
-Write a comprehensive SEO-optimized blog post about {service_name} services in Seoni, Madhya Pradesh.
+Write a blog post about {service_name} services in Seoni, MP.
 
-IMPORTANT: Use these EXACT contact details:
+IMPORTANT CONTACT DETAILS:
 - Company: {COMPANY_NAME}
 - Phone: {COMPANY_PHONE}
-- Landline: {COMPANY_LANDLINE}
-- Email: {COMPANY_EMAIL}
 - Website: {COMPANY_WEBSITE}
 - WhatsApp: {SOCIAL_LINKS['whatsapp']}
-- Instagram: {SOCIAL_LINKS['instagram']}
-- YouTube: {SOCIAL_LINKS['youtube']}
-- LinkedIn: {SOCIAL_LINKS['linkedin']}
-- Facebook: {SOCIAL_LINKS['facebook']}
-- Twitter/X: {SOCIAL_LINKS['twitter']}
-- Pinterest: {SOCIAL_LINKS['pinterest']}
-- Arattai: {SOCIAL_LINKS['arattai']}
 - Android App: {SOCIAL_LINKS['playstore']}
-- iOS App: {SOCIAL_LINKS['appstore']}
 
-STRUCTURE MUST INCLUDE:
-1. SEO Metadata: Catchy title (under 60 chars), meta description (under 160 chars with CTA), SEO-friendly slug
-2. Introduction with local Seoni intent and common pain points
-3. Why Choose {COMPANY_NAME}: Local reliability, verified technicians, transparent pricing, quick response
-4. Comprehensive Service Overview: What the service includes, key features, benefits
-5. Pricing & Process: Transparent rates, step-by-step process with correct phone number
-6. Tools, Safety & Maintenance: Equipment used, DIY vs Professional comparison
-7. Local Service Areas: Main Road, Subhash Ward, Barapatthar, and nearby MP regions
-8. FAQs (7-10 questions with answers) - Must include schema-ready FAQ content
-9. Strong Call to Action with all contact details and app download links
+STRUCTURE:
+1. SEO Metadata: title, meta_description, slug
+2. Introduction
+3. Why Choose {COMPANY_NAME}
+4. Service Overview
+5. Pricing & Process
+6. Local Service Areas
+7. FAQs (5-7 questions)
+8. Call to Action
 
-Make content readable with proper H2, H3 headings, short paragraphs, and bullet points.
-Optimize for Google Search, AI Search (Perplexity, ChatGPT, Gemini), and Voice Search.
+CRITICAL: Return ONLY valid JSON. NO markdown, NO extra text.
 
-OUTPUT FORMAT: Return valid JSON only:
+OUTPUT:
 {{
     "title": "",
     "meta_description": "",
     "slug": "",
     "content_html": "",
     "faqs": [{{"question": "", "answer": ""}}],
-    "tags": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
+    "tags": ["keyword1", "keyword2"]
 }}
 """
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
     data = {
         "model": "deepseek-chat",
-        "messages": [{"role": "system", "content": "Return valid JSON only. Always include 7-10 FAQs."}, {"role": "user", "content": prompt}],
-        "temperature": 0.7,
-        "max_tokens": 5000
+        "messages": [
+            {"role": "system", "content": "You are an expert SEO writer. Return ONLY valid JSON. No markdown, no extra text."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.3,
+        "max_tokens": 3000
     }
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
+        
+        # Clean JSON
+        content = content.strip()
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
+        content = content.strip()
+        
         return json.loads(content)
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON Parse Error for {service_name}: {e}")
+        print(f"Raw: {content[:200] if content else 'EMPTY'}")
+        return None
     except Exception as e:
-        print(f"❌ DeepSeek Error: {e}")
+        print(f"❌ DeepSeek Error for {service_name}: {e}")
         return None
 
 def publish_to_wordpress(blog_data, service_info):
@@ -222,7 +252,6 @@ def get_or_create_tag(tag_name):
         return None
 
 def main():
-    # दिन के हिसाब से 2 posts publish करें
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
@@ -231,11 +260,15 @@ def main():
     blog_data1 = generate_blog_post(service1["name"])
     if blog_data1:
         publish_to_wordpress(blog_data1, service1)
+    else:
+        print(f"❌ Failed to generate: {service1['name']}")
     
     print(f"🤖 Generating blog 2: {service2['name']}")
     blog_data2 = generate_blog_post(service2["name"])
     if blog_data2:
         publish_to_wordpress(blog_data2, service2)
+    else:
+        print(f"❌ Failed to generate: {service2['name']}")
 
 if __name__ == "__main__":
     main()
