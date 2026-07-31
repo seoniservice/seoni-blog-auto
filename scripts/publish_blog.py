@@ -31,45 +31,45 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ===== SERVICES LIST (Updated - 29 Services) =====
+# ===== SERVICES LIST (29 Services + Hindi Names) =====
 SERVICES = [
-    # 🔧 Home Repair
-    {"name": "Electrician", "category": "Electrician"},
-    {"name": "Plumber", "category": "Plumber"},
-    {"name": "Carpenter", "category": "Carpenter"},
-    {"name": "Painting", "category": "Painting-Services"},
-    {"name": "Water Purifier", "category": "Water-Purifier"},
+    # Home Repair
+    {"name": "Electrician", "category": "Electrician", "name_hi": "इलेक्ट्रीशियन"},
+    {"name": "Plumber", "category": "Plumber", "name_hi": "प्लंबर"},
+    {"name": "Carpenter", "category": "Carpenter", "name_hi": "बढ़ई"},
+    {"name": "Painting", "category": "Painting-Services", "name_hi": "पेंटिंग"},
+    {"name": "Water Purifier", "category": "Water-Purifier", "name_hi": "पानी शुद्धिकरण"},
     
-    # 📱 Appliance Repair
-    {"name": "AC Repair", "category": "AC-Service"},
-    {"name": "Appliance Repair", "category": "Appliance-Repair"},
-    {"name": "TV Repair", "category": "TV-Repair"},
-    {"name": "Washing Machine Repair", "category": "Washing-Machine-Repair"},
-    {"name": "Microwave Repair", "category": "Microwave-Repair"},
-    {"name": "Inverter Repair", "category": "Inverter-Repair"},
-    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair"},
+    # Appliance Repair
+    {"name": "AC Repair", "category": "AC-Service", "name_hi": "एसी रिपेयर"},
+    {"name": "Appliance Repair", "category": "Appliance-Repair", "name_hi": "उपकरण मरम्मत"},
+    {"name": "TV Repair", "category": "TV-Repair", "name_hi": "टीवी रिपेयर"},
+    {"name": "Washing Machine Repair", "category": "Washing-Machine-Repair", "name_hi": "वॉशिंग मशीन रिपेयर"},
+    {"name": "Microwave Repair", "category": "Microwave-Repair", "name_hi": "माइक्रोवेव रिपेयर"},
+    {"name": "Inverter Repair", "category": "Inverter-Repair", "name_hi": "इनवर्टर रिपेयर"},
+    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair", "name_hi": "गैस स्टोव रिपेयर"},
     
-    # 🧹 Cleaning
-    {"name": "Home Cleaning", "category": "Cleaning-Services"},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
-    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning"},
-    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning"},
-    {"name": "Kitchen Cleaning", "category": "Kitchen-Cleaning"},
-    {"name": "Bathroom Cleaning", "category": "Bathroom-Cleaning"},
-    {"name": "Window Cleaning", "category": "Window-Cleaning"},
+    # Cleaning
+    {"name": "Home Cleaning", "category": "Cleaning-Services", "name_hi": "घर की सफाई"},
+    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning", "name_hi": "सोफा क्लीनिंग"},
+    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning", "name_hi": "कार्पेट क्लीनिंग"},
+    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning", "name_hi": "व्यावसायिक सफाई"},
+    {"name": "Kitchen Cleaning", "category": "Kitchen-Cleaning", "name_hi": "रसोई की सफाई"},
+    {"name": "Bathroom Cleaning", "category": "Bathroom-Cleaning", "name_hi": "बाथरूम की सफाई"},
+    {"name": "Window Cleaning", "category": "Window-Cleaning", "name_hi": "खिड़की की सफाई"},
     
-    # 💄 Beauty & Wellness
-    {"name": "Women Salon", "category": "Women-Salon"},
-    {"name": "Nail Art", "category": "Nail-Art"},
-    {"name": "Spa & Massage", "category": "Spa-Massage"},
+    # Beauty & Wellness
+    {"name": "Women Salon", "category": "Women-Salon", "name_hi": "महिला सैलून"},
+    {"name": "Nail Art", "category": "Nail-Art", "name_hi": "नेल आर्ट"},
+    {"name": "Spa & Massage", "category": "Spa-Massage", "name_hi": "स्पा और मालिश"},
     
-    # 🏡 Other Services
-    {"name": "Pest Control", "category": "Pest-Control"},
-    {"name": "Waterproofing", "category": "Waterproofing"},
-    {"name": "Modular Kitchen", "category": "Modular-Kitchen"},
-    {"name": "Gardening", "category": "Gardening"},
-    {"name": "Laundry", "category": "Laundry"},
-    {"name": "Pick & Drop", "category": "Pick-Drop-Service"}
+    # Other Services
+    {"name": "Pest Control", "category": "Pest-Control", "name_hi": "कीट नियंत्रण"},
+    {"name": "Waterproofing", "category": "Waterproofing", "name_hi": "वाटरप्रूफिंग"},
+    {"name": "Modular Kitchen", "category": "Modular-Kitchen", "name_hi": "मॉड्यूलर किचन"},
+    {"name": "Gardening", "category": "Gardening", "name_hi": "बागवानी"},
+    {"name": "Laundry", "category": "Laundry", "name_hi": "कपड़े धुलाई"},
+    {"name": "Pick & Drop", "category": "Pick-Drop-Service", "name_hi": "पिक एंड ड्रॉप"}
 ]
 
 def get_category_id(category_name):
@@ -88,6 +88,7 @@ def get_category_id(category_name):
         return 1
 
 def generate_blog_post(service_name):
+    """English blog generate karega"""
     prompt = f"""You are an expert SEO content writer.
 
 Write a blog post about {service_name} services in Seoni, MP.
@@ -154,6 +155,76 @@ OUTPUT:
         return None
     except Exception as e:
         print(f"❌ DeepSeek Error for {service_name}: {e}")
+        return None
+
+def generate_blog_post_hindi(service_name, service_name_hi):
+    """Hindi blog generate karega"""
+    prompt = f"""You are an expert SEO content writer in Hindi.
+
+Write a blog post about {service_name_hi} services in Seoni, MP in HINDI language.
+
+IMPORTANT CONTACT DETAILS (use as is):
+- Company: {COMPANY_NAME}
+- Phone: {COMPANY_PHONE}
+- Website: {COMPANY_WEBSITE}
+- WhatsApp: {SOCIAL_LINKS['whatsapp']}
+- Android App: {SOCIAL_LINKS['playstore']}
+
+STRUCTURE (in Hindi):
+1. SEO Metadata: title, meta_description, slug (all in Hindi)
+2. Introduction (Hindi)
+3. Why Choose {COMPANY_NAME} (Hindi)
+4. Service Overview (Hindi)
+5. Pricing & Process (Hindi)
+6. Local Service Areas (Hindi)
+7. FAQs (5-7 questions in Hindi)
+8. Call to Action (Hindi)
+
+CRITICAL: Return ONLY valid JSON. NO markdown, NO extra text.
+
+OUTPUT:
+{{
+    "title": "",
+    "meta_description": "",
+    "slug": "",
+    "content_html": "",
+    "faqs": [{{"question": "", "answer": ""}}],
+    "tags": ["keyword1", "keyword2"]
+}}
+"""
+    url = "https://api.deepseek.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
+    data = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": "You are an expert SEO writer in Hindi. Return ONLY valid JSON. No markdown, no extra text."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.3,
+        "max_tokens": 3000
+    }
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        content = response.json()["choices"][0]["message"]["content"]
+        
+        # Clean JSON
+        content = content.strip()
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
+        content = content.strip()
+        
+        return json.loads(content)
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON Parse Error for {service_name_hi}: {e}")
+        print(f"Raw: {content[:200] if content else 'EMPTY'}")
+        return None
+    except Exception as e:
+        print(f"❌ DeepSeek Error for {service_name_hi}: {e}")
         return None
 
 def publish_to_wordpress(blog_data, service_info):
@@ -256,19 +327,35 @@ def main():
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
     
-    print(f"🤖 Generating blog 1: {service1['name']}")
-    blog_data1 = generate_blog_post(service1["name"])
-    if blog_data1:
-        publish_to_wordpress(blog_data1, service1)
+    # ===== ENGLISH POSTS =====
+    print(f"🤖 [EN] Generating blog 1: {service1['name']}")
+    blog_data1_en = generate_blog_post(service1["name"])
+    if blog_data1_en:
+        publish_to_wordpress(blog_data1_en, service1)
     else:
-        print(f"❌ Failed to generate: {service1['name']}")
+        print(f"❌ [EN] Failed: {service1['name']}")
     
-    print(f"🤖 Generating blog 2: {service2['name']}")
-    blog_data2 = generate_blog_post(service2["name"])
-    if blog_data2:
-        publish_to_wordpress(blog_data2, service2)
+    print(f"🤖 [EN] Generating blog 2: {service2['name']}")
+    blog_data2_en = generate_blog_post(service2["name"])
+    if blog_data2_en:
+        publish_to_wordpress(blog_data2_en, service2)
     else:
-        print(f"❌ Failed to generate: {service2['name']}")
+        print(f"❌ [EN] Failed: {service2['name']}")
+    
+    # ===== HINDI POSTS =====
+    print(f"🤖 [HI] Generating blog 1: {service1['name_hi']}")
+    blog_data1_hi = generate_blog_post_hindi(service1["name"], service1["name_hi"])
+    if blog_data1_hi:
+        publish_to_wordpress(blog_data1_hi, service1)
+    else:
+        print(f"❌ [HI] Failed: {service1['name_hi']}")
+    
+    print(f"🤖 [HI] Generating blog 2: {service2['name_hi']}")
+    blog_data2_hi = generate_blog_post_hindi(service2["name"], service2["name_hi"])
+    if blog_data2_hi:
+        publish_to_wordpress(blog_data2_hi, service2)
+    else:
+        print(f"❌ [HI] Failed: {service2['name_hi']}")
 
 if __name__ == "__main__":
     main()
