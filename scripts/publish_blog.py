@@ -8,7 +8,35 @@ WP_URL = os.getenv("WP_URL")
 WP_USERNAME = os.getenv("WP_USERNAME")
 WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
-SERVICES = ["Electrician", "AC Repair", "Plumber", "Home Cleaning", "Appliance Repair", "Carpenter", "Painting", "Water Purifier"]
+SERVICES = [
+    {"name": "Electrician", "category": "Electrician"},
+    {"name": "AC Repair", "category": "AC-Service"},
+    {"name": "Plumber", "category": "Plumber"},
+    {"name": "Home Cleaning", "category": "Cleaning-Services"},
+    {"name": "Appliance Repair", "category": "Appliance-Repair"},
+    {"name": "Carpenter", "category": "Carpenter"},
+    {"name": "Painting", "category": "Painting-Services"},
+    {"name": "Water Purifier", "category": "Water-Purifier"}
+]
+
+def get_category_id(category_name):
+    """WordPress में category ID fetch करें"""
+    try:
+        url = f"{WP_URL}/wp-json/wp/v2/categories"
+        params = {"slug": category_name.lower().replace(" ", "-")}
+        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
+        
+        if response.status_code == 200 and response.json():
+            return response.json()[0]["id"]
+        
+        # Category नहीं है तो create करें
+        data = {"name": category_name, "slug": category_name.lower().replace(" ", "-")}
+        response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
+        if response.status_code == 201:
+            return response.json()["id"]
+        return 1  # Default: Uncategorized
+    except:
+        return 1
 
 def generate_blog_post(service_name):
     prompt = f"""You are an expert Senior SEO, GEO, and Local Content Strategist for 'seoniservice.in'.
@@ -27,13 +55,16 @@ STRUCTURE MUST INCLUDE:
 9. Strong Call to Action
 10. Social Media Promotion Pack
 
+IMPORTANT: Make content readable with proper H2, H3 headings, short paragraphs, and bullet points.
+
 OUTPUT FORMAT: Return valid JSON only:
 {{
     "title": "",
     "meta_description": "",
     "slug": "",
-    "content_html": "<full HTML content>",
-    "faqs": [{{"question": "", "answer": ""}}]
+    "content_html": "<full HTML content with proper headings>",
+    "faqs": [{{"question": "", "answer": ""}}],
+    "tags": ["keyword1", "keyword2", "keyword3"]
 }}
 """
 
@@ -55,10 +86,11 @@ OUTPUT FORMAT: Return valid JSON only:
         print(f"❌ DeepSeek Error: {e}")
         return None
 
-def publish_to_wordpress(blog_data, service_name):
+def publish_to_wordpress(blog_data, service_info):
     if not blog_data:
         return None
 
+    # Content build
     full_content = blog_data["content_html"]
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions</h2>"
@@ -66,15 +98,30 @@ def publish_to_wordpress(blog_data, service_name):
             faq_html += f"<h3>Q: {faq['question']}</h3><p>A: {faq['answer']}</p>"
         full_content += faq_html
 
+    # Category ID get करें
+    category_id = get_category_id(service_info["category"])
+
+    # Tags create/attach करें
+    tag_ids = []
+    if blog_data.get("tags"):
+        for tag_name in blog_data["tags"][:5]:  # Max 5 tags
+            tag_id = get_or_create_tag(tag_name)
+            if tag_id:
+                tag_ids.append(tag_id)
+
+    # WordPress Post Data
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
         "content": full_content,
         "status": "publish",
         "slug": blog_data["slug"],
+        "categories": [category_id],
+        "tags": tag_ids,
         "meta": {
-            "_yoast_wpseo_metadesc": blog_data["meta_description"],
-            "_yoast_wpseo_title": blog_data["title"]
+            "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
+            "_yoast_wpseo_title": blog_data["title"],
+            "_yoast_wpseo_focuskw": service_info["name"]
         }
     }
 
@@ -84,6 +131,7 @@ def publish_to_wordpress(blog_data, service_name):
             result = response.json()
             print(f"✅ Published: {blog_data['title']}")
             print(f"   URL: {result.get('link', '')}")
+            print(f"   Category: {service_info['category']}")
             return result
         else:
             print(f"❌ WordPress Error: {response.status_code}")
@@ -93,13 +141,33 @@ def publish_to_wordpress(blog_data, service_name):
         print(f"❌ Error: {e}")
         return None
 
+def get_or_create_tag(tag_name):
+    """Tag create या get करें"""
+    try:
+        url = f"{WP_URL}/wp-json/wp/v2/tags"
+        params = {"search": tag_name}
+        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
+        
+        if response.status_code == 200 and response.json():
+            return response.json()[0]["id"]
+        
+        data = {"name": tag_name}
+        response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
+        if response.status_code == 201:
+            return response.json()["id"]
+        return None
+    except:
+        return None
+
 def main():
     day_index = datetime.datetime.now().day % len(SERVICES)
-    service = SERVICES[day_index]
-    print(f"🤖 Generating blog for: {service}")
-    blog_data = generate_blog_post(service)
+    service_info = SERVICES[day_index]
+    service_name = service_info["name"]
+    
+    print(f"🤖 Generating blog for: {service_name}")
+    blog_data = generate_blog_post(service_name)
     if blog_data:
-        publish_to_wordpress(blog_data, service)
+        publish_to_wordpress(blog_data, service_info)
 
 if __name__ == "__main__":
     main()
