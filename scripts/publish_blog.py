@@ -31,7 +31,7 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ===== SERVICES LIST (अब 12 Services) =====
+# ===== SERVICES LIST =====
 SERVICES = [
     {"name": "Electrician", "category": "Electrician"},
     {"name": "AC Repair", "category": "AC-Service"},
