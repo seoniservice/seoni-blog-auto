@@ -30,21 +30,21 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ===== 13 SERVICES =====
+# ===== 13 SERVICES WITH KEYWORDS =====
 SERVICES = [
-    {"name": "Electrician", "category": "Electrician"},
-    {"name": "AC Repair", "category": "AC-Service"},
-    {"name": "Plumber", "category": "Plumber"},
-    {"name": "Home Cleaning", "category": "Cleaning-Services"},
-    {"name": "Appliance Repair", "category": "Appliance-Repair"},
-    {"name": "Carpenter", "category": "Carpenter"},
-    {"name": "Painting", "category": "Painting-Services"},
-    {"name": "Water Purifier", "category": "Water-Purifier"},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
-    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair"},
-    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning"},
-    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning"},
-    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service"}
+    {"name": "Electrician", "category": "Electrician", "keyword": "Electrician Seoni"},
+    {"name": "AC Repair", "category": "AC-Service", "keyword": "AC Repair Seoni"},
+    {"name": "Plumber", "category": "Plumber", "keyword": "Plumber Seoni"},
+    {"name": "Home Cleaning", "category": "Cleaning-Services", "keyword": "Home Cleaning Seoni"},
+    {"name": "Appliance Repair", "category": "Appliance-Repair", "keyword": "Appliance Repair Seoni"},
+    {"name": "Carpenter", "category": "Carpenter", "keyword": "Carpenter Seoni"},
+    {"name": "Painting", "category": "Painting-Services", "keyword": "Painting Services Seoni"},
+    {"name": "Water Purifier", "category": "Water-Purifier", "keyword": "Water Purifier Service Seoni"},
+    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning", "keyword": "Sofa Cleaning Seoni"},
+    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair", "keyword": "Gas Stove Repair Seoni"},
+    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning", "keyword": "Carpet Cleaning Seoni"},
+    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning", "keyword": "Commercial Cleaning Seoni"},
+    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service", "keyword": "Pick and Drop Service Seoni"}
 ]
 
 # ===== HINDI TRANSLATION =====
@@ -79,21 +79,25 @@ def get_category_id(category_name):
     except:
         return 1
 
-def generate_blog_post(service_name, language="en"):
+def generate_blog_post(service_name, keyword, language="en"):
     service_hi = SERVICES_HI.get(service_name, service_name)
     
-    # ===== SEO GREEN KE LIYE EXTRA INSTRUCTIONS =====
     seo_rules = """
-SEO RULES FOR GREEN SCORE:
-1. Keep paragraphs short (max 3-4 sentences each)
-2. Use subheadings (H2, H3) every 100-150 words
-3. Include focus keyword in first paragraph
-4. Include focus keyword in at least 1 H2 heading
-5. Include 1 internal link (to mycityservice.in)
-6. Include 1 external link (to authority site like Wikipedia)
-7. Write in active voice, not passive voice
-8. Use transition words (however, therefore, moreover, etc.)
-9. Include a call to action in last paragraph
+SEO RULES FOR GREEN SCORE (STRICT):
+1. Keep EVERY sentence under 20 words. Break long sentences into short ones.
+2. Use transition words (however, therefore, moreover, furthermore, in addition, consequently, for example) in at least 30% of sentences.
+3. Include focus keyword in the FIRST sentence of the introduction.
+4. Include focus keyword in at least 2 H2 subheadings.
+5. Include focus keyword in SEO title (at the beginning).
+6. Include focus keyword in meta description.
+7. Include focus keyword at least 5-7 times in the content.
+8. Use focus keyword EXACTLY as given (do not change it).
+9. Add 1 image suggestion with alt text containing the keyphrase.
+10. Add 1 external link to an authority site.
+11. Write short paragraphs (max 2-3 sentences).
+12. Use active voice throughout.
+13. Include a call to action.
+14. Use keyphrase in the last paragraph too.
 """
     
     if language == "hi":
@@ -133,6 +137,8 @@ OUTPUT: Return ONLY JSON. No extra text.
         prompt = f"""You are an expert Senior SEO, GEO, and Local Content Strategist for '{COMPANY_NAME}'.
 
 Write a comprehensive SEO-optimized blog post about {service_name} services in Seoni, Madhya Pradesh.
+
+IMPORTANT FOCUS KEYWORD: {keyword}
 
 {seo_rules}
 
@@ -260,7 +266,7 @@ def publish_to_wordpress(blog_data, service_info):
         "meta": {
             "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
             "_yoast_wpseo_title": blog_data["title"],
-            "_yoast_wpseo_focuskw": service_info["name"],
+            "_yoast_wpseo_focuskw": service_info["keyword"],
             "_yoast_wpseo_linkdex": "good",
             "_yoast_wpseo_content_score": "90"
         }
@@ -304,25 +310,25 @@ def main():
     
     # ===== ENGLISH POSTS =====
     print(f"🤖 [EN] Generating blog 1: {service1['name']}")
-    blog_data1 = generate_blog_post(service1["name"], "en")
+    blog_data1 = generate_blog_post(service1["name"], service1["keyword"], "en")
     if blog_data1:
         publish_to_wordpress(blog_data1, service1)
     
     print(f"🤖 [EN] Generating blog 2: {service2['name']}")
-    blog_data2 = generate_blog_post(service2["name"], "en")
+    blog_data2 = generate_blog_post(service2["name"], service2["keyword"], "en")
     if blog_data2:
         publish_to_wordpress(blog_data2, service2)
     
     # ===== HINDI POSTS =====
     print(f"🤖 [HI] Generating blog 1: {SERVICES_HI[service1['name']]}")
-    blog_data_hi1 = generate_blog_post(service1["name"], "hi")
+    blog_data_hi1 = generate_blog_post(service1["name"], service1["keyword"], "hi")
     if blog_data_hi1:
         service_hi = service1.copy()
         service_hi["category"] = service1["category"] + "-HI"
         publish_to_wordpress(blog_data_hi1, service_hi)
     
     print(f"🤖 [HI] Generating blog 2: {SERVICES_HI[service2['name']]}")
-    blog_data_hi2 = generate_blog_post(service2["name"], "hi")
+    blog_data_hi2 = generate_blog_post(service2["name"], service2["keyword"], "hi")
     if blog_data_hi2:
         service_hi = service2.copy()
         service_hi["category"] = service2["category"] + "-HI"
