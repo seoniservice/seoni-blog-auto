@@ -47,7 +47,7 @@ SERVICES = [
     {"name": "Pick & Drop Service", "category": "Pick-Drop-Service", "keyword": "Pick and Drop Service in Seoni"}
 ]
 
-# ===== HINDI KEYWORDS =====
+# ===== HINDI TRANSLATIONS =====
 SERVICES_HI = {
     "Electrician": "इलेक्ट्रीशियन",
     "AC Repair": "एसी रिपेयर",
@@ -303,7 +303,6 @@ def publish_to_wordpress(blog_data, service_info):
             if tag_id:
                 tag_ids.append(tag_id)
 
-    # Get keyword for Yoast
     keyword = service_info.get("keyword", service_info["name"])
 
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
