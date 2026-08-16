@@ -10,6 +10,7 @@ WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
 # ===== COMPANY DETAILS =====
 COMPANY_NAME = "My City Service"
+COMPANY_TAGLINE = "India's Trusted Home Service Platform"
 COMPANY_PHONE = "+91-9584670816"
 COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
@@ -30,22 +31,41 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ===== 13 SERVICES WITH EXACT KEYWORDS =====
-SERVICES = [
-    {"name": "Electrician", "category": "Electrician", "keyword": "Electrician in Seoni"},
-    {"name": "AC Repair", "category": "AC-Service", "keyword": "AC Repair in Seoni"},
-    {"name": "Plumber", "category": "Plumber", "keyword": "Plumber in Seoni"},
-    {"name": "Home Cleaning", "category": "Cleaning-Services", "keyword": "Home Cleaning in Seoni"},
-    {"name": "Appliance Repair", "category": "Appliance-Repair", "keyword": "Appliance Repair in Seoni"},
-    {"name": "Carpenter", "category": "Carpenter", "keyword": "Carpenter in Seoni"},
-    {"name": "Painting", "category": "Painting-Services", "keyword": "Painting Services in Seoni"},
-    {"name": "Water Purifier", "category": "Water-Purifier", "keyword": "Water Purifier in Seoni"},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning", "keyword": "Sofa Cleaning in Seoni"},
-    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair", "keyword": "Gas Stove Repair in Seoni"},
-    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning", "keyword": "Carpet Cleaning in Seoni"},
-    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning", "keyword": "Commercial Cleaning in Seoni"},
-    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service", "keyword": "Pick and Drop Service in Seoni"}
+# ===== CITIES =====
+CITIES = [
+    {"name": "Seoni", "slug": "seoni"},
+    {"name": "Chhindwara", "slug": "chhindwara"},
+    {"name": "Jabalpur", "slug": "jabalpur"}
 ]
+
+# ===== SERVICES =====
+SERVICE_NAMES = [
+    {"name": "Electrician", "category": "Electrician"},
+    {"name": "AC Repair", "category": "AC-Service"},
+    {"name": "Plumber", "category": "Plumber"},
+    {"name": "Home Cleaning", "category": "Cleaning-Services"},
+    {"name": "Appliance Repair", "category": "Appliance-Repair"},
+    {"name": "Carpenter", "category": "Carpenter"},
+    {"name": "Painting", "category": "Painting-Services"},
+    {"name": "Water Purifier", "category": "Water-Purifier"},
+    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
+    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair"},
+    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning"},
+    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning"},
+    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service"}
+]
+
+# ===== GENERATE SERVICES WITH ALL CITIES =====
+SERVICES = []
+for city in CITIES:
+    for service in SERVICE_NAMES:
+        SERVICES.append({
+            "name": service["name"],
+            "category": f"{city['name']}-{service['category']}",
+            "city": city["name"],
+            "keyword": f"{service['name']} in {city['name']}",
+            "slug": f"{service['name'].lower().replace(' ', '-')}-{city['slug']}"
+        })
 
 # ===== HINDI TRANSLATIONS =====
 SERVICES_HI = {
@@ -95,55 +115,56 @@ def get_category_id(category_name):
     except:
         return 1
 
-def generate_blog_post(service_name, keyword, language="en"):
+def generate_blog_post(service_name, keyword, city, language="en"):
     service_hi = SERVICES_HI.get(service_name, service_name)
     keyword_hi = SERVICES_HI_KEYWORD.get(service_name, service_name)
     
     if language == "hi":
         seo_rules = f"""
 STRICT SEO RULES FOR GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" - Use this EXACTLY as given.
-2. Use "{keyword_hi}" in the FIRST sentence of the introduction.
-3. Use "{keyword_hi}" in the SEO title (at the very beginning).
-4. Use "{keyword_hi}" in the meta description.
-5. Use "{keyword_hi}" at least 5-7 times in the content.
+1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" - Use this EXACTLY.
+2. Use "{keyword_hi}" in FIRST sentence of introduction.
+3. Use "{keyword_hi}" in SEO title (beginning).
+4. Use "{keyword_hi}" in meta description.
+5. Use "{keyword_hi}" 5-7 times in content.
 6. Use "{keyword_hi}" in at least 2 H2 subheadings.
 7. Keep EVERY sentence under 15 words in Hindi.
-8. Use transition words in at least 30% of sentences.
-9. Add image suggestion with alt text containing "{keyword_hi}".
-10. Write short paragraphs (max 2-3 sentences).
+8. Use transition words in 30%+ sentences.
+9. Add image with alt text containing "{keyword_hi}".
+10. Write short paragraphs (2-3 sentences).
 11. Use active voice.
-12. Include a call to action.
+12. Include call to action.
 13. NEVER use any other keyphrase. ONLY use "{keyword_hi}".
 """
     else:
         seo_rules = f"""
 STRICT SEO RULES FOR GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword}" - Use this EXACTLY as given.
-2. Use "{keyword}" in the FIRST sentence of the introduction.
-3. Use "{keyword}" in the SEO title (at the very beginning).
-4. Use "{keyword}" in the meta description.
-5. Use "{keyword}" at least 5-7 times in the content (including H2 headings).
+1. EXACT FOCUS KEYPHRASE: "{keyword}" - Use this EXACTLY.
+2. Use "{keyword}" in FIRST sentence of introduction.
+3. Use "{keyword}" in SEO title (beginning).
+4. Use "{keyword}" in meta description.
+5. Use "{keyword}" 5-7 times in content.
 6. Use "{keyword}" in at least 2 H2 subheadings.
-7. Keep EVERY sentence under 20 words.
-8. Use transition words (however, therefore, moreover, furthermore, in addition, consequently, for example) in at least 30% of sentences.
-9. Add image suggestion with alt text containing "{keyword}".
-10. Add 1 external link to an authority site.
-11. Write short paragraphs (max 2-3 sentences).
-12. Use active voice throughout.
-13. Include a call to action.
-14. Use keyphrase in the last paragraph too.
-15. NEVER use any other keyphrase. ONLY use "{keyword}".
+7. Keep sentences under 20 words.
+8. Use transition words in 30%+ sentences.
+9. Add image with alt text containing "{keyword}".
+10. Add 1 external link to authority site.
+11. Write short paragraphs (2-3 sentences).
+12. Use active voice.
+13. Include call to action.
+14. Use keyphrase in last paragraph.
+15. NEVER use any other keyphrase.
 """
 
     if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME}' के लिए SEO विशेषज्ञ हैं।
+        prompt = f"""आप '{COMPANY_NAME} - {COMPANY_TAGLINE}' के लिए SEO विशेषज्ञ हैं।
 
-{service_hi} सेवाओं के बारे में सिवनी, मध्य प्रदेश के लिए एक SEO-ऑप्टिमाइज्ड ब्लॉग पोस्ट लिखें।
+{service_hi} सेवाओं के बारे में {city}, मध्य प्रदेश के लिए एक SEO-ऑप्टिमाइज्ड ब्लॉग पोस्ट लिखें।
 
 {seo_rules}
 
 इन विवरणों का सटीक उपयोग करें:
+- कंपनी: {COMPANY_NAME} ({COMPANY_TAGLINE})
 - फोन: {COMPANY_PHONE}
 - वेबसाइट: {COMPANY_WEBSITE}
 - व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
@@ -151,15 +172,15 @@ STRICT SEO RULES FOR GREEN SCORE:
 
 Structure:
 1. SEO Metadata: title, meta_description, slug
-2. Introduction (with keyword in first paragraph)
-3. Why Choose {COMPANY_NAME}
+2. Introduction (with keyword in first paragraph + brand mention)
+3. Why Choose {COMPANY_NAME} - India's Trusted Brand
 4. Service Overview
 5. Pricing & Process
-6. Local Service Areas
+6. Local Service Areas ({city})
 7. FAQs (5-7 questions)
-8. Call to Action
+8. Call to Action with brand name
 
-OUTPUT: Return ONLY JSON. No extra text.
+OUTPUT: Return ONLY JSON.
 {{
     "title": "",
     "meta_description": "",
@@ -170,15 +191,16 @@ OUTPUT: Return ONLY JSON. No extra text.
 }}
 """
     else:
-        prompt = f"""You are an expert Senior SEO, GEO, and Local Content Strategist for '{COMPANY_NAME}'.
+        prompt = f"""You are an expert Senior SEO, GEO, and Local Content Strategist for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
 
-Write a comprehensive SEO-optimized blog post about {service_name} services in Seoni, Madhya Pradesh.
+Write a comprehensive SEO-optimized blog post about {service_name} services in {city}, Madhya Pradesh.
 
 IMPORTANT FOCUS KEYPHRASE: "{keyword}"
 
 {seo_rules}
 
-IMPORTANT: Use these EXACT contact details:
+IMPORTANT: Use these EXACT details:
+- Brand: {COMPANY_NAME} ({COMPANY_TAGLINE})
 - Phone: {COMPANY_PHONE}
 - Website: {COMPANY_WEBSITE}
 - WhatsApp: {SOCIAL_LINKS['whatsapp']}
@@ -187,13 +209,13 @@ IMPORTANT: Use these EXACT contact details:
 
 STRUCTURE:
 1. SEO Metadata: title, meta_description, slug
-2. Introduction (keyword in first paragraph)
-3. Why Choose {COMPANY_NAME}
+2. Introduction (keyword in first paragraph + brand mention)
+3. Why Choose {COMPANY_NAME} - India's Trusted Brand
 4. Service Overview
 5. Pricing & Process
-6. Local Service Areas
+6. Local Service Areas ({city})
 7. FAQs (7-10 questions)
-8. Call to Action with contact details
+8. Call to Action with brand name
 
 OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
 {{
@@ -253,6 +275,7 @@ def publish_to_wordpress(blog_data, service_info):
     # Social Media Section
     social_html = f"""
     <h2>📱 Connect With {COMPANY_NAME}</h2>
+    <p><strong>{COMPANY_TAGLINE}</strong></p>
     <ul>
         <li>🌐 <a href="{SOCIAL_LINKS['website']}">Website</a></li>
         <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
@@ -279,20 +302,20 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # ---- IMAGE SUGGESTION ADD (SEO Green ke liye) ----
+    # ---- IMAGE SUGGESTION ----
     image_html = f'''
-    <img src="https://mycityservice.in/wp-content/uploads/{service_info["name"].lower().replace(" ", "-")}-seoni.jpg" 
+    <img src="https://mycityservice.in/wp-content/uploads/{service_info["name"].lower().replace(" ", "-")}-{service_info["city"].lower()}.jpg" 
          alt="{service_info["keyword"]}" 
          title="{service_info["keyword"]}" />
     '''
     full_content = image_html + full_content
 
-    # ---- INTERNAL LINK ADD ----
-    internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a>.</p>'
+    # ---- INTERNAL LINK ----
+    internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a> - {COMPANY_TAGLINE}.</p>'
     full_content += internal_link
 
-    # ---- EXTERNAL LINK ADD ----
-    external_link = f'<p><a href="https://en.wikipedia.org/wiki/Seoni,_Madhya_Pradesh">Learn more about Seoni, MP</a>.</p>'
+    # ---- EXTERNAL LINK ----
+    external_link = f'<p><a href="https://en.wikipedia.org/wiki/{service_info["city"]}">Learn more about {service_info["city"]}, MP</a>.</p>'
     full_content += external_link
 
     category_id = get_category_id(service_info["category"])
@@ -355,37 +378,38 @@ def get_or_create_tag(tag_name):
         return None
 
 def main():
+    # --- 4 POSTS PER RUN (2 EN + 2 HI) ---
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
     
     # ===== ENGLISH POSTS =====
-    print(f"🤖 [EN] Generating blog 1: {service1['name']} - Keyword: {service1['keyword']}")
-    blog_data1 = generate_blog_post(service1["name"], service1["keyword"], "en")
-    if blog_data1:
-        publish_to_wordpress(blog_data1, service1)
+    print(f"🤖 [EN] Blog 1: {service1['name']} - {service1['city']} - {service1['keyword']}")
+    data1 = generate_blog_post(service1["name"], service1["keyword"], service1["city"], "en")
+    if data1:
+        publish_to_wordpress(data1, service1)
     
-    print(f"🤖 [EN] Generating blog 2: {service2['name']} - Keyword: {service2['keyword']}")
-    blog_data2 = generate_blog_post(service2["name"], service2["keyword"], "en")
-    if blog_data2:
-        publish_to_wordpress(blog_data2, service2)
+    print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - {service2['keyword']}")
+    data2 = generate_blog_post(service2["name"], service2["keyword"], service2["city"], "en")
+    if data2:
+        publish_to_wordpress(data2, service2)
     
     # ===== HINDI POSTS =====
-    print(f"🤖 [HI] Generating blog 1: {SERVICES_HI[service1['name']]} - Keyword: {SERVICES_HI_KEYWORD[service1['name']]}")
-    blog_data_hi1 = generate_blog_post(service1["name"], service1["keyword"], "hi")
-    if blog_data_hi1:
+    print(f"🤖 [HI] Blog 1: {SERVICES_HI[service1['name']]} - {service1['city']}")
+    data_hi1 = generate_blog_post(service1["name"], service1["keyword"], service1["city"], "hi")
+    if data_hi1:
         service_hi = service1.copy()
         service_hi["category"] = service1["category"] + "-HI"
         service_hi["keyword"] = SERVICES_HI_KEYWORD[service1["name"]]
-        publish_to_wordpress(blog_data_hi1, service_hi)
+        publish_to_wordpress(data_hi1, service_hi)
     
-    print(f"🤖 [HI] Generating blog 2: {SERVICES_HI[service2['name']]} - Keyword: {SERVICES_HI_KEYWORD[service2['name']]}")
-    blog_data_hi2 = generate_blog_post(service2["name"], service2["keyword"], "hi")
-    if blog_data_hi2:
+    print(f"🤖 [HI] Blog 2: {SERVICES_HI[service2['name']]} - {service2['city']}")
+    data_hi2 = generate_blog_post(service2["name"], service2["keyword"], service2["city"], "hi")
+    if data_hi2:
         service_hi = service2.copy()
         service_hi["category"] = service2["category"] + "-HI"
         service_hi["keyword"] = SERVICES_HI_KEYWORD[service2["name"]]
-        publish_to_wordpress(blog_data_hi2, service_hi)
+        publish_to_wordpress(data_hi2, service_hi)
 
 if __name__ == "__main__":
     main()
