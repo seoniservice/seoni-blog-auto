@@ -110,29 +110,31 @@ def generate_blog_post(service_name, keyword, city, language="en"):
     
     if language == "hi":
         seo_rules = f"""
-STRICT RULES FOR SEO + AI (GEO) RANKING:
+STRICT RULES FOR 100% YOAST GREEN SCORE:
 1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" 
-2. Answer the query in the FIRST 40 words to capture AI Overviews.
-3. Use "{keyword_hi}" in Title, Meta Description, and H2 headings.
-4. Use "{keyword_hi}" 8-10 times in content.
-5. Include 2 direct Q&A blocks (Q: ... A: ...) for AI & Featured Snippets.
-6. Include Business Name: {COMPANY_NAME} ({COMPANY_TAGLINE}) in intro and conclusion.
-7. Keep sentences short and active. Use bullet points.
-8. Include CTA: Call {COMPANY_PHONE} or Download App.
-9. 100% focus on "{keyword_hi}".
+2. Use "{keyword_hi}" EXACTLY ONCE in the FIRST sentence.
+3. Use "{keyword_hi}" in SEO title, Meta Description.
+4. Use "{keyword_hi}" at least 4 times but NEVER more than 6 times in the content.
+5. Use "{keyword_hi}" in ONLY 1 H2 subheading.
+6. All other H2/H3 subheadings must use DIFFERENT words (Use "Benefits", "Process", "Pricing", "Areas", "App").
+7. Keep sentences under 15 words. Use transition words (इसलिए, इसके अलावा, उदाहरण के लिए).
+8. Do NOT start 3 consecutive sentences with the same word.
+9. Include CTA: Call {COMPANY_PHONE} or Download App.
+10. Content must be informative and NOT repetitive.
 """
     else:
         seo_rules = f"""
-STRICT RULES FOR SEO + AI (GEO) RANKING:
+STRICT RULES FOR 100% YOAST GREEN SCORE:
 1. EXACT FOCUS KEYPHRASE: "{keyword}" 
-2. Answer the query in the FIRST 40 words to capture AI Overviews.
-3. Use "{keyword}" in Title, Meta Description, and H2 headings.
-4. Use "{keyword}" 8-10 times in content.
-5. Include 2 direct Q&A blocks (Q: ... A: ...) for AI & Featured Snippets.
-6. Include Business Name: {COMPANY_NAME} ({COMPANY_TAGLINE}) in intro and conclusion.
-7. Keep sentences short and active. Use bullet points.
-8. Include CTA: Call {COMPANY_PHONE} or Download App.
-9. 100% focus on "{keyword}".
+2. Use "{keyword}" EXACTLY ONCE in the FIRST sentence.
+3. Use "{keyword}" in SEO title, Meta Description.
+4. Use "{keyword}" at least 4 times but NEVER more than 6 times in the content.
+5. Use "{keyword}" in ONLY 1 H2 subheading.
+6. All other H2/H3 subheadings must use DIFFERENT words (Use "Benefits", "Process", "Pricing", "Areas", "App").
+7. Keep sentences under 20 words. Use transition words (however, therefore, moreover, in addition, for example).
+8. Do NOT start 3 consecutive sentences with the same word.
+9. Include CTA: Call {COMPANY_PHONE} or Download App.
+10. Content must be informative and NOT repetitive.
 """
 
     if language == "hi":
