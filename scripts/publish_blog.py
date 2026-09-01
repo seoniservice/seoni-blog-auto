@@ -3,30 +3,28 @@ import json
 import requests
 import datetime
 
+# ===== API & CONFIG (Secrets se aayega) =====
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 WP_URL = os.getenv("WP_URL")
 WP_USERNAME = os.getenv("WP_USERNAME")
 WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
-# ===== COMPANY DETAILS =====
+# ===== COMPANY DETAILS (India's Trusted Brand) =====
 COMPANY_NAME = "My City Service"
-COMPANY_TAGLINE = "India's Trusted Home Service Platform"
+COMPANY_TAGLINE = "India's Trusted On-Demand Home Service Platform"
 COMPANY_PHONE = "+91-9584670816"
 COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
 COMPANY_WEBSITE = "https://www.mycityservice.in"
 
 SOCIAL_LINKS = {
-    "website": "https://www.mycityservice.in",
+    "website": COMPANY_WEBSITE,
     "twitter": "https://x.com/mycityservice9",
     "instagram": "https://instagram.com/mycityservice.in",
     "facebook": "https://facebook.com/MyCityService",
     "linkedin": "https://linkedin.com/in/my-city-service",
     "whatsapp": "https://wa.me/919584670816",
-    "whatsapp_channel": "https://whatsapp.com/channel/0029VbAbZ4M5K3zTCiDwsS2e",
     "youtube": "https://youtube.com/@MyCityService",
-    "pinterest": "https://pin.it/6WQE1XxYG",
-    "arattai": "@my_city_service",
     "playstore": "https://play.google.com/store/apps/details?id=com.myapp.sservices",
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
@@ -69,34 +67,18 @@ for city in CITIES:
 
 # ===== HINDI TRANSLATIONS =====
 SERVICES_HI = {
-    "Electrician": "इलेक्ट्रीशियन",
-    "AC Repair": "एसी रिपेयर",
-    "Plumber": "प्लम्बर",
-    "Home Cleaning": "होम क्लीनिंग",
-    "Appliance Repair": "अप्लायंस रिपेयर",
-    "Carpenter": "कारपेंटर",
-    "Painting": "पेंटिंग",
-    "Water Purifier": "वॉटर प्यूरीफायर",
-    "Sofa Cleaning": "सोफा क्लीनिंग",
-    "Gas Stove Repair": "गैस स्टोव रिपेयर",
-    "Carpet Cleaning": "कार्पेट क्लीनिंग",
-    "Commercial Cleaning": "कमर्शियल क्लीनिंग",
+    "Electrician": "इलेक्ट्रीशियन", "AC Repair": "एसी रिपेयर", "Plumber": "प्लम्बर",
+    "Home Cleaning": "होम क्लीनिंग", "Appliance Repair": "अप्लायंस रिपेयर", "Carpenter": "कारपेंटर",
+    "Painting": "पेंटिंग", "Water Purifier": "वॉटर प्यूरीफायर", "Sofa Cleaning": "सोफा क्लीनिंग",
+    "Gas Stove Repair": "गैस स्टोव रिपेयर", "Carpet Cleaning": "कार्पेट क्लीनिंग", "Commercial Cleaning": "कमर्शियल क्लीनिंग",
     "Pick & Drop Service": "पिक एंड ड्रॉप सर्विस"
 }
 
 SERVICES_HI_KEYWORD = {
-    "Electrician": "सिवनी में इलेक्ट्रीशियन",
-    "AC Repair": "सिवनी में एसी रिपेयर",
-    "Plumber": "सिवनी में प्लम्बर",
-    "Home Cleaning": "सिवनी में होम क्लीनिंग",
-    "Appliance Repair": "सिवनी में अप्लायंस रिपेयर",
-    "Carpenter": "सिवनी में कारपेंटर",
-    "Painting": "सिवनी में पेंटिंग सेवाएं",
-    "Water Purifier": "सिवनी में वॉटर प्यूरीफायर",
-    "Sofa Cleaning": "सिवनी में सोफा क्लीनिंग",
-    "Gas Stove Repair": "सिवनी में गैस स्टोव रिपेयर",
-    "Carpet Cleaning": "सिवनी में कार्पेट क्लीनिंग",
-    "Commercial Cleaning": "सिवनी में कमर्शियल क्लीनिंग",
+    "Electrician": "सिवनी में इलेक्ट्रीशियन", "AC Repair": "सिवनी में एसी रिपेयर", "Plumber": "सिवनी में प्लम्बर",
+    "Home Cleaning": "सिवनी में होम क्लीनिंग", "Appliance Repair": "सिवनी में अप्लायंस रिपेयर", "Carpenter": "सिवनी में कारपेंटर",
+    "Painting": "सिवनी में पेंटिंग सेवाएं", "Water Purifier": "सिवनी में वॉटर प्यूरीफायर", "Sofa Cleaning": "सिवनी में सोफा क्लीनिंग",
+    "Gas Stove Repair": "सिवनी में गैस स्टोव रिपेयर", "Carpet Cleaning": "सिवनी में कार्पेट क्लीनिंग", "Commercial Cleaning": "सिवनी में कमर्शियल क्लीनिंग",
     "Pick & Drop Service": "सिवनी में पिक एंड ड्रॉप सर्विस"
 }
 
@@ -121,45 +103,35 @@ def generate_blog_post(service_name, keyword, city, language="en"):
     
     if language == "hi":
         seo_rules = f"""
-STRICT SEO RULES FOR GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" - Use this EXACTLY.
-2. Use "{keyword_hi}" in FIRST sentence of introduction.
-3. Use "{keyword_hi}" in SEO title (beginning).
-4. Use "{keyword_hi}" in meta description.
-5. Use "{keyword_hi}" 5-7 times in content.
-6. Use "{keyword_hi}" in at least 2 H2 subheadings.
-7. Keep EVERY sentence under 15 words in Hindi.
-8. Use transition words in 30%+ sentences.
-9. Add image with alt text containing "{keyword_hi}".
-10. Write short paragraphs (2-3 sentences).
-11. Use active voice.
-12. Include call to action.
-13. NEVER use any other keyphrase. ONLY use "{keyword_hi}".
+STRICT RULES FOR SEO + AI (GEO) RANKING:
+1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" 
+2. Answer the query in the FIRST 40 words to capture AI Overviews.
+3. Use "{keyword_hi}" in Title, Meta Description, and H2 headings.
+4. Use "{keyword_hi}" 8-10 times in content.
+5. Include 2 direct Q&A blocks (Q: ... A: ...) for AI & Featured Snippets.
+6. Include Business Name: {COMPANY_NAME} ({COMPANY_TAGLINE}) in intro and conclusion.
+7. Keep sentences short and active. Use bullet points.
+8. Include CTA: Call {COMPANY_PHONE} or Download App.
+9. 100% focus on "{keyword_hi}".
 """
     else:
         seo_rules = f"""
-STRICT SEO RULES FOR GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword}" - Use this EXACTLY.
-2. Use "{keyword}" in FIRST sentence of introduction.
-3. Use "{keyword}" in SEO title (beginning).
-4. Use "{keyword}" in meta description.
-5. Use "{keyword}" 5-7 times in content.
-6. Use "{keyword}" in at least 2 H2 subheadings.
-7. Keep sentences under 20 words.
-8. Use transition words in 30%+ sentences.
-9. Add image with alt text containing "{keyword}".
-10. Add 1 external link to authority site.
-11. Write short paragraphs (2-3 sentences).
-12. Use active voice.
-13. Include call to action.
-14. Use keyphrase in last paragraph.
-15. NEVER use any other keyphrase.
+STRICT RULES FOR SEO + AI (GEO) RANKING:
+1. EXACT FOCUS KEYPHRASE: "{keyword}" 
+2. Answer the query in the FIRST 40 words to capture AI Overviews.
+3. Use "{keyword}" in Title, Meta Description, and H2 headings.
+4. Use "{keyword}" 8-10 times in content.
+5. Include 2 direct Q&A blocks (Q: ... A: ...) for AI & Featured Snippets.
+6. Include Business Name: {COMPANY_NAME} ({COMPANY_TAGLINE}) in intro and conclusion.
+7. Keep sentences short and active. Use bullet points.
+8. Include CTA: Call {COMPANY_PHONE} or Download App.
+9. 100% focus on "{keyword}".
 """
 
     if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME} - {COMPANY_TAGLINE}' के लिए SEO विशेषज्ञ हैं।
+        prompt = f"""आप '{COMPANY_NAME} - {COMPANY_TAGLINE}' के लिए AI-first SEO & GEO विशेषज्ञ हैं।
 
-{service_hi} सेवाओं के बारे में {city}, मध्य प्रदेश के लिए एक SEO-ऑप्टिमाइज्ड ब्लॉग पोस्ट लिखें।
+{service_hi} सेवाओं के बारे में {city}, मध्य प्रदेश के लिए एक AI-Optimized ब्लॉग पोस्ट लिखें।
 
 {seo_rules}
 
@@ -170,17 +142,16 @@ STRICT SEO RULES FOR GREEN SCORE:
 - व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
 - ऐप: {SOCIAL_LINKS['playstore']}
 
-Structure:
-1. SEO Metadata: title, meta_description, slug
-2. Introduction (with keyword in first paragraph + brand mention)
-3. Why Choose {COMPANY_NAME} - India's Trusted Brand
-4. Service Overview
-5. Pricing & Process
-6. Local Service Areas ({city})
-7. FAQs (5-7 questions)
-8. Call to Action with brand name
+STRUCTURE:
+1. SEO Metadata (Title, Meta Desc, Slug)
+2. Introduction (Direct Answer in 40 words)
+3. Why Choose {COMPANY_NAME} (Trust Signals)
+4. Service Areas ({city})
+5. App Download CTA
+6. FAQs (7-10 questions)
+7. Call to Action
 
-OUTPUT: Return ONLY JSON.
+OUTPUT: Return ONLY valid JSON.
 {{
     "title": "",
     "meta_description": "",
@@ -191,9 +162,9 @@ OUTPUT: Return ONLY JSON.
 }}
 """
     else:
-        prompt = f"""You are an expert Senior SEO, GEO, and Local Content Strategist for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
+        prompt = f"""You are an AI-first SEO & GEO (Generative Engine Optimization) expert for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
 
-Write a comprehensive SEO-optimized blog post about {service_name} services in {city}, Madhya Pradesh.
+Write an AI-Optimized blog post about {service_name} services in {city}, Madhya Pradesh.
 
 IMPORTANT FOCUS KEYPHRASE: "{keyword}"
 
@@ -208,16 +179,15 @@ IMPORTANT: Use these EXACT details:
 - iOS App: {SOCIAL_LINKS['appstore']}
 
 STRUCTURE:
-1. SEO Metadata: title, meta_description, slug
-2. Introduction (keyword in first paragraph + brand mention)
-3. Why Choose {COMPANY_NAME} - India's Trusted Brand
-4. Service Overview
-5. Pricing & Process
-6. Local Service Areas ({city})
-7. FAQs (7-10 questions)
-8. Call to Action with brand name
+1. SEO Metadata (Title, Meta Desc, Slug)
+2. Introduction (Direct Answer in 40 words)
+3. Why Choose {COMPANY_NAME} (Trust Signals)
+4. Service Areas ({city})
+5. App Download CTA
+6. FAQs (7-10 questions)
+7. Call to Action
 
-OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
+OUTPUT: Return ONLY valid JSON, no markdown.
 {{
     "title": "",
     "meta_description": "",
@@ -230,42 +200,32 @@ OUTPUT FORMAT: Return valid JSON only. NO markdown, NO extra text.
 
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
-    data = {
-        "model": "deepseek-chat",
-        "messages": [{"role": "system", "content": "You are an expert SEO writer. Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}],
-        "temperature": 0.3,
-        "max_tokens": 4000
-    }
+    data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.3, "max_tokens": 4000}
+    
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
-        
         content = content.strip()
-        if content.startswith("```json"):
-            content = content[7:]
-        if content.startswith("```"):
-            content = content[3:]
-        if content.endswith("```"):
-            content = content[:-3]
-        content = content.strip()
-        
+        if content.startswith("```json"): content = content[7:]
+        if content.startswith("```"): content = content[3:]
+        if content.endswith("```"): content = content[:-3]
         return json.loads(content, strict=False)
-    except json.JSONDecodeError as e:
-        print(f"❌ JSON Parse Error for {service_name} ({language}): {e}")
-        print(f"Raw: {content[:200] if content else 'EMPTY'}")
-        return None
     except Exception as e:
-        print(f"❌ DeepSeek Error for {service_name} ({language}): {e}")
+        print(f"❌ Error: {e}")
         return None
 
 def publish_to_wordpress(blog_data, service_info):
-    if not blog_data:
-        return None
+    if not blog_data: return None
 
     full_content = blog_data["content_html"]
     
-    # FAQ Schema
+    # AI-Ready Summary (40 words) for Featured Snippet
+    if blog_data.get("meta_description"):
+        ai_summary = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>"
+        full_content = ai_summary + full_content
+
+    # FAQ Schema (AI & Google Structured Data)
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
@@ -281,14 +241,11 @@ def publish_to_wordpress(blog_data, service_info):
         <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
         <li>📸 <a href="{SOCIAL_LINKS['instagram']}">Instagram</a></li>
         <li>▶️ <a href="{SOCIAL_LINKS['youtube']}">YouTube</a></li>
-        <li>💼 <a href="{SOCIAL_LINKS['linkedin']}">LinkedIn</a></li>
         <li>📘 <a href="{SOCIAL_LINKS['facebook']}">Facebook</a></li>
         <li>🐦 <a href="{SOCIAL_LINKS['twitter']}">Twitter/X</a></li>
-        <li>📌 <a href="{SOCIAL_LINKS['pinterest']}">Pinterest</a></li>
-        <li>💬 <a href="{SOCIAL_LINKS['arattai']}">Arattai</a></li>
     </ul>
 
-    <h2>📲 Download Our App</h2>
+    <h2>📲 Download On-Demand App</h2>
     <ul>
         <li>📱 <a href="{SOCIAL_LINKS['playstore']}">Android (Play Store)</a></li>
         <li>🍎 <a href="{SOCIAL_LINKS['appstore']}">iPhone (App Store)</a></li>
@@ -302,11 +259,12 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # ---- IMAGE SUGGESTION ----
+    # ---- IMAGE & LOGO ----
     image_html = f'''
     <img src="https://mycityservice.in/wp-content/uploads/{service_info["name"].lower().replace(" ", "-")}-{service_info["city"].lower()}.jpg" 
-         alt="{service_info["keyword"]}" 
+         alt="{service_info["keyword"]} - {COMPANY_NAME}" 
          title="{service_info["keyword"]}" />
+    <p><strong>Trusted {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
     '''
     full_content = image_html + full_content
 
@@ -322,12 +280,22 @@ def publish_to_wordpress(blog_data, service_info):
     tag_ids = []
     if blog_data.get("tags"):
         for tag_name in blog_data["tags"][:5]:
-            tag_id = get_or_create_tag(tag_name)
-            if tag_id:
-                tag_ids.append(tag_id)
+            try:
+                url = f"{WP_URL}/wp-json/wp/v2/tags"
+                params = {"search": tag_name}
+                response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
+                if response.status_code == 200 and response.json():
+                    tag_ids.append(response.json()[0]["id"])
+                else:
+                    data = {"name": tag_name}
+                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
+                    if response.status_code == 201:
+                        tag_ids.append(response.json()["id"])
+            except: pass
 
     keyword = service_info.get("keyword", service_info["name"])
 
+    # ---------- PERFECT YOAST SEO META DATA ----------
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
@@ -362,23 +330,7 @@ def publish_to_wordpress(blog_data, service_info):
         print(f"❌ Error: {e}")
         return None
 
-def get_or_create_tag(tag_name):
-    try:
-        url = f"{WP_URL}/wp-json/wp/v2/tags"
-        params = {"search": tag_name}
-        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
-        if response.status_code == 200 and response.json():
-            return response.json()[0]["id"]
-        data = {"name": tag_name}
-        response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
-        if response.status_code == 201:
-            return response.json()["id"]
-        return None
-    except:
-        return None
-
 def main():
-    # --- 4 POSTS PER RUN (2 EN + 2 HI) ---
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
