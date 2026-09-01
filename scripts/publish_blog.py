@@ -17,6 +17,10 @@ COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
 COMPANY_WEBSITE = "https://www.mycityservice.in"
 
+# ===== LOGO URL (ACTUAL) =====
+LOGO_URL = "https://seoniservice.in/wp-content/uploads/2026/09/logo-mcs-1.png"
+
+# ===== SOCIAL MEDIA & APP LINKS (COMPLETE SET) =====
 SOCIAL_LINKS = {
     "website": COMPANY_WEBSITE,
     "twitter": "https://x.com/mycityservice9",
@@ -24,7 +28,10 @@ SOCIAL_LINKS = {
     "facebook": "https://facebook.com/MyCityService",
     "linkedin": "https://linkedin.com/in/my-city-service",
     "whatsapp": "https://wa.me/919584670816",
+    "whatsapp_channel": "https://whatsapp.com/channel/0029VbAbZ4M5K3zTCiDwsS2e",
     "youtube": "https://youtube.com/@MyCityService",
+    "pinterest": "https://pin.it/6WQE1XxYG",
+    "arattai": "@my_city_service",
     "playstore": "https://play.google.com/store/apps/details?id=com.myapp.sservices",
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
@@ -241,8 +248,11 @@ def publish_to_wordpress(blog_data, service_info):
         <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
         <li>📸 <a href="{SOCIAL_LINKS['instagram']}">Instagram</a></li>
         <li>▶️ <a href="{SOCIAL_LINKS['youtube']}">YouTube</a></li>
+        <li>💼 <a href="{SOCIAL_LINKS['linkedin']}">LinkedIn</a></li>
         <li>📘 <a href="{SOCIAL_LINKS['facebook']}">Facebook</a></li>
         <li>🐦 <a href="{SOCIAL_LINKS['twitter']}">Twitter/X</a></li>
+        <li>📌 <a href="{SOCIAL_LINKS['pinterest']}">Pinterest</a></li>
+        <li>💬 <a href="{SOCIAL_LINKS['arattai']}">Arattai</a></li>
     </ul>
 
     <h2>📲 Download On-Demand App</h2>
@@ -259,23 +269,19 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # ---- IMAGE & LOGO ----
+    # ---------- PERFECT IMAGE & LOGO (Featured Image) ----------
     image_html = f'''
-    <img src="https://mycityservice.in/wp-content/uploads/{service_info["name"].lower().replace(" ", "-")}-{service_info["city"].lower()}.jpg" 
-         alt="{service_info["keyword"]} - {COMPANY_NAME}" 
-         title="{service_info["keyword"]}" />
+    <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" />
     <p><strong>Trusted {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
     '''
     full_content = image_html + full_content
 
-    # ---- INTERNAL LINK ----
+    # Internal & External Links
     internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a> - {COMPANY_TAGLINE}.</p>'
-    full_content += internal_link
-
-    # ---- EXTERNAL LINK ----
     external_link = f'<p><a href="https://en.wikipedia.org/wiki/{service_info["city"]}">Learn more about {service_info["city"]}, MP</a>.</p>'
-    full_content += external_link
+    full_content += internal_link + external_link
 
+    # Categories & Tags
     category_id = get_category_id(service_info["category"])
     tag_ids = []
     if blog_data.get("tags"):
