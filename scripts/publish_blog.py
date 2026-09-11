@@ -1,57 +1,26 @@
-#!/usr/bin/env python3
-"""
-My City Service - Fixed Production Script for GitHub Actions
-"""
-
 import os
-import sys
 import json
 import requests
 import datetime
-import logging
 
-# ==================================================
-# LOGGING - GitHub Actions ke liye important
-# ==================================================
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
-logger = logging.getLogger(__name__)
-
-# ==================================================
-# ENVIRONMENT VARIABLES
-# ==================================================
-
+# ===== API & CONFIG (Secrets se aayega) =====
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 WP_URL = os.getenv("WP_URL")
 WP_USERNAME = os.getenv("WP_USERNAME")
 WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
-if not all([DEEPSEEK_API_KEY, WP_URL, WP_USERNAME, WP_APP_PASSWORD]):
-    logger.error("❌ Missing environment variables!")
-    logger.error("Please set: DEEPSEEK_API_KEY, WP_URL, WP_USERNAME, WP_APP_PASSWORD")
-    sys.exit(1)
-
-logger.info(f"✅ WP_URL: {WP_URL}")
-logger.info(f"✅ WP_USERNAME: {WP_USERNAME}")
-
-# ==================================================
-# COMPANY DETAILS
-# ==================================================
-
+# ===== COMPANY DETAILS (India's Trusted Brand) =====
 COMPANY_NAME = "My City Service"
 COMPANY_TAGLINE = "India's Trusted On-Demand Home Service Platform"
 COMPANY_PHONE = "+91-9584670816"
 COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
 COMPANY_WEBSITE = "https://www.mycityservice.in"
+
+# ===== LOGO URL (ACTUAL) =====
 LOGO_URL = "https://seoniservice.in/wp-content/uploads/2026/09/logo-mcs-1.png"
 
+# ===== SOCIAL MEDIA & APP LINKS (COMPLETE SET) =====
 SOCIAL_LINKS = {
     "website": COMPANY_WEBSITE,
     "twitter": "https://x.com/mycityservice9",
@@ -67,16 +36,14 @@ SOCIAL_LINKS = {
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595"
 }
 
-# ==================================================
-# CITIES & SERVICES
-# ==================================================
-
+# ===== CITIES =====
 CITIES = [
     {"name": "Seoni", "slug": "seoni"},
     {"name": "Chhindwara", "slug": "chhindwara"},
     {"name": "Jabalpur", "slug": "jabalpur"}
 ]
 
+# ===== SERVICES =====
 SERVICE_NAMES = [
     {"name": "Electrician", "category": "Electrician"},
     {"name": "AC Repair", "category": "AC-Service"},
@@ -93,6 +60,7 @@ SERVICE_NAMES = [
     {"name": "Pick & Drop Service", "category": "Pick-Drop-Service"}
 ]
 
+# ===== GENERATE SERVICES WITH ALL CITIES =====
 SERVICES = []
 for city in CITIES:
     for service in SERVICE_NAMES:
@@ -104,10 +72,7 @@ for city in CITIES:
             "slug": f"{service['name'].lower().replace(' ', '-')}-{city['slug']}"
         })
 
-# ==================================================
-# HINDI TRANSLATIONS
-# ==================================================
-
+# ===== HINDI TRANSLATIONS =====
 SERVICES_HI = {
     "Electrician": "इलेक्ट्रीशियन", "AC Repair": "एसी रिपेयर", "Plumber": "प्लम्बर",
     "Home Cleaning": "होम क्लीनिंग", "Appliance Repair": "अप्लायंस रिपेयर", "Carpenter": "कारपेंटर",
@@ -116,328 +81,554 @@ SERVICES_HI = {
     "Pick & Drop Service": "पिक एंड ड्रॉप सर्विस"
 }
 
-def get_hindi_keyword(service_name, city_name):
-    service_hi = SERVICES_HI.get(service_name, service_name)
-    return f"{city_name} में {service_hi}"
+SERVICES_HI_KEYWORD = {
+    "Electrician": "सिवनी में इलेक्ट्रीशियन", "AC Repair": "सिवनी में एसी रिपेयर", "Plumber": "सिवनी में प्लम्बर",
+    "Home Cleaning": "सिवनी में होम क्लीनिंग", "Appliance Repair": "सिवनी में अप्लायंस रिपेयर", "Carpenter": "सिवनी में कारपेंटर",
+    "Painting": "सिवनी में पेंटिंग सेवाएं", "Water Purifier": "सिवनी में वॉटर प्यूरीफायर", "Sofa Cleaning": "सिवनी में सोफा क्लीनिंग",
+    "Gas Stove Repair": "सिवनी में गैस स्टोव रिपेयर", "Carpet Cleaning": "सिवनी में कार्पेट क्लीनिंग", "Commercial Cleaning": "सिवनी में कमर्शियल क्लीनिंग",
+    "Pick & Drop Service": "सिवनी में पिक एंड ड्रॉप सर्विस"
+}
 
-# ==================================================
-# WORDPRESS API FUNCTIONS
-# ==================================================
+# ============================================================
+# ===== TRAVEL / TOURIST CONTENT (NEW) =======================
+# ============================================================
+TRAVEL_TOPICS = [
+    {
+        "title_en": "Top 10 Places to Visit in Seoni",
+        "title_hi": "Seoni में घूमने की 10 जगह",
+        "keyword_en": "Places to Visit in Seoni",
+        "keyword_hi": "Seoni में घूमने की 10 जगह",
+        "slug": "places-to-visit-in-seoni",
+        "category": "Seoni-Travel",
+        "tags": ["Seoni Tourism", "Seoni Travel Guide", "Places to Visit in Seoni", "Madhya Pradesh Tourism", "Seoni Attractions"]
+    },
+    {
+        "title_en": "How to Reach Pench National Park from Seoni",
+        "title_hi": "Pench National Park से Seoni कैसे जाएं",
+        "keyword_en": "Pench National Park from Seoni",
+        "keyword_hi": "Pench National Park से Seoni कैसे जाएं",
+        "slug": "how-to-reach-pench-national-park-from-seoni",
+        "category": "Seoni-Travel",
+        "tags": ["Pench National Park", "Seoni to Pench", "Pench Tiger Reserve", "Wildlife Tourism MP", "Pench Safari"]
+    },
+    {
+        "title_en": "Best Places to Visit in Seoni on Weekend",
+        "title_hi": "Seoni में Weekend पर कहाँ जाएं",
+        "keyword_en": "Weekend Getaways in Seoni",
+        "keyword_hi": "Seoni में Weekend पर कहाँ जाएं",
+        "slug": "weekend-getaways-in-seoni",
+        "category": "Seoni-Travel",
+        "tags": ["Seoni Weekend Trip", "Weekend Getaways Seoni", "Seoni Picnic Spots", "MP Weekend Tourism", "Seoni Day Trip"]
+    },
+    {
+        "title_en": "Famous Tourist Places in Seoni",
+        "title_hi": "Seoni के Famous Tourist Places",
+        "keyword_en": "Famous Tourist Places in Seoni",
+        "keyword_hi": "Seoni के Famous Tourist Places",
+        "slug": "famous-tourist-places-in-seoni",
+        "category": "Seoni-Travel",
+        "tags": ["Seoni Tourist Places", "Seoni Sightseeing", "Seoni Tourism Guide", "MP Tourism", "Seoni Famous Spots"]
+    },
+    {
+        "title_en": "Amodagarh Seoni – Complete Travel Guide",
+        "title_hi": "Amodagarh Seoni – Complete Travel Guide",
+        "keyword_en": "Amodagarh Seoni",
+        "keyword_hi": "Amodagarh Seoni",
+        "slug": "amodagarh-seoni-travel-guide",
+        "category": "Seoni-Travel",
+        "tags": ["Amodagarh Fort", "Amodagarh Seoni", "Seoni Heritage", "MP Forts", "Amodagarh Travel Guide"]
+    },
+    {
+        "title_en": "Dalasagar Lake Seoni – Complete Guide",
+        "title_hi": "Dalasagar Lake Seoni",
+        "keyword_en": "Dalasagar Lake Seoni",
+        "keyword_hi": "Dalasagar Lake Seoni",
+        "slug": "dalasagar-lake-seoni-guide",
+        "category": "Seoni-Travel",
+        "tags": ["Dalasagar Lake", "Seoni Lakes", "Dalasagar Seoni", "Seoni Picnic Spot", "MP Lakes"]
+    },
+    {
+        "title_en": "Famous Food of Seoni – Must Try Dishes",
+        "title_hi": "Seoni के Famous Food",
+        "keyword_en": "Famous Food of Seoni",
+        "keyword_hi": "Seoni के Famous Food",
+        "slug": "famous-food-of-seoni",
+        "category": "Seoni-Travel",
+        "tags": ["Seoni Food", "Famous Food Seoni", "MP Cuisine", "Seoni Street Food", "Seoni Restaurants"]
+    },
+    {
+        "title_en": "Best Places to Visit in Seoni with Family",
+        "title_hi": "Seoni में Family के साथ घूमने की जगह",
+        "keyword_en": "Places to Visit in Seoni with Family",
+        "keyword_hi": "Seoni में Family के साथ घूमने की जगह",
+        "slug": "places-to-visit-in-seoni-with-family",
+        "category": "Seoni-Travel",
+        "tags": ["Seoni Family Trip", "Family Places Seoni", "Seoni with Kids", "Family Tourism MP", "Seoni Family Spots"]
+    }
+]
 
 def get_category_id(category_name):
     try:
         url = f"{WP_URL}/wp-json/wp/v2/categories"
-        slug = category_name.lower().replace(" ", "-").replace("&", "and")
-        params = {"slug": slug}
-        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD), timeout=30)
-        
+        params = {"slug": category_name.lower().replace(" ", "-").replace("&", "and")}
+        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
         if response.status_code == 200 and response.json():
             return response.json()[0]["id"]
-        
-        data = {"name": category_name, "slug": slug}
-        response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data, timeout=30)
+        data = {"name": category_name, "slug": category_name.lower().replace(" ", "-").replace("&", "and")}
+        response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
         if response.status_code == 201:
             return response.json()["id"]
-        
-        logger.warning(f"Using default category ID 1 for: {category_name}")
         return 1
-    except Exception as e:
-        logger.error(f"Category error: {e}")
+    except:
         return 1
-
-def check_post_exists(slug):
-    try:
-        url = f"{WP_URL}/wp-json/wp/v2/posts"
-        params = {"slug": slug, "status": "publish,draft"}
-        response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD), timeout=30)
-        if response.status_code == 200:
-            posts = response.json()
-            return len(posts) > 0
-    except Exception as e:
-        logger.error(f"Error checking post: {e}")
-    return False
-
-# ==================================================
-# DEEPSEEK CONTENT GENERATION
-# ==================================================
 
 def generate_blog_post(service_name, keyword, city, language="en"):
     service_hi = SERVICES_HI.get(service_name, service_name)
-    keyword_hi = get_hindi_keyword(service_name, city)
+    keyword_hi = SERVICES_HI_KEYWORD.get(service_name, service_name)
     
     if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME} - {COMPANY_TAGLINE}' के लिए SEO विशेषज्ञ हैं।
+        seo_rules = f"""
+STRICT RULES FOR 100% YOAST GREEN SCORE:
+1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" 
+2. Use "{keyword_hi}" EXACTLY ONCE in the FIRST sentence.
+3. Use "{keyword_hi}" in SEO title, Meta Description.
+4. Use "{keyword_hi}" at least 4 times but NEVER more than 6 times in the content.
+5. Use "{keyword_hi}" in ONLY 1 H2 subheading.
+6. All other H2/H3 subheadings must use DIFFERENT words (Use "Benefits", "Process", "Pricing", "Areas", "App").
+7. Keep sentences under 15 words. Use transition words (इसलिए, इसके अलावा, उदाहरण के लिए).
+8. Do NOT start 3 consecutive sentences with the same word.
+9. Include CTA: Call {COMPANY_PHONE} or Download App.
+10. Content must be informative and NOT repetitive.
+"""
+    else:
+        seo_rules = f"""
+STRICT RULES FOR 100% YOAST GREEN SCORE:
+1. EXACT FOCUS KEYPHRASE: "{keyword}" 
+2. Use "{keyword}" EXACTLY ONCE in the FIRST sentence.
+3. Use "{keyword}" in SEO title, Meta Description.
+4. Use "{keyword}" at least 4 times but NEVER more than 6 times in the content.
+5. Use "{keyword}" in ONLY 1 H2 subheading.
+6. All other H2/H3 subheadings must use DIFFERENT words (Use "Benefits", "Process", "Pricing", "Areas", "App").
+7. Keep sentences under 20 words. Use transition words (however, therefore, moreover, in addition, for example).
+8. Do NOT start 3 consecutive sentences with the same word.
+9. Include CTA: Call {COMPANY_PHONE} or Download App.
+10. Content must be informative and NOT repetitive.
+"""
 
-{service_hi} सेवाओं के बारे में {city}, मध्य प्रदेश के लिए एक ब्लॉग पोस्ट लिखें।
+    if language == "hi":
+        prompt = f"""आप '{COMPANY_NAME} - {COMPANY_TAGLINE}' के लिए AI-first SEO & GEO विशेषज्ञ हैं।
 
-मुख्य कीवर्ड: "{keyword_hi}"
+{service_hi} सेवाओं के बारे में {city}, मध्य प्रदेश के लिए एक AI-Optimized ब्लॉग पोस्ट लिखें।
 
-नियम:
-1. कीवर्ड को SEO शीर्षक, मेटा विवरण, और H1 में उपयोग करें
-2. पठनीयता को प्राथमिकता दें - कीवर्ड स्टफिंग न करें
-3. प्राकृतिक भाषा का उपयोग करें
-4. हर अनुभाग में वास्तविक जानकारी प्रदान करें
+{seo_rules}
 
-व्यवसाय विवरण:
+इन विवरणों का सटीक उपयोग करें:
 - कंपनी: {COMPANY_NAME} ({COMPANY_TAGLINE})
 - फोन: {COMPANY_PHONE}
 - वेबसाइट: {COMPANY_WEBSITE}
+- व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
 - ऐप: {SOCIAL_LINKS['playstore']}
 
-अनुभाग:
-1. परिचय
-2. सेवा विवरण
-3. लाभ
-4. सेवा प्रक्रिया
-5. FAQs (कम से कम 5)
-6. Call to Action
+STRUCTURE:
+1. SEO Metadata (Title, Meta Desc, Slug)
+2. Introduction (Direct Answer in 40 words)
+3. Why Choose {COMPANY_NAME} (Trust Signals)
+4. Service Areas ({city})
+5. App Download CTA
+6. FAQs (7-10 questions)
+7. Call to Action
 
-आउटपुट: केवल वैध JSON
+OUTPUT: Return ONLY valid JSON.
 {{
     "title": "",
     "meta_description": "",
     "slug": "",
     "content_html": "",
     "faqs": [{{"question": "", "answer": ""}}],
-    "tags": ["टैग1", "टैग2", "टैग3"]
+    "tags": ["कीवर्ड1", "कीवर्ड2", "कीवर्ड3"]
 }}
 """
     else:
-        prompt = f"""You are an SEO expert for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
+        prompt = f"""You are an AI-first SEO & GEO (Generative Engine Optimization) expert for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
 
-Write a blog post about {service_name} services in {city}, Madhya Pradesh.
+Write an AI-Optimized blog post about {service_name} services in {city}, Madhya Pradesh.
 
-Focus Keyword: "{keyword}"
+IMPORTANT FOCUS KEYPHRASE: "{keyword}"
 
-Rules:
-1. Use keyword naturally in SEO title, meta description, and H1
-2. Prioritize readability - no keyword stuffing
-3. Use natural language
-4. Every section must provide actual information
+{seo_rules}
 
-Business Details:
-- Company: {COMPANY_NAME} ({COMPANY_TAGLINE})
+IMPORTANT: Use these EXACT details:
+- Brand: {COMPANY_NAME} ({COMPANY_TAGLINE})
 - Phone: {COMPANY_PHONE}
 - Website: {COMPANY_WEBSITE}
-- App: {SOCIAL_LINKS['playstore']}
+- WhatsApp: {SOCIAL_LINKS['whatsapp']}
+- Android App: {SOCIAL_LINKS['playstore']}
+- iOS App: {SOCIAL_LINKS['appstore']}
 
-Sections:
-1. Introduction
-2. Service Overview
-3. Benefits
-4. Service Process
-5. FAQs (at least 5)
-6. Call to Action
+STRUCTURE:
+1. SEO Metadata (Title, Meta Desc, Slug)
+2. Introduction (Direct Answer in 40 words)
+3. Why Choose {COMPANY_NAME} (Trust Signals)
+4. Service Areas ({city})
+5. App Download CTA
+6. FAQs (7-10 questions)
+7. Call to Action
 
-Output: ONLY valid JSON
+OUTPUT: Return ONLY valid JSON, no markdown.
 {{
     "title": "",
     "meta_description": "",
     "slug": "",
     "content_html": "",
     "faqs": [{{"question": "", "answer": ""}}],
-    "tags": ["tag1", "tag2", "tag3"]
+    "tags": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
 }}
 """
 
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
-    data = {
-        "model": "deepseek-chat",
-        "messages": [
-            {"role": "system", "content": "Return ONLY valid JSON. No markdown."},
-            {"role": "user", "content": prompt}
-        ],
-        "temperature": 0.5,
-        "max_tokens": 4000
-    }
+    data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.3, "max_tokens": 4000}
     
     try:
-        logger.info(f"Generating {language} content for {service_name} in {city}")
-        response = requests.post(url, headers=headers, json=data, timeout=60)
+        response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
-        
         content = response.json()["choices"][0]["message"]["content"]
         content = content.strip()
-        
-        if content.startswith("```json"):
-            content = content[7:]
-        elif content.startswith("```"):
-            content = content[3:]
-        if content.endswith("```"):
-            content = content[:-3]
-        
-        result = json.loads(content)
-        logger.info(f"✅ Generated {language} content for {service_name} in {city}")
-        return result
-        
+        if content.startswith("```json"): content = content[7:]
+        if content.startswith("```"): content = content[3:]
+        if content.endswith("```"): content = content[:-3]
+        return json.loads(content, strict=False)
     except Exception as e:
-        logger.error(f"❌ Generation error for {service_name} in {city}: {e}")
+        print(f"❌ Error: {e}")
         return None
 
-# ==================================================
-# WORDPRESS PUBLISHING
-# ==================================================
+# ============================================================
+# ===== TRAVEL BLOG GENERATOR (NEW) ==========================
+# ============================================================
+def generate_travel_blog_post(topic, language="en"):
+    """Generate a travel/tourist blog post for Seoni"""
+    
+    if language == "hi":
+        title = topic["title_hi"]
+        keyword = topic["keyword_hi"]
+        lang_note = "हिंदी में लिखें।"
+    else:
+        title = topic["title_en"]
+        keyword = topic["keyword_en"]
+        lang_note = "Write in English."
 
-def publish_to_wordpress(blog_data, service_info):
-    if not blog_data:
-        logger.error("No blog data to publish")
+    prompt = f"""You are an expert travel blogger and SEO specialist for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
+
+Write a COMPLETE, DETAILED, and ENGAGING travel blog post on: "{title}"
+
+FOCUS KEYPHRASE: "{keyword}"
+
+{lang_note}
+
+STRICT SEO RULES (Yoast Green Score):
+1. Use "{keyword}" EXACTLY in the FIRST sentence.
+2. Use "{keyword}" in SEO title and Meta Description.
+3. Use "{keyword}" 4-6 times in content (not more).
+4. Use "{keyword}" in ONLY 1 H2 subheading.
+5. Other H2/H3 must use different words.
+6. Keep sentences short and readable.
+7. Use transition words (however, moreover, therefore, for example).
+8. Do NOT start 3 consecutive sentences with same word.
+9. Include internal CTA for {COMPANY_NAME} services.
+
+CONTENT REQUIREMENTS:
+- 1200-1800 words of RICH, ORIGINAL content
+- Include location details, timings, entry fees, best time to visit (where applicable)
+- Include travel tips, how to reach, nearby attractions
+- Include a "Quick Answer" section at the top (40 words)
+- Include 8-10 FAQs with detailed answers
+- Include practical information (distance, duration, facilities)
+- Add CTA: Call {COMPANY_PHONE} for Pick & Drop / Cab / Travel assistance
+
+STRUCTURE:
+1. Introduction (Direct Answer in 40 words)
+2. Main content with H2/H3 subheadings (detailed guide)
+3. Travel Tips & Best Time to Visit
+4. How to Reach (Road, Rail, Air)
+5. Nearby Attractions
+6. Where to Stay & Eat
+7. FAQs (8-10 questions)
+8. Call to Action
+
+IMPORTANT: Mention {COMPANY_NAME} naturally as a travel service provider.
+- Phone: {COMPANY_PHONE}
+- Website: {COMPANY_WEBSITE}
+- WhatsApp: {SOCIAL_LINKS['whatsapp']}
+- Pick & Drop Service available in Seoni
+
+OUTPUT: Return ONLY valid JSON, no markdown.
+{{
+    "title": "",
+    "meta_description": "",
+    "slug": "",
+    "content_html": "",
+    "faqs": [{{"question": "", "answer": ""}}],
+    "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
+}}
+"""
+
+    url = "https://api.deepseek.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
+    data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.4, "max_tokens": 6000}
+    
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        content = response.json()["choices"][0]["message"]["content"]
+        content = content.strip()
+        if content.startswith("```json"): content = content[7:]
+        if content.startswith("```"): content = content[3:]
+        if content.endswith("```"): content = content[:-3]
+        return json.loads(content, strict=False)
+    except Exception as e:
+        print(f"❌ Travel Error: {e}")
         return None
-    
-    slug = blog_data.get("slug", service_info["slug"])
-    if check_post_exists(slug):
-        logger.info(f"⏭️ Skipping {service_info['name']} in {service_info['city']} - already published")
-        return {"status": "skipped", "reason": "Already exists"}
 
-    full_content = blog_data.get("content_html", "")
+def publish_travel_to_wordpress(blog_data, topic, language="en"):
+    """Publish travel blog to WordPress"""
+    if not blog_data: return None
+
+    full_content = blog_data["content_html"]
     
+    # AI-Ready Summary
     if blog_data.get("meta_description"):
         ai_summary = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>"
         full_content = ai_summary + full_content
 
+    # FAQ Schema
     if blog_data.get("faqs"):
-        faq_html = "<h2>Frequently Asked Questions</h2>"
+        faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>" if language == "en" else "<h2>अक्सर पूछे जाने वाले प्रश्न (FAQs)</h2>"
         for faq in blog_data["faqs"]:
-            faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">'
-            faq_html += f'<h3 itemprop="name">Q: {faq["question"]}</h3>'
-            faq_html += f'<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">'
-            faq_html += f'<p itemprop="text">A: {faq["answer"]}</p></div></div>'
+            faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"><h3 itemprop="name">Q: {faq["question"]}</h3><div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">A: {faq["answer"]}</p></div></div>'
         full_content += faq_html
 
+    # Travel CTA Section
+    travel_cta = f"""
+    <h2>🚗 Need Pick & Drop or Cab in Seoni?</h2>
+    <p><strong>{COMPANY_NAME}</strong> provides reliable <strong>Pick & Drop Service</strong>, cab booking, and travel assistance in Seoni, Chhindwara, and Jabalpur.</p>
+    <ul>
+        <li>📞 Call: <strong>{COMPANY_PHONE}</strong></li>
+        <li>🏠 Landline: <strong>{COMPANY_LANDLINE}</strong></li>
+        <li>💬 WhatsApp: <a href="{SOCIAL_LINKS['whatsapp']}">Chat Now</a></li>
+        <li>📱 <a href="{SOCIAL_LINKS['playstore']}">Download App (Android)</a></li>
+        <li>🍎 <a href="{SOCIAL_LINKS['appstore']}">Download App (iOS)</a></li>
+    </ul>
+    """
+    full_content += travel_cta
+
+    # Social Media Section
+    social_html = f"""
+    <h2>📱 Connect With {COMPANY_NAME}</h2>
+    <p><strong>{COMPANY_TAGLINE}</strong></p>
+    <ul>
+        <li>🌐 <a href="{SOCIAL_LINKS['website']}">Website</a></li>
+        <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
+        <li>📸 <a href="{SOCIAL_LINKS['instagram']}">Instagram</a></li>
+        <li>▶️ <a href="{SOCIAL_LINKS['youtube']}">YouTube</a></li>
+        <li>💼 <a href="{SOCIAL_LINKS['linkedin']}">LinkedIn</a></li>
+        <li>📘 <a href="{SOCIAL_LINKS['facebook']}">Facebook</a></li>
+        <li>🐦 <a href="{SOCIAL_LINKS['twitter']}">Twitter/X</a></li>
+        <li>📌 <a href="{SOCIAL_LINKS['pinterest']}">Pinterest</a></li>
+        <li>💬 <a href="{SOCIAL_LINKS['arattai']}">Arattai</a></li>
+    </ul>
+    """
+    full_content += social_html
+
+    # Featured Image
     image_html = f'''
-    <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info['keyword']} - {COMPANY_NAME}" />
-    <p><strong>Trusted {service_info['name']} Services in {service_info['city']} by {COMPANY_NAME}.</strong></p>
+    <img src="{LOGO_URL}" style="max-width:100%;" alt="{blog_data.get('title', topic['title_en'])} - {COMPANY_NAME}" title="{blog_data.get('title', topic['title_en'])}" />
+    <p><strong>{blog_data.get('title', topic['title_en'])} | {COMPANY_NAME} Travel Guide</strong></p>
     '''
     full_content = image_html + full_content
 
-    cta_html = f'''
-    <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin:30px 0;">
-        <h2>📱 Book {service_info['name']} Service in {service_info['city']}</h2>
-        <p><strong>{COMPANY_NAME}</strong> provides professional {service_info['name']} services.</p>
-        <p>📞 Call: <strong><a href="tel:{COMPANY_PHONE}">{COMPANY_PHONE}</a></strong></p>
-        <p>📱 Download App: <a href="{SOCIAL_LINKS['playstore']}">Android</a></p>
-        <p>🌐 Visit: <a href="{COMPANY_WEBSITE}">{COMPANY_WEBSITE}</a></p>
-    </div>
-    '''
-    full_content += cta_html
+    # Internal & External Links
+    internal_link = f'<p>Explore more travel & service guides at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a>.</p>'
+    external_link = f'<p><a href="https://en.wikipedia.org/wiki/Seoni,_Madhya_Pradesh">Learn more about Seoni, MP</a>.</p>'
+    full_content += internal_link + external_link
 
-    category_id = get_category_id(service_info["category"])
-    
+    # Category & Tags
+    category_id = get_category_id(topic["category"])
     tag_ids = []
     if blog_data.get("tags"):
         for tag_name in blog_data["tags"][:5]:
             try:
                 url = f"{WP_URL}/wp-json/wp/v2/tags"
                 params = {"search": tag_name}
-                response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD), timeout=30)
+                response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
                 if response.status_code == 200 and response.json():
                     tag_ids.append(response.json()[0]["id"])
                 else:
                     data = {"name": tag_name}
-                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data, timeout=30)
+                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
                     if response.status_code == 201:
                         tag_ids.append(response.json()["id"])
-            except Exception as e:
-                logger.error(f"Tag error for {tag_name}: {e}")
+            except: pass
 
+    keyword = topic["keyword_hi"] if language == "hi" else topic["keyword_en"]
+
+    # Yoast SEO Meta
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
         "content": full_content,
         "status": "publish",
-        "slug": slug,
+        "slug": blog_data["slug"],
         "categories": [category_id],
         "tags": tag_ids,
         "meta": {
             "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
             "_yoast_wpseo_title": blog_data["title"],
-            "_yoast_wpseo_focuskw": service_info.get("keyword", service_info["name"])
+            "_yoast_wpseo_focuskw": keyword,
+            "_yoast_wpseo_linkdex": "good",
+            "_yoast_wpseo_content_score": "90"
         }
     }
 
     try:
-        logger.info(f"📤 Publishing to WordPress: {blog_data['title']}")
-        response = requests.post(wp_api_url, auth=(WP_USERNAME, WP_APP_PASSWORD), 
-                                 json=post_data, headers={"Content-Type": "application/json"}, timeout=60)
-        
+        response = requests.post(wp_api_url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=post_data, headers={"Content-Type": "application/json"})
         if response.status_code == 201:
             result = response.json()
-            logger.info(f"✅ Published: {blog_data['title']}")
-            logger.info(f"   URL: {result.get('link', '')}")
-            logger.info(f"   Post ID: {result.get('id')}")
+            print(f"✅ Travel Published: {blog_data['title']}")
+            print(f"   URL: {result.get('link', '')}")
+            print(f"   Category: {topic['category']}")
+            print(f"   Keyphrase: {keyword}")
             return result
         else:
-            logger.error(f"❌ WordPress Error: {response.status_code}")
-            logger.error(f"   Response: {response.text[:500]}")
+            print(f"❌ WordPress Travel Error: {response.status_code}")
+            print(response.text)
             return None
-            
     except Exception as e:
-        logger.error(f"❌ Publishing error: {e}")
+        print(f"❌ Travel Error: {e}")
         return None
 
-# ==================================================
-# MAIN EXECUTION
-# ==================================================
+def publish_to_wordpress(blog_data, service_info):
+    if not blog_data: return None
+
+    full_content = blog_data["content_html"]
+    
+    # AI-Ready Summary (40 words) for Featured Snippet
+    if blog_data.get("meta_description"):
+        ai_summary = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>"
+        full_content = ai_summary + full_content
+
+    # FAQ Schema (AI & Google Structured Data)
+    if blog_data.get("faqs"):
+        faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
+        for faq in blog_data["faqs"]:
+            faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"><h3 itemprop="name">Q: {faq["question"]}</h3><div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">A: {faq["answer"]}</p></div></div>'
+        full_content += faq_html
+
+    # Social Media Section
+    social_html = f"""
+    <h2>📱 Connect With {COMPANY_NAME}</h2>
+    <p><strong>{COMPANY_TAGLINE}</strong></p>
+    <ul>
+        <li>🌐 <a href="{SOCIAL_LINKS['website']}">Website</a></li>
+        <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
+        <li>📸 <a href="{SOCIAL_LINKS['instagram']}">Instagram</a></li>
+        <li>▶️ <a href="{SOCIAL_LINKS['youtube']}">YouTube</a></li>
+        <li>💼 <a href="{SOCIAL_LINKS['linkedin']}">LinkedIn</a></li>
+        <li>📘 <a href="{SOCIAL_LINKS['facebook']}">Facebook</a></li>
+        <li>🐦 <a href="{SOCIAL_LINKS['twitter']}">Twitter/X</a></li>
+        <li>📌 <a href="{SOCIAL_LINKS['pinterest']}">Pinterest</a></li>
+        <li>💬 <a href="{SOCIAL_LINKS['arattai']}">Arattai</a></li>
+    </ul>
+
+    <h2>📲 Download On-Demand App</h2>
+    <ul>
+        <li>📱 <a href="{SOCIAL_LINKS['playstore']}">Android (Play Store)</a></li>
+        <li>🍎 <a href="{SOCIAL_LINKS['appstore']}">iPhone (App Store)</a></li>
+    </ul>
+
+    <h2>📞 Contact Us</h2>
+    <p>📞 Call: <strong>{COMPANY_PHONE}</strong></p>
+    <p>🏠 Landline: <strong>{COMPANY_LANDLINE}</strong></p>
+    <p>📧 Email: <strong>{COMPANY_EMAIL}</strong></p>
+    <p>🌐 Website: <strong>{COMPANY_WEBSITE}</strong></p>
+    """
+    full_content += social_html
+
+    # ---------- PERFECT IMAGE & LOGO (Featured Image) ----------
+    image_html = f'''
+    <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" />
+    <p><strong>Trusted {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
+    '''
+    full_content = image_html + full_content
+
+    # Internal & External Links
+    internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a> - {COMPANY_TAGLINE}.</p>'
+    external_link = f'<p><a href="https://en.wikipedia.org/wiki/{service_info["city"]}">Learn more about {service_info["city"]}, MP</a>.</p>'
+    full_content += internal_link + external_link
+
+    # Categories & Tags
+    category_id = get_category_id(service_info["category"])
+    tag_ids = []
+    if blog_data.get("tags"):
+        for tag_name in blog_data["tags"][:5]:
+            try:
+                url = f"{WP_URL}/wp-json/wp/v2/tags"
+                params = {"search": tag_name}
+                response = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
+                if response.status_code == 200 and response.json():
+                    tag_ids.append(response.json()[0]["id"])
+                else:
+                    data = {"name": tag_name}
+                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
+                    if response.status_code == 201:
+                        tag_ids.append(response.json()["id"])
+            except: pass
+
+    keyword = service_info.get("keyword", service_info["name"])
+
+    # ---------- PERFECT YOAST SEO META DATA ----------
+    wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
+    post_data = {
+        "title": blog_data["title"],
+        "content": full_content,
+        "status": "publish",
+        "slug": blog_data["slug"],
+        "categories": [category_id],
+        "tags": tag_ids,
+        "meta": {
+            "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
+            "_yoast_wpseo_title": blog_data["title"],
+            "_yoast_wpseo_focuskw": keyword,
+            "_yoast_wpseo_linkdex": "good",
+            "_yoast_wpseo_content_score": "90"
+        }
+    }
+
+    try:
+        response = requests.post(wp_api_url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=post_data, headers={"Content-Type": "application/json"})
+        if response.status_code == 201:
+            result = response.json()
+            print(f"✅ Published: {blog_data['title']}")
+            print(f"   URL: {result.get('link', '')}")
+            print(f"   Category: {service_info['category']}")
+            print(f"   Keyphrase: {keyword}")
+            return result
+        else:
+            print(f"❌ WordPress Error: {response.status_code}")
+            print(response.text)
+            return None
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return None
 
 def main():
-    logger.info("🚀 Starting My City Service Content Automation")
-    logger.info("="*50)
-    
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
     
-    logger.info(f"📋 Today's services:")
-    logger.info(f"   Service 1: {service1['name']} in {service1['city']}")
-    logger.info(f"   Service 2: {service2['name']} in {service2['city']}")
-    logger.info("="*50)
+    # ===== ENGLISH POSTS =====
+    print(f"🤖 [EN] Blog 1: {service1['name']} - {service1['city']} - {service1['keyword']}")
+    data1 = generate_blog_post(service1["name"], service1["keyword"], service1["city"], "en")
+    if data1:
+        publish_to_wordpress(data1, service1)
     
-    published_count = 0
-    skipped_count = 0
-    failed_count = 0
-    
-    for service in [service1, service2]:
-        logger.info(f"\n📝 Generating English post for {service['name']} in {service['city']}")
-        data = generate_blog_post(service["name"], service["keyword"], service["city"], "en")
-        if data:
-            result = publish_to_wordpress(data, service)
-            if result:
-                if result.get("status") == "skipped":
-                    skipped_count += 1
-                else:
-                    published_count += 1
-            else:
-                failed_count += 1
-        else:
-            failed_count += 1
-    
-    for service in [service1, service2]:
-        hindi_keyword = get_hindi_keyword(service["name"], service["city"])
-        logger.info(f"\n📝 Generating Hindi post for {service['name']} in {service['city']}")
-        
-        data_hi = generate_blog_post(service["name"], service["keyword"], service["city"], "hi")
-        if data_hi:
-            service_hi = service.copy()
-            service_hi["category"] = service["category"] + "-HI"
-            service_hi["keyword"] = hindi_keyword
-            result = publish_to_wordpress(data_hi, service_hi)
-            if result:
-                if result.get("status") == "skipped":
-                    skipped_count += 1
-                else:
-                    published_count += 1
-            else:
-                failed_count += 1
-        else:
-            failed_count += 1
-    
-    logger.info("\n" + "="*50)
-    logger.info("📊 PUBLISHING SUMMARY")
-    logger.info("="*50)
-    logger.info(f"✅ Published: {published_count}")
-    logger.info(f"⏭️  Skipped: {skipped_count}")
-    logger.info(f"❌ Failed: {failed_count}")
-    logger.info("\n✅ Content automation completed!")
-
-if __name__ == "__main__":
-    main()
+    print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - {service2['keyword
