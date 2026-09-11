@@ -9,7 +9,7 @@ WP_URL = os.getenv("WP_URL")
 WP_USERNAME = os.getenv("WP_USERNAME")
 WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
-# ===== COMPANY DETAILS (India's Trusted Brand) =====
+# ===== COMPANY DETAILS =====
 COMPANY_NAME = "My City Service"
 COMPANY_TAGLINE = "India's Trusted On-Demand Home Service Platform"
 COMPANY_PHONE = "+91-9584670816"
@@ -17,10 +17,10 @@ COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
 COMPANY_WEBSITE = "https://www.mycityservice.in"
 
-# ===== LOGO URL (ACTUAL) =====
+# ===== LOGO URL =====
 LOGO_URL = "https://seoniservice.in/wp-content/uploads/2026/09/logo-mcs-1.png"
 
-# ===== SOCIAL MEDIA & APP LINKS (COMPLETE SET) =====
+# ===== SOCIAL LINKS =====
 SOCIAL_LINKS = {
     "website": COMPANY_WEBSITE,
     "twitter": "https://x.com/mycityservice9",
@@ -90,7 +90,7 @@ SERVICES_HI_KEYWORD = {
 }
 
 # ============================================================
-# ===== TRAVEL / TOURIST CONTENT (NEW) =======================
+# ===== TRAVEL / TOURIST TOPICS (NEW) ========================
 # ============================================================
 TRAVEL_TOPICS = [
     {
@@ -167,6 +167,9 @@ TRAVEL_TOPICS = [
     }
 ]
 
+# ============================================================
+# ===== CATEGORY HELPER ======================================
+# ============================================================
 def get_category_id(category_name):
     try:
         url = f"{WP_URL}/wp-json/wp/v2/categories"
@@ -182,14 +185,17 @@ def get_category_id(category_name):
     except:
         return 1
 
+# ============================================================
+# ===== SERVICE BLOG GENERATOR ===============================
+# ============================================================
 def generate_blog_post(service_name, keyword, city, language="en"):
     service_hi = SERVICES_HI.get(service_name, service_name)
     keyword_hi = SERVICES_HI_KEYWORD.get(service_name, service_name)
-    
+
     if language == "hi":
         seo_rules = f"""
 STRICT RULES FOR 100% YOAST GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword_hi}" 
+1. EXACT FOCUS KEYPHRASE: "{keyword_hi}"
 2. Use "{keyword_hi}" EXACTLY ONCE in the FIRST sentence.
 3. Use "{keyword_hi}" in SEO title, Meta Description.
 4. Use "{keyword_hi}" at least 4 times but NEVER more than 6 times in the content.
@@ -203,7 +209,7 @@ STRICT RULES FOR 100% YOAST GREEN SCORE:
     else:
         seo_rules = f"""
 STRICT RULES FOR 100% YOAST GREEN SCORE:
-1. EXACT FOCUS KEYPHRASE: "{keyword}" 
+1. EXACT FOCUS KEYPHRASE: "{keyword}"
 2. Use "{keyword}" EXACTLY ONCE in the FIRST sentence.
 3. Use "{keyword}" in SEO title, Meta Description.
 4. Use "{keyword}" at least 4 times but NEVER more than 6 times in the content.
@@ -288,7 +294,7 @@ OUTPUT: Return ONLY valid JSON, no markdown.
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
     data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.3, "max_tokens": 4000}
-    
+
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
@@ -306,8 +312,6 @@ OUTPUT: Return ONLY valid JSON, no markdown.
 # ===== TRAVEL BLOG GENERATOR (NEW) ==========================
 # ============================================================
 def generate_travel_blog_post(topic, language="en"):
-    """Generate a travel/tourist blog post for Seoni"""
-    
     if language == "hi":
         title = topic["title_hi"]
         keyword = topic["keyword_hi"]
@@ -375,7 +379,7 @@ OUTPUT: Return ONLY valid JSON, no markdown.
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
     data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.4, "max_tokens": 6000}
-    
+
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
@@ -389,25 +393,24 @@ OUTPUT: Return ONLY valid JSON, no markdown.
         print(f"❌ Travel Error: {e}")
         return None
 
+# ============================================================
+# ===== TRAVEL PUBLISH TO WORDPRESS (NEW) ====================
+# ============================================================
 def publish_travel_to_wordpress(blog_data, topic, language="en"):
-    """Publish travel blog to WordPress"""
     if not blog_data: return None
 
     full_content = blog_data["content_html"]
-    
-    # AI-Ready Summary
+
     if blog_data.get("meta_description"):
         ai_summary = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>"
         full_content = ai_summary + full_content
 
-    # FAQ Schema
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>" if language == "en" else "<h2>अक्सर पूछे जाने वाले प्रश्न (FAQs)</h2>"
         for faq in blog_data["faqs"]:
             faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"><h3 itemprop="name">Q: {faq["question"]}</h3><div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">A: {faq["answer"]}</p></div></div>'
         full_content += faq_html
 
-    # Travel CTA Section
     travel_cta = f"""
     <h2>🚗 Need Pick & Drop or Cab in Seoni?</h2>
     <p><strong>{COMPANY_NAME}</strong> provides reliable <strong>Pick & Drop Service</strong>, cab booking, and travel assistance in Seoni, Chhindwara, and Jabalpur.</p>
@@ -421,7 +424,6 @@ def publish_travel_to_wordpress(blog_data, topic, language="en"):
     """
     full_content += travel_cta
 
-    # Social Media Section
     social_html = f"""
     <h2>📱 Connect With {COMPANY_NAME}</h2>
     <p><strong>{COMPANY_TAGLINE}</strong></p>
@@ -439,19 +441,16 @@ def publish_travel_to_wordpress(blog_data, topic, language="en"):
     """
     full_content += social_html
 
-    # Featured Image
     image_html = f'''
     <img src="{LOGO_URL}" style="max-width:100%;" alt="{blog_data.get('title', topic['title_en'])} - {COMPANY_NAME}" title="{blog_data.get('title', topic['title_en'])}" />
     <p><strong>{blog_data.get('title', topic['title_en'])} | {COMPANY_NAME} Travel Guide</strong></p>
     '''
     full_content = image_html + full_content
 
-    # Internal & External Links
     internal_link = f'<p>Explore more travel & service guides at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a>.</p>'
     external_link = f'<p><a href="https://en.wikipedia.org/wiki/Seoni,_Madhya_Pradesh">Learn more about Seoni, MP</a>.</p>'
     full_content += internal_link + external_link
 
-    # Category & Tags
     category_id = get_category_id(topic["category"])
     tag_ids = []
     if blog_data.get("tags"):
@@ -467,11 +466,11 @@ def publish_travel_to_wordpress(blog_data, topic, language="en"):
                     response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
                     if response.status_code == 201:
                         tag_ids.append(response.json()["id"])
-            except: pass
+            except:
+                pass
 
     keyword = topic["keyword_hi"] if language == "hi" else topic["keyword_en"]
 
-    # Yoast SEO Meta
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
@@ -506,24 +505,24 @@ def publish_travel_to_wordpress(blog_data, topic, language="en"):
         print(f"❌ Travel Error: {e}")
         return None
 
+# ============================================================
+# ===== SERVICE PUBLISH TO WORDPRESS =========================
+# ============================================================
 def publish_to_wordpress(blog_data, service_info):
     if not blog_data: return None
 
     full_content = blog_data["content_html"]
-    
-    # AI-Ready Summary (40 words) for Featured Snippet
+
     if blog_data.get("meta_description"):
         ai_summary = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>"
         full_content = ai_summary + full_content
 
-    # FAQ Schema (AI & Google Structured Data)
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
             faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"><h3 itemprop="name">Q: {faq["question"]}</h3><div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">A: {faq["answer"]}</p></div></div>'
         full_content += faq_html
 
-    # Social Media Section
     social_html = f"""
     <h2>📱 Connect With {COMPANY_NAME}</h2>
     <p><strong>{COMPANY_TAGLINE}</strong></p>
@@ -553,19 +552,16 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # ---------- PERFECT IMAGE & LOGO (Featured Image) ----------
     image_html = f'''
     <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" />
     <p><strong>Trusted {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
     '''
     full_content = image_html + full_content
 
-    # Internal & External Links
     internal_link = f'<p>Check out our other services at <a href="{COMPANY_WEBSITE}">{COMPANY_NAME}</a> - {COMPANY_TAGLINE}.</p>'
     external_link = f'<p><a href="https://en.wikipedia.org/wiki/{service_info["city"]}">Learn more about {service_info["city"]}, MP</a>.</p>'
     full_content += internal_link + external_link
 
-    # Categories & Tags
     category_id = get_category_id(service_info["category"])
     tag_ids = []
     if blog_data.get("tags"):
@@ -581,11 +577,11 @@ def publish_to_wordpress(blog_data, service_info):
                     response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
                     if response.status_code == 201:
                         tag_ids.append(response.json()["id"])
-            except: pass
+            except:
+                pass
 
     keyword = service_info.get("keyword", service_info["name"])
 
-    # ---------- PERFECT YOAST SEO META DATA ----------
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
@@ -620,15 +616,23 @@ def publish_to_wordpress(blog_data, service_info):
         print(f"❌ Error: {e}")
         return None
 
+# ============================================================
+# ===== MAIN =================================================
+# ============================================================
 def main():
     day_index = datetime.datetime.now().day % len(SERVICES)
     service1 = SERVICES[day_index]
     service2 = SERVICES[(day_index + 1) % len(SERVICES)]
-    
-    # ===== ENGLISH POSTS =====
+
+    # ===== ENGLISH SERVICE POSTS =====
     print(f"🤖 [EN] Blog 1: {service1['name']} - {service1['city']} - {service1['keyword']}")
     data1 = generate_blog_post(service1["name"], service1["keyword"], service1["city"], "en")
     if data1:
         publish_to_wordpress(data1, service1)
-    
-    print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - {service2['keyword
+
+    print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - {service2['keyword']}")
+    data2 = generate_blog_post(service2["name"], service2["keyword"], service2["city"], "en")
+    if data2:
+        publish_to_wordpress(data2, service2)
+
+    # ===== HINDI SERVICE POSTS =====
