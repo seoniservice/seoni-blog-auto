@@ -9,9 +9,9 @@ WP_URL = os.getenv("WP_URL")
 WP_USERNAME = os.getenv("WP_USERNAME")
 WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
-# ===== COMPANY DETAILS (India's Trusted Brand) =====
+# ===== COMPANY DETAILS (Professional & Safe Claims) =====
 COMPANY_NAME = "My City Service"
-COMPANY_TAGLINE = "India's Trusted On-Demand Home Service Platform"
+COMPANY_TAGLINE = "Professional Home Services at Your Doorstep"
 COMPANY_PHONE = "+91-9584670816"
 COMPANY_LANDLINE = "07692422904"
 COMPANY_EMAIL = "info@mycityservice.in"
@@ -274,7 +274,7 @@ def publish_to_wordpress(blog_data, service_info):
     # ---------- PERFECT IMAGE & LOGO (Featured Image) ----------
     image_html = f'''
     <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" />
-    <p><strong>Trusted {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
+    <p><strong>Professional {service_info["name"]} Services in {service_info["city"]} by {COMPANY_NAME}.</strong></p>
     '''
     full_content = image_html + full_content
 
