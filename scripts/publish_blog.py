@@ -135,7 +135,7 @@ EN_TITLE_TEMPLATES = {
     "Pick & Drop Service": "Pick & Drop Service in {city} | Same-Day Delivery"
 }
 
-# ===== BACKLINK SOURCES (verified + authority) =====
+# ===== BACKLINK SOURCES =====
 BACKLINK_SOURCES = [
     {"text": "My City Service – Official Website", "url": "https://www.mycityservice.in/"},
     {"text": "My City Service – Android App (Play Store)", "url": "https://play.google.com/store/apps/details?id=com.myapp.sservices&hl=en_IN"},
@@ -185,7 +185,7 @@ MANDATORY CONTENT SECTIONS (H2 headings):
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
 - "Our Service Pricing" — Visit Charge ₹{visit_charge} (city-wise) + service charges; mention "30 दिन वारंटी (Terms & Conditions apply)"
 - "Service Areas in {city_hi}" — 5-6 real locality names
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, **30-day warranty (T&C apply)**, transparent pricing, 10,000+ happy customers
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 10,000+ happy customers
 - "FAQs" — 7-10 questions
 """
 
@@ -247,7 +247,7 @@ MANDATORY CONTENT SECTIONS (H2 headings):
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
 - "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; mention "30-Day Warranty (Terms & Conditions apply)"
 - "Service Areas in {city}" — 5-6 real locality names (Wright Town, Napier Town, Vijay Nagar, Rampur, Adhartal for Jabalpur)
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, **30-day warranty (T&C apply)**, transparent pricing, 10,000+ happy customers, 4.8★ Google rating
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 10,000+ happy customers, 4.8★ Google rating
 - "FAQs" — 7-10 questions
 """
 
@@ -267,8 +267,8 @@ IMPORTANT: Use these EXACT details:
 - Android App: {SOCIAL_LINKS['playstore']}
 - iOS App: {SOCIAL_LINKS['appstore']}
 - City: {city}, Madhya Pradesh
-- **Visit Charge: ₹{visit_charge}** (transparent, no hidden cost)
-- **Warranty: 30 Days** (Terms & Conditions apply)
+- Visit Charge: ₹{visit_charge} (transparent, no hidden cost)
+- Warranty: 30 Days (Terms & Conditions apply)
 
 POSITIONING: Present {COMPANY_NAME} as the MOST TRUSTED & PREMIUM home services platform in Madhya Pradesh. Mention: verified & background-checked technicians, transparent pricing, 30-minute response, 30-day warranty (T&C apply), 10,000+ happy customers, 4.8★ Google rating.
 
@@ -299,19 +299,30 @@ OUTPUT: Return ONLY valid JSON, no markdown.
 
     url = "https://api.deepseek.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
-    data = {"model": "deepseek-chat", "messages": [{"role": "system", "content": "Return ONLY valid JSON. No markdown."}, {"role": "user", "content": prompt}], "temperature": 0.3, "max_tokens": 4000}
+    data = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": "Return ONLY valid JSON. No markdown."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.3,
+        "max_tokens": 4000
+    }
 
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
         content = content.strip()
-        if content.startswith("```json"): content = content[7:]
-        if content.startswith("```"): content = content[3:]
-        if content.endswith("```"): content = content[:-3]
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
         return json.loads(content, strict=False)
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"❌ DeepSeek API Error: {e}")
         return None
 
 def build_schema_jsonld(service_info, blog_data):
@@ -379,7 +390,8 @@ def build_schema_jsonld(service_info, blog_data):
     return json.dumps(schema, ensure_ascii=False)
 
 def publish_to_wordpress(blog_data, service_info):
-    if not blog_data: return None
+    if not blog_data:
+        return None
 
     full_content = blog_data["content_html"]
     visit_charge = service_info.get("visit_charge", 99)
@@ -388,7 +400,7 @@ def publish_to_wordpress(blog_data, service_info):
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # 2) Trust banner (30-day warranty + T&C + visit charge)
+    # 2) Trust banner
     trust_html = f"""
     <div style="background:#f0f8ff;border-left:4px solid #0073aa;padding:12px;margin:16px 0;">
         <p><strong>✅ Why {COMPANY_NAME}?</strong></p>
@@ -407,7 +419,12 @@ def publish_to_wordpress(blog_data, service_info):
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
-            faq_html += f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"><h3 itemprop="name">Q: {faq["question"]}</h3><div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">A: {faq["answer"]}</p></div></div>'
+            faq_html += (
+                f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">'
+                f'<h3 itemprop="name">Q: {faq["question"]}</h3>'
+                f'<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">'
+                f'<p itemprop="text">A: {faq["answer"]}</p></div></div>'
+            )
         full_content += faq_html
 
     # 4) Social + Contact
@@ -463,14 +480,14 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += internal_links
 
-    # 7) Backlinks (aapke real + authority)
+    # 7) Backlinks
     backlink_html = "<h2>🔗 Trusted References</h2><ul>"
     for link in BACKLINK_SOURCES:
         backlink_html += f'<li><a href="{link["url"]}" target="_blank" rel="noopener">{link["text"]}</a></li>'
     backlink_html += "</ul>"
     full_content += backlink_html
 
-    # 8) JSON-LD
+    # 8) JSON-LD Schema
     schema_jsonld = build_schema_jsonld(service_info, blog_data)
     full_content += f'<script type="application/ld+json">{schema_jsonld}</script>'
 
@@ -490,7 +507,8 @@ def publish_to_wordpress(blog_data, service_info):
                     response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
                     if response.status_code == 201:
                         tag_ids.append(response.json()["id"])
-            except: pass
+            except:
+                pass
 
     keyword = service_info.get("keyword", service_info["name"])
 
@@ -513,7 +531,12 @@ def publish_to_wordpress(blog_data, service_info):
     }
 
     try:
-        response = requests.post(wp_api_url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=post_data, headers={"Content-Type": "application/json"})
+        response = requests.post(
+            wp_api_url,
+            auth=(WP_USERNAME, WP_APP_PASSWORD),
+            json=post_data,
+            headers={"Content-Type": "application/json"}
+        )
         if response.status_code == 201:
             result = response.json()
             print(f"✅ Published: {blog_data['title']}")
@@ -527,7 +550,7 @@ def publish_to_wordpress(blog_data, service_info):
             print(response.text)
             return None
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"❌ WordPress Error: {e}")
         return None
 
 def main():
@@ -537,11 +560,43 @@ def main():
 
     # ===== ENGLISH POSTS =====
     print(f"🤖 [EN] Blog 1: {service1['name']} - {service1['city']} - ₹{service1['visit_charge']}")
-    data1 = generate_blog_post(service1["name"], service1["keyword"], service1["city"], "en", service1["city_hi"], service1["visit_charge"])
+    data1 = generate_blog_post(
+        service1["name"], service1["keyword"], service1["city"],
+        "en", service1["city_hi"], service1["visit_charge"]
+    )
     if data1:
         publish_to_wordpress(data1, service1)
 
     print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - ₹{service2['visit_charge']}")
-    data2 = generate_blog_post(service2["name"], service2["keyword"], service2["city"], "en", service2["city_hi"], service2["visit_charge"])
+    data2 = generate_blog_post(
+        service2["name"], service2["keyword"], service2["city"],
+        "en", service2["city_hi"], service2["visit_charge"]
+    )
     if data2:
-        publish_to_word
+        publish_to_wordpress(data2, service2)
+
+    # ===== HINDI POSTS =====
+    print(f"🤖 [HI] Blog 1: {SERVICES_HI[service1['name']]} - {service1['city']}")
+    data_hi1 = generate_blog_post(
+        service1["name"], service1["keyword"], service1["city"],
+        "hi", service1["city_hi"], service1["visit_charge"]
+    )
+    if data_hi1:
+        service_hi = service1.copy()
+        service_hi["category"] = service1["category"] + "-HI"
+        service_hi["keyword"] = get_hindi_keyword(service1["name"], service1["city_hi"])
+        publish_to_wordpress(data_hi1, service_hi)
+
+    print(f"🤖 [HI] Blog 2: {SERVICES_HI[service2['name']]} - {service2['city']}")
+    data_hi2 = generate_blog_post(
+        service2["name"], service2["keyword"], service2["city"],
+        "hi", service2["city_hi"], service2["visit_charge"]
+    )
+    if data_hi2:
+        service_hi = service2.copy()
+        service_hi["category"] = service2["category"] + "-HI"
+        service_hi["keyword"] = get_hindi_keyword(service2["name"], service2["city_hi"])
+        publish_to_wordpress(data_hi2, service_hi)
+
+if __name__ == "__main__":
+    main()
