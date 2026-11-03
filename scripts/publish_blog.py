@@ -37,11 +37,29 @@ SOCIAL_LINKS = {
     "hotfrog": "https://www.hotfrog.in/company/AOTJXhjlcYui-madhya-pradesh/cleaning-services"
 }
 
-# ===== CITIES (with visit charge) =====
+# ===== SEONI = PRIORITY CITY =====
+PRIORITY_CITY = "Seoni"
+
+# ===== CITIES (with visit charge + localities) =====
 CITIES = [
-    {"name": "Seoni", "slug": "seoni", "hi": "सिवनी", "visit_charge": 49},
-    {"name": "Chhindwara", "slug": "chhindwara", "hi": "छिंदवाड़ा", "visit_charge": 49},
-    {"name": "Jabalpur", "slug": "jabalpur", "hi": "जबलपुर", "visit_charge": 99}
+    {
+        "name": "Seoni", "slug": "seoni", "hi": "सिवनी", "visit_charge": 49,
+        "localities_en": "Gol Bazar, Main Market, Civil Lines, Budhwara, Kanhiwada, Barapathar, Jawahar Nagar",
+        "localities_hi": "गोल बाजार, मेन मार्केट, सिविल लाइंस, बुधवारा, कन्हीवाड़ा, बरापथर, जवाहर नगर",
+        "landmarks": "near Seoni Bus Stand, District Court, Pench Tiger Reserve, and Government Medical College"
+    },
+    {
+        "name": "Chhindwara", "slug": "chhindwara", "hi": "छिंदवाड़ा", "visit_charge": 49,
+        "localities_en": "Chandangaon, Parasia, Sausar, Pandhurna, Amarwara, Damua",
+        "localities_hi": "चांदनगांव, परासिया, सौंसर, पांधुरना, अमरवाड़ा, दमुआ",
+        "landmarks": "near Chhindwara Bus Stand and District Hospital"
+    },
+    {
+        "name": "Jabalpur", "slug": "jabalpur", "hi": "जबलपुर", "visit_charge": 99,
+        "localities_en": "Wright Town, Napier Town, Vijay Nagar, Rampur, Adhartal, Gorakhpur",
+        "localities_hi": "राइट टाउन, नेपियर टाउन, विजय नगर, रामपुर, अधारताल, गोरखपुर",
+        "landmarks": "near Jabalpur Railway Station, Rani Durgavati Museum, and Dumna Nature Reserve"
+    }
 ]
 
 SERVICE_NAMES = [
@@ -70,17 +88,23 @@ for city in CITIES:
             "city_hi": city["hi"],
             "city_slug": city["slug"],
             "visit_charge": city["visit_charge"],
+            "localities_en": city["localities_en"],
+            "localities_hi": city["localities_hi"],
+            "landmarks": city["landmarks"],
             "keyword": f"{service['name']} in {city['name']}",
             "slug": f"{service['name'].lower().replace(' ', '-')}-{city['slug']}"
         })
+
+# ===== SEONI-ONLY SERVICES (priority) =====
+SEONI_SERVICES = [s for s in SERVICES if s["city"] == PRIORITY_CITY]
 
 # ===== HINDI TRANSLATIONS =====
 SERVICES_HI = {
     "Electrician": "इलेक्ट्रीशियन", "AC Repair": "एसी रिपेयर", "Plumber": "प्लम्बर",
     "Home Cleaning": "होम क्लीनिंग", "Appliance Repair": "अप्लायंस रिपेयर", "Carpenter": "कारपेंटर",
     "Painting": "पेंटिंग", "Water Purifier": "वॉटर प्यूरीफायर", "Sofa Cleaning": "सोफा क्लीनिंग",
-    "Gas Stove Repair": "गैस स्टोव रिपेयर", "Carpet Cleaning": "कार्पेट क्लीनिंग", "Commercial Cleaning": "कमर्शियल क्लीनिंग",
-    "Pick & Drop Service": "पिक एंड ड्रॉप सर्विस"
+    "Gas Stove Repair": "गैस स्टोव रिपेयर", "Carpet Cleaning": "कार्पेट क्लीनिंग",
+    "Commercial Cleaning": "कमर्शियल क्लीनिंग", "Pick & Drop Service": "पिक एंड ड्रॉप सर्विस"
 }
 
 SERVICES_HI_KEYWORD_TEMPLATE = {
@@ -104,8 +128,8 @@ def get_hindi_keyword(service_name, city_hi):
     return template.format(city=city_hi)
 
 HINDI_TITLE_TEMPLATES = {
-    "Electrician": "{city} में बेस्ट इलेक्ट्रीशियन सर्विस | विजिट चार्ज ₹{charge}",
-    "AC Repair": "{city} में AC रिपेयर एंड सर्विस | विजिट चार्ज ₹{charge} + 30 दिन वारंटी",
+    "Electrician": "{city} में बेस्ट इलेक्ट्रीशियन सर्विस | विजिट चार्ज ₹{charge} | 30 दिन वारंटी",
+    "AC Repair": "{city} में एसी रिपेयर एंड सर्विस | विजिट चार्ज ₹{charge} + 30 दिन वारंटी",
     "Plumber": "{city} में प्लंबर सर्विस | विजिट चार्ज ₹{charge} | लीकेज फिक्स",
     "Home Cleaning": "{city} में होम क्लीनिंग सर्विस | विजिट चार्ज ₹{charge}",
     "Appliance Repair": "{city} में अप्लायंस रिपेयर | विजिट चार्ज ₹{charge} + 30 दिन वारंटी",
@@ -143,6 +167,7 @@ BACKLINK_SOURCES = [
     {"text": "My City Service – Facebook Reels", "url": "https://www.facebook.com/Mycityservices/reels/"},
     {"text": "My City Service – Justdial Verified Listing", "url": "https://wap.justdial.com/el?source=77&user_type=&docid=9999P7695.7695.250603235056.Y3R9"},
     {"text": "My City Service – Hotfrog Business Profile", "url": "https://www.hotfrog.in/company/AOTJXhjlcYui-madhya-pradesh/cleaning-services"},
+    {"text": "Seoni District Official Website", "url": "https://seoni.nic.in/"},
     {"text": "Madhya Pradesh Tourism", "url": "https://www.mptourism.com/"},
     {"text": "Wikipedia – Home Services", "url": "https://en.wikipedia.org/wiki/Home_service"},
 ]
@@ -162,7 +187,8 @@ def get_category_id(category_name):
     except:
         return 1
 
-def generate_blog_post(service_name, keyword, city, language="en", city_hi=None, visit_charge=99):
+def generate_blog_post(service_name, keyword, city, language="en", city_hi=None,
+                       visit_charge=49, localities="", landmarks=""):
     service_hi = SERVICES_HI.get(service_name, service_name)
     keyword_hi = get_hindi_keyword(service_name, city_hi or city)
 
@@ -174,18 +200,18 @@ STRICT RULES FOR 100% YOAST GREEN SCORE:
 3. Use "{keyword_hi}" in SEO title and Meta Description (meta 150-160 chars).
 4. Use "{keyword_hi}" at least 4 times but NEVER more than 6 times in the content.
 5. Use "{keyword_hi}" in ONLY 1 H2 subheading.
-6. All other H2/H3 subheadings must use DIFFERENT words (Benefits, Process, Pricing, Areas, App, Why Needed, Problem-Solution).
+6. All other H2/H3 subheadings must use DIFFERENT words.
 7. Keep sentences under 15 words. Use transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन).
 8. Do NOT start 3 consecutive sentences with the same word.
 9. Include CTA: Call {COMPANY_PHONE} or Download App.
 10. Content must be informative and NOT repetitive.
 
 MANDATORY CONTENT SECTIONS (H2 headings):
-- "Why You Need {service_hi} in {city_hi}" — 3-4 real problems (dirt, breakdown, safety, cost)
+- "Why You Need {service_hi} in {city_hi}" — 3-4 real problems
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
-- "Our Service Pricing" — Visit Charge ₹{visit_charge} (city-wise) + service charges; mention "30 दिन वारंटी (Terms & Conditions apply)"
-- "Service Areas in {city_hi}" — 5-6 real locality names
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 10,000+ happy customers
+- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; "30 दिन वारंटी (Terms & Conditions apply)"
+- "Service Areas in {city_hi}" — mention these localities: {localities}
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 500+ happy customers in {city_hi}
 - "FAQs" — 7-10 questions
 """
 
@@ -202,17 +228,19 @@ MANDATORY CONTENT SECTIONS (H2 headings):
 - व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
 - ऐप: {SOCIAL_LINKS['playstore']}
 - शहर: {city_hi}, मध्य प्रदेश
+- प्रमुख इलाके: {localities}
+- लैंडमार्क: {landmarks}
 - विजिट चार्ज: ₹{visit_charge}
 - वारंटी: 30 दिन (Terms & Conditions apply)
 
-POSITIONING: {COMPANY_NAME} को मध्य प्रदेश का सबसे भरोसेमंद प्रीमियम होम सर्विस प्लेटफॉर्म बताएं। Verified technicians, transparent pricing, 30-min response, 30-day warranty (T&C apply) highlight करें।
+POSITIONING: {COMPANY_NAME} को {city_hi} का सबसे भरोसेमंद प्रीमियम होम सर्विस प्लेटफॉर्म बताएं। Verified technicians, transparent pricing, 30-min response, 30-day warranty (T&C apply) highlight करें।
 
 STRUCTURE (exact order):
 1. Introduction (Direct Answer in 40 words, keyword in first sentence)
 2. Why You Need {service_hi} (Problem section)
 3. How We Solve It (Step-by-Step Process)
 4. Our Pricing (Visit Charge ₹{visit_charge} + service charges + 30 दिन वारंटी T&C apply)
-5. Service Areas in {city_hi}
+5. Service Areas in {city_hi} (use: {localities})
 6. Why Choose {COMPANY_NAME}
 7. App Download CTA
 8. FAQs (7-10)
@@ -236,22 +264,22 @@ STRICT RULES FOR 100% YOAST GREEN SCORE:
 3. Use "{keyword}" in SEO title and Meta Description (meta 150-160 chars).
 4. Use "{keyword}" at least 4 times but NEVER more than 6 times in the content.
 5. Use "{keyword}" in ONLY 1 H2 subheading.
-6. All other H2/H3 subheadings must use DIFFERENT words (Benefits, Process, Pricing, Areas, App, Why Needed, Problem-Solution).
+6. All other H2/H3 subheadings must use DIFFERENT words.
 7. Keep sentences under 20 words. Use transition words (however, therefore, moreover, in addition, for example).
 8. Do NOT start 3 consecutive sentences with the same word.
 9. Include CTA: Call {COMPANY_PHONE} or Download App.
 10. Content must be informative and NOT repetitive.
 
 MANDATORY CONTENT SECTIONS (H2 headings):
-- "Why You Need {service_name} in {city}" — 3-4 real problems (dirt, breakdown, safety, cost, health)
+- "Why You Need {service_name} in {city}" — 3-4 real problems
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
-- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; mention "30-Day Warranty (Terms & Conditions apply)"
-- "Service Areas in {city}" — 5-6 real locality names (Wright Town, Napier Town, Vijay Nagar, Rampur, Adhartal for Jabalpur)
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 10,000+ happy customers, 4.8★ Google rating
+- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; "30-Day Warranty (Terms & Conditions apply)"
+- "Service Areas in {city}" — mention these localities: {localities}
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 500+ happy customers in {city}, 4.8★ Google rating
 - "FAQs" — 7-10 questions
 """
 
-        prompt = f"""You are an AI-first SEO & GEO (Generative Engine Optimization) expert for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
+        prompt = f"""You are an AI-first SEO & GEO expert for '{COMPANY_NAME} - {COMPANY_TAGLINE}'.
 
 Write an AI-Optimized PREMIUM blog post about {service_name} services in {city}, Madhya Pradesh.
 
@@ -267,10 +295,14 @@ IMPORTANT: Use these EXACT details:
 - Android App: {SOCIAL_LINKS['playstore']}
 - iOS App: {SOCIAL_LINKS['appstore']}
 - City: {city}, Madhya Pradesh
+- Localities: {localities}
+- Landmarks: {landmarks}
 - Visit Charge: ₹{visit_charge} (transparent, no hidden cost)
 - Warranty: 30 Days (Terms & Conditions apply)
 
-POSITIONING: Present {COMPANY_NAME} as the MOST TRUSTED & PREMIUM home services platform in Madhya Pradesh. Mention: verified & background-checked technicians, transparent pricing, 30-minute response, 30-day warranty (T&C apply), 10,000+ happy customers, 4.8★ Google rating.
+POSITIONING: Present {COMPANY_NAME} as the MOST TRUSTED & PREMIUM home services platform in {city}, Madhya Pradesh. Mention: verified & background-checked technicians, transparent pricing, 30-minute response, 30-day warranty (T&C apply), 500+ happy customers in {city}, 4.8★ Google rating.
+
+LOCAL SEO: Mention these {city} localities naturally: {localities}. Also mention {landmarks}.
 
 PRICING RULE: Always show Visit Charge ₹{visit_charge} clearly. Then mention service charges separately. Add "30-Day Warranty (Terms & Conditions apply)" in pricing section.
 
@@ -280,7 +312,7 @@ STRUCTURE (exact order):
 3. Why You Need {service_name} (Problem section)
 4. How We Solve It (Step-by-Step Process)
 5. Our Pricing (Visit Charge ₹{visit_charge} + service charges + 30-Day Warranty T&C)
-6. Service Areas in {city}
+6. Service Areas in {city} (use: {localities})
 7. Why Choose {COMPANY_NAME} (Trust Signals)
 8. App Download CTA
 9. FAQs (7-10 questions)
@@ -327,7 +359,7 @@ OUTPUT: Return ONLY valid JSON, no markdown.
 
 def build_schema_jsonld(service_info, blog_data):
     city = service_info["city"]
-    visit_charge = service_info.get("visit_charge", 99)
+    visit_charge = service_info.get("visit_charge", 49)
     schema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -350,7 +382,7 @@ def build_schema_jsonld(service_info, blog_data):
                 "aggregateRating": {
                     "@type": "AggregateRating",
                     "ratingValue": "4.8",
-                    "reviewCount": "10000"
+                    "reviewCount": "150"
                 }
             },
             {
@@ -394,28 +426,28 @@ def publish_to_wordpress(blog_data, service_info):
         return None
 
     full_content = blog_data["content_html"]
-    visit_charge = service_info.get("visit_charge", 99)
+    visit_charge = service_info.get("visit_charge", 49)
 
-    # 1) Quick Answer
+    # Quick Answer
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # 2) Trust banner
+    # Trust banner
     trust_html = f"""
     <div style="background:#f0f8ff;border-left:4px solid #0073aa;padding:12px;margin:16px 0;">
-        <p><strong>✅ Why {COMPANY_NAME}?</strong></p>
+        <p><strong>✅ Why {COMPANY_NAME} in {service_info['city']}?</strong></p>
         <ul>
             <li>✔️ Verified & background-checked technicians</li>
             <li>✔️ 30-minute response in {service_info['city']}</li>
             <li>✔️ <strong>Visit Charge ₹{visit_charge}</strong> (transparent, no hidden cost)</li>
             <li>✔️ <strong>30-Day Service Warranty</strong> (Terms & Conditions apply)</li>
-            <li>✔️ 10,000+ happy customers | 4.8★ Google rating</li>
+            <li>✔️ 500+ happy customers in {service_info['city']} | 4.8★ Google rating</li>
         </ul>
     </div>
     """
     full_content += trust_html
 
-    # 3) FAQ
+    # FAQ
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
@@ -427,7 +459,7 @@ def publish_to_wordpress(blog_data, service_info):
             )
         full_content += faq_html
 
-    # 4) Social + Contact
+    # Social + Contact
     social_html = f"""
     <h2>📱 Connect With {COMPANY_NAME}</h2>
     <p><strong>{COMPANY_TAGLINE}</strong></p>
@@ -458,7 +490,7 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # 5) Featured image
+    # Featured image
     image_html = f'''
     <figure>
         <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" loading="lazy" />
@@ -467,9 +499,9 @@ def publish_to_wordpress(blog_data, service_info):
     '''
     full_content = image_html + full_content
 
-    # 6) Internal links
+    # Internal links (safe — only city page + related)
     internal_links = f"""
-    <h2>🔗 Explore More Services</h2>
+    <h2>🔗 Explore More Services in {service_info['city']}</h2>
     <ul>
         <li><a href="{COMPANY_WEBSITE}/{service_info['city_slug']}">All Services in {service_info['city']}</a></li>
         <li><a href="{COMPANY_WEBSITE}/ac-repair-{service_info['city_slug']}">AC Repair in {service_info['city']}</a></li>
@@ -480,18 +512,18 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += internal_links
 
-    # 7) Backlinks
+    # Backlinks
     backlink_html = "<h2>🔗 Trusted References</h2><ul>"
     for link in BACKLINK_SOURCES:
         backlink_html += f'<li><a href="{link["url"]}" target="_blank" rel="noopener">{link["text"]}</a></li>'
     backlink_html += "</ul>"
     full_content += backlink_html
 
-    # 8) JSON-LD Schema
+    # JSON-LD Schema
     schema_jsonld = build_schema_jsonld(service_info, blog_data)
     full_content += f'<script type="application/ld+json">{schema_jsonld}</script>'
 
-    # 9) Categories & Tags
+    # Categories & Tags
     category_id = get_category_id(service_info["category"])
     tag_ids = []
     if blog_data.get("tags"):
@@ -504,99 +536,4 @@ def publish_to_wordpress(blog_data, service_info):
                     tag_ids.append(response.json()[0]["id"])
                 else:
                     data = {"name": tag_name}
-                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
-                    if response.status_code == 201:
-                        tag_ids.append(response.json()["id"])
-            except:
-                pass
-
-    keyword = service_info.get("keyword", service_info["name"])
-
-    # 10) Yoast meta
-    wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
-    post_data = {
-        "title": blog_data["title"],
-        "content": full_content,
-        "status": "publish",
-        "slug": blog_data["slug"],
-        "categories": [category_id],
-        "tags": tag_ids,
-        "meta": {
-            "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
-            "_yoast_wpseo_title": blog_data["title"],
-            "_yoast_wpseo_focuskw": keyword,
-            "_yoast_wpseo_linkdex": "good",
-            "_yoast_wpseo_content_score": "90"
-        }
-    }
-
-    try:
-        response = requests.post(
-            wp_api_url,
-            auth=(WP_USERNAME, WP_APP_PASSWORD),
-            json=post_data,
-            headers={"Content-Type": "application/json"}
-        )
-        if response.status_code == 201:
-            result = response.json()
-            print(f"✅ Published: {blog_data['title']}")
-            print(f"   URL: {result.get('link', '')}")
-            print(f"   Category: {service_info['category']}")
-            print(f"   Keyphrase: {keyword}")
-            print(f"   Visit Charge: ₹{visit_charge} | Warranty: 30 days (T&C)")
-            return result
-        else:
-            print(f"❌ WordPress Error: {response.status_code}")
-            print(response.text)
-            return None
-    except Exception as e:
-        print(f"❌ WordPress Error: {e}")
-        return None
-
-def main():
-    day_index = datetime.datetime.now().day % len(SERVICES)
-    service1 = SERVICES[day_index]
-    service2 = SERVICES[(day_index + 1) % len(SERVICES)]
-
-    # ===== ENGLISH POSTS =====
-    print(f"🤖 [EN] Blog 1: {service1['name']} - {service1['city']} - ₹{service1['visit_charge']}")
-    data1 = generate_blog_post(
-        service1["name"], service1["keyword"], service1["city"],
-        "en", service1["city_hi"], service1["visit_charge"]
-    )
-    if data1:
-        publish_to_wordpress(data1, service1)
-
-    print(f"🤖 [EN] Blog 2: {service2['name']} - {service2['city']} - ₹{service2['visit_charge']}")
-    data2 = generate_blog_post(
-        service2["name"], service2["keyword"], service2["city"],
-        "en", service2["city_hi"], service2["visit_charge"]
-    )
-    if data2:
-        publish_to_wordpress(data2, service2)
-
-    # ===== HINDI POSTS =====
-    print(f"🤖 [HI] Blog 1: {SERVICES_HI[service1['name']]} - {service1['city']}")
-    data_hi1 = generate_blog_post(
-        service1["name"], service1["keyword"], service1["city"],
-        "hi", service1["city_hi"], service1["visit_charge"]
-    )
-    if data_hi1:
-        service_hi = service1.copy()
-        service_hi["category"] = service1["category"] + "-HI"
-        service_hi["keyword"] = get_hindi_keyword(service1["name"], service1["city_hi"])
-        publish_to_wordpress(data_hi1, service_hi)
-
-    print(f"🤖 [HI] Blog 2: {SERVICES_HI[service2['name']]} - {service2['city']}")
-    data_hi2 = generate_blog_post(
-        service2["name"], service2["keyword"], service2["city"],
-        "hi", service2["city_hi"], service2["visit_charge"]
-    )
-    if data_hi2:
-        service_hi = service2.copy()
-        service_hi["category"] = service2["category"] + "-HI"
-        service_hi["keyword"] = get_hindi_keyword(service2["name"], service2["city_hi"])
-        publish_to_wordpress(data_hi2, service_hi)
-
-if __name__ == "__main__":
-    main()
+                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_P
