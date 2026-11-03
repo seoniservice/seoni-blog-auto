@@ -37,10 +37,9 @@ SOCIAL_LINKS = {
     "hotfrog": "https://www.hotfrog.in/company/AOTJXhjlcYui-madhya-pradesh/cleaning-services"
 }
 
-# ===== SEONI = PRIORITY CITY =====
 PRIORITY_CITY = "Seoni"
 
-# ===== CITIES (visit charge + localities + landmarks) =====
+# ===== CITIES =====
 CITIES = [
     {
         "name": "Seoni", "slug": "seoni", "hi": "सिवनी", "visit_charge": 49,
@@ -62,20 +61,23 @@ CITIES = [
     }
 ]
 
+# ===== SERVICE DEFINITIONS (with warranty flag) =====
+# warranty_eligible = True  → sirf in services me "30-Day Service Warranty (T&C apply)" likha jayega
+# warranty_eligible = False → "Satisfaction Guarantee" / "Quality Assurance" use hoga
 SERVICE_NAMES = [
-    {"name": "Electrician", "category": "Electrician"},
-    {"name": "AC Repair", "category": "AC-Service"},
-    {"name": "Plumber", "category": "Plumber"},
-    {"name": "Home Cleaning", "category": "Cleaning-Services"},
-    {"name": "Appliance Repair", "category": "Appliance-Repair"},
-    {"name": "Carpenter", "category": "Carpenter"},
-    {"name": "Painting", "category": "Painting-Services"},
-    {"name": "Water Purifier", "category": "Water-Purifier"},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning"},
-    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair"},
-    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning"},
-    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning"},
-    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service"}
+    {"name": "Electrician", "category": "Electrician", "warranty_eligible": True},
+    {"name": "AC Repair", "category": "AC-Service", "warranty_eligible": True},
+    {"name": "Plumber", "category": "Plumber", "warranty_eligible": True},
+    {"name": "Home Cleaning", "category": "Cleaning-Services", "warranty_eligible": False},
+    {"name": "Appliance Repair", "category": "Appliance-Repair", "warranty_eligible": True},
+    {"name": "Carpenter", "category": "Carpenter", "warranty_eligible": False},
+    {"name": "Painting", "category": "Painting-Services", "warranty_eligible": False},
+    {"name": "Water Purifier", "category": "Water-Purifier", "warranty_eligible": True},
+    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning", "warranty_eligible": False},
+    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair", "warranty_eligible": True},
+    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning", "warranty_eligible": False},
+    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning", "warranty_eligible": False},
+    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service", "warranty_eligible": False}
 ]
 
 SERVICES = []
@@ -91,11 +93,11 @@ for city in CITIES:
             "localities_en": city["localities_en"],
             "localities_hi": city["localities_hi"],
             "landmarks": city["landmarks"],
+            "warranty_eligible": service["warranty_eligible"],
             "keyword": f"{service['name']} in {city['name']}",
             "slug": f"{service['name'].lower().replace(' ', '-')}-{city['slug']}"
         })
 
-# ===== SEONI-ONLY SERVICES (priority) =====
 SEONI_SERVICES = [s for s in SERVICES if s["city"] == PRIORITY_CITY]
 
 # ===== HINDI TRANSLATIONS =====
@@ -127,6 +129,39 @@ def get_hindi_keyword(service_name, city_hi):
     template = SERVICES_HI_KEYWORD_TEMPLATE.get(service_name, "{city} में " + service_name)
     return template.format(city=city_hi)
 
+# ===== TITLE TEMPLATES (warranty only where eligible) =====
+EN_TITLE_TEMPLATES = {
+    "Electrician": "Best Electrician in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "AC Repair": "AC Repair in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "Plumber": "Plumber in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "Home Cleaning": "Home Deep Cleaning in {city} | Visit Charge ₹{charge} | Satisfaction Guarantee",
+    "Appliance Repair": "Appliance Repair in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "Carpenter": "Carpenter in {city} | Visit Charge ₹{charge} | Quality Workmanship",
+    "Painting": "Home Painting in {city} | Free Inspection | Quality Assurance",
+    "Water Purifier": "Water Purifier Service in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "Sofa Cleaning": "Sofa Cleaning in {city} | Visit Charge ₹{charge} | Satisfaction Guarantee",
+    "Gas Stove Repair": "Gas Stove Repair in {city} | Visit Charge ₹{charge} | 30-Day Service Warranty",
+    "Carpet Cleaning": "Carpet Cleaning in {city} | Visit Charge ₹{charge} | Satisfaction Guarantee",
+    "Commercial Cleaning": "Commercial Cleaning in {city} | Free Site Visit | Quality Assurance",
+    "Pick & Drop Service": "Pick & Drop Service in {city} | Same-Day Delivery | Safe Handling"
+}
+
+HINDI_TITLE_TEMPLATES = {
+    "Electrician": "{city} में बेस्ट इलेक्ट्रीशियन सर्विस | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "AC Repair": "{city} में एसी रिपेयर एंड सर्विस | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "Plumber": "{city} में प्लंबर सर्विस | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "Home Cleaning": "{city} में होम क्लीनिंग सर्विस | विजिट चार्ज ₹{charge} | संतुष्टि गारंटी",
+    "Appliance Repair": "{city} में अप्लायंस रिपेयर | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "Carpenter": "{city} में कारपेंटर सर्विस | विजिट चार्ज ₹{charge} | क्वालिटी वर्क",
+    "Painting": "{city} में होम पेंटिंग सर्विस | फ्री इंस्पेक्शन | क्वालिटी एश्योरेंस",
+    "Water Purifier": "{city} में वॉटर प्यूरीफायर सर्विस | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "Sofa Cleaning": "{city} में सोफा क्लीनिंग | विजिट चार्ज ₹{charge} | संतुष्टि गारंटी",
+    "Gas Stove Repair": "{city} में गैस स्टोव रिपेयर | विजिट चार्ज ₹{charge} | 30 दिन सर्विस वारंटी",
+    "Carpet Cleaning": "{city} में कार्पेट क्लीनिंग | विजिट चार्ज ₹{charge} | संतुष्टि गारंटी",
+    "Commercial Cleaning": "{city} में कमर्शियल क्लीनिंग | फ्री साइट विजिट | क्वालिटी एश्योरेंस",
+    "Pick & Drop Service": "{city} में पिक एंड ड्रॉप सर्विस | सेम-डे डिलीवरी | सेफ हैंडलिंग"
+}
+
 # ===== BACKLINK SOURCES =====
 BACKLINK_SOURCES = [
     {"text": "My City Service – Official Website", "url": "https://www.mycityservice.in/"},
@@ -156,9 +191,25 @@ def get_category_id(category_name):
         return 1
 
 def generate_blog_post(service_name, keyword, city, language="en", city_hi=None,
-                       visit_charge=49, localities="", landmarks=""):
+                       visit_charge=49, localities="", landmarks="", warranty_eligible=False):
     service_hi = SERVICES_HI.get(service_name, service_name)
     keyword_hi = get_hindi_keyword(service_name, city_hi or city)
+
+    # Warranty vs Guarantee — dynamic
+    if warranty_eligible:
+        warranty_en = "30-Day Service Warranty (Terms & Conditions apply)"
+        warranty_hi = "30 दिन सर्विस वारंटी (Terms & Conditions apply)"
+        warranty_signal_en = "30-day service warranty (T&C apply)"
+        warranty_signal_hi = "30 दिन सर्विस वारंटी (T&C apply)"
+        warranty_rule_en = "Add '30-Day Service Warranty (Terms & Conditions apply)' in pricing section."
+        warranty_rule_hi = "'30 दिन सर्विस वारंटी (Terms & Conditions apply)' pricing section में लिखें।"
+    else:
+        warranty_en = "Satisfaction Guarantee (no warranty claim)"
+        warranty_hi = "संतुष्टि गारंटी (कोई वारंटी क्लेम नहीं)"
+        warranty_signal_en = "Satisfaction Guarantee / Quality Assurance"
+        warranty_signal_hi = "संतुष्टि गारंटी / क्वालिटी एश्योरेंस"
+        warranty_rule_en = "DO NOT mention warranty. Use 'Satisfaction Guarantee' or 'Quality Assurance' only."
+        warranty_rule_hi = "वारंटी का ज़िक्र बिल्कुल न करें। सिर्फ 'संतुष्टि गारंटी' या 'क्वालिटी एश्योरेंस' लिखें।"
 
     if language == "hi":
         seo_rules = f"""
@@ -174,12 +225,14 @@ STRICT RULES FOR 100% YOAST GREEN SCORE:
 9. Include CTA: Call {COMPANY_PHONE} or Download App.
 10. Content must be informative and NOT repetitive.
 
+WARRANTY RULE (VERY IMPORTANT): {warranty_rule_hi}
+
 MANDATORY CONTENT SECTIONS (H2 headings):
 - "Why You Need {service_hi} in {city_hi}" — 3-4 real problems
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
-- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; "30 दिन वारंटी (Terms & Conditions apply)"
+- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; {warranty_hi}
 - "Service Areas in {city_hi}" — mention these localities: {localities}
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 500+ happy customers in {city_hi}
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, {warranty_signal_hi}, transparent pricing, 500+ happy customers in {city_hi}
 - "FAQs" — 7-10 questions
 """
 
@@ -199,15 +252,15 @@ MANDATORY CONTENT SECTIONS (H2 headings):
 - प्रमुख इलाके: {localities}
 - लैंडमार्क: {landmarks}
 - विजिट चार्ज: ₹{visit_charge}
-- वारंटी: 30 दिन (Terms & Conditions apply)
+- गारंटी/वारंटी: {warranty_hi}
 
-POSITIONING: {COMPANY_NAME} को {city_hi} का सबसे भरोसेमंद प्रीमियम होम सर्विस प्लेटफॉर्म बताएं। Verified technicians, transparent pricing, 30-min response, 30-day warranty (T&C apply) highlight करें।
+POSITIONING: {COMPANY_NAME} को {city_hi} का सबसे भरोसेमंद प्रीमियम होम सर्विस प्लेटफॉर्म बताएं। Verified technicians, transparent pricing, 30-min response highlight करें।
 
 STRUCTURE (exact order):
 1. Introduction (Direct Answer in 40 words, keyword in first sentence)
 2. Why You Need {service_hi} (Problem section)
 3. How We Solve It (Step-by-Step Process)
-4. Our Pricing (Visit Charge ₹{visit_charge} + service charges + 30 दिन वारंटी T&C apply)
+4. Our Pricing (Visit Charge ₹{visit_charge} + service charges + {warranty_hi})
 5. Service Areas in {city_hi} (use: {localities})
 6. Why Choose {COMPANY_NAME}
 7. App Download CTA
@@ -238,12 +291,14 @@ STRICT RULES FOR 100% YOAST GREEN SCORE:
 9. Include CTA: Call {COMPANY_PHONE} or Download App.
 10. Content must be informative and NOT repetitive.
 
+WARRANTY RULE (VERY IMPORTANT): {warranty_rule_en}
+
 MANDATORY CONTENT SECTIONS (H2 headings):
 - "Why You Need {service_name} in {city}" — 3-4 real problems
 - "How We Solve It (Step-by-Step Process)" — 4-5 numbered steps
-- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; "30-Day Warranty (Terms & Conditions apply)"
+- "Our Service Pricing" — Visit Charge ₹{visit_charge} + service charges; {warranty_en}
 - "Service Areas in {city}" — mention these localities: {localities}
-- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, 30-day warranty (T&C apply), transparent pricing, 500+ happy customers in {city}, 4.8★ Google rating
+- "Why Choose {COMPANY_NAME}" — trust signals: verified technicians, 30-min response, {warranty_signal_en}, transparent pricing, 500+ happy customers in {city}, 4.8★ Google rating
 - "FAQs" — 7-10 questions
 """
 
@@ -266,20 +321,20 @@ IMPORTANT: Use these EXACT details:
 - Localities: {localities}
 - Landmarks: {landmarks}
 - Visit Charge: ₹{visit_charge} (transparent, no hidden cost)
-- Warranty: 30 Days (Terms & Conditions apply)
+- Guarantee: {warranty_en}
 
-POSITIONING: Present {COMPANY_NAME} as the MOST TRUSTED & PREMIUM home services platform in {city}, Madhya Pradesh. Mention: verified & background-checked technicians, transparent pricing, 30-minute response, 30-day warranty (T&C apply), 500+ happy customers in {city}, 4.8★ Google rating.
+POSITIONING: Present {COMPANY_NAME} as the MOST TRUSTED & PREMIUM home services platform in {city}, Madhya Pradesh. Mention: verified & background-checked technicians, transparent pricing, 30-minute response, 500+ happy customers in {city}, 4.8★ Google rating.
 
 LOCAL SEO: Mention these {city} localities naturally: {localities}. Also mention {landmarks}.
 
-PRICING RULE: Always show Visit Charge ₹{visit_charge} clearly. Then mention service charges separately. Add "30-Day Warranty (Terms & Conditions apply)" in pricing section.
+PRICING RULE: Always show Visit Charge ₹{visit_charge} clearly. Then mention service charges separately. {warranty_rule_en}
 
 STRUCTURE (exact order):
 1. SEO Metadata (Title, Meta Desc, Slug)
 2. Introduction (Direct Answer in 40 words)
 3. Why You Need {service_name} (Problem section)
 4. How We Solve It (Step-by-Step Process)
-5. Our Pricing (Visit Charge ₹{visit_charge} + service charges + 30-Day Warranty T&C)
+5. Our Pricing (Visit Charge ₹{visit_charge} + service charges + {warranty_en})
 6. Service Areas in {city} (use: {localities})
 7. Why Choose {COMPANY_NAME} (Trust Signals)
 8. App Download CTA
@@ -328,6 +383,12 @@ OUTPUT: Return ONLY valid JSON, no markdown.
 def build_schema_jsonld(service_info, blog_data):
     city = service_info["city"]
     visit_charge = service_info.get("visit_charge", 49)
+    warranty_eligible = service_info.get("warranty_eligible", False)
+
+    offer_desc = f"Visit charge ₹{visit_charge}."
+    if warranty_eligible:
+        offer_desc += " 30-Day Service Warranty (Terms & Conditions apply)."
+
     schema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -363,7 +424,7 @@ def build_schema_jsonld(service_info, blog_data):
                     "@type": "Offer",
                     "priceCurrency": "INR",
                     "price": str(visit_charge),
-                    "description": f"Visit charge ₹{visit_charge}. 30-Day Warranty (Terms & Conditions apply)."
+                    "description": offer_desc
                 }
             },
             {
@@ -395,12 +456,17 @@ def publish_to_wordpress(blog_data, service_info):
 
     full_content = blog_data["content_html"]
     visit_charge = service_info.get("visit_charge", 49)
+    warranty_eligible = service_info.get("warranty_eligible", False)
 
-    # Quick Answer
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # Trust banner
+    # Trust banner — dynamic
+    if warranty_eligible:
+        guarantee_line = '<li>✔️ <strong>30-Day Service Warranty</strong> (Terms & Conditions apply)</li>'
+    else:
+        guarantee_line = '<li>✔️ <strong>Satisfaction Guarantee</strong> (quality assurance)</li>'
+
     trust_html = f"""
     <div style="background:#f0f8ff;border-left:4px solid #0073aa;padding:12px;margin:16px 0;">
         <p><strong>✅ Why {COMPANY_NAME} in {service_info['city']}?</strong></p>
@@ -408,14 +474,13 @@ def publish_to_wordpress(blog_data, service_info):
             <li>✔️ Verified & background-checked technicians</li>
             <li>✔️ 30-minute response in {service_info['city']}</li>
             <li>✔️ <strong>Visit Charge ₹{visit_charge}</strong> (transparent, no hidden cost)</li>
-            <li>✔️ <strong>30-Day Service Warranty</strong> (Terms & Conditions apply)</li>
+            {guarantee_line}
             <li>✔️ 500+ happy customers in {service_info['city']} | 4.8★ Google rating</li>
         </ul>
     </div>
     """
     full_content += trust_html
 
-    # FAQ
     if blog_data.get("faqs"):
         faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
@@ -427,7 +492,6 @@ def publish_to_wordpress(blog_data, service_info):
             )
         full_content += faq_html
 
-    # Social + Contact
     social_html = f"""
     <h2>📱 Connect With {COMPANY_NAME}</h2>
     <p><strong>{COMPANY_TAGLINE}</strong></p>
@@ -458,7 +522,6 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += social_html
 
-    # Featured image
     image_html = f'''
     <figure>
         <img src="{LOGO_URL}" style="max-width:100%;" alt="{service_info["keyword"]} - {COMPANY_NAME}" title="{service_info["keyword"]}" loading="lazy" />
@@ -467,7 +530,6 @@ def publish_to_wordpress(blog_data, service_info):
     '''
     full_content = image_html + full_content
 
-    # Internal links
     internal_links = f"""
     <h2>🔗 Explore More Services in {service_info['city']}</h2>
     <ul>
@@ -480,18 +542,15 @@ def publish_to_wordpress(blog_data, service_info):
     """
     full_content += internal_links
 
-    # Backlinks
     backlink_html = "<h2>🔗 Trusted References</h2><ul>"
     for link in BACKLINK_SOURCES:
         backlink_html += f'<li><a href="{link["url"]}" target="_blank" rel="noopener">{link["text"]}</a></li>'
     backlink_html += "</ul>"
     full_content += backlink_html
 
-    # JSON-LD Schema
     schema_jsonld = build_schema_jsonld(service_info, blog_data)
     full_content += f'<script type="application/ld+json">{schema_jsonld}</script>'
 
-    # Categories & Tags
     category_id = get_category_id(service_info["category"])
     tag_ids = []
     if blog_data.get("tags"):
@@ -512,7 +571,6 @@ def publish_to_wordpress(blog_data, service_info):
 
     keyword = service_info.get("keyword", service_info["name"])
 
-    # Yoast meta
     wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
@@ -543,7 +601,7 @@ def publish_to_wordpress(blog_data, service_info):
             print(f"   URL: {result.get('link', '')}")
             print(f"   Category: {service_info['category']}")
             print(f"   Keyphrase: {keyword}")
-            print(f"   Visit Charge: ₹{visit_charge} | Warranty: 30 days (T&C)")
+            print(f"   Visit Charge: ₹{visit_charge} | Warranty Eligible: {warranty_eligible}")
             return result
         else:
             print(f"❌ WordPress Error: {response.status_code}")
@@ -555,12 +613,9 @@ def publish_to_wordpress(blog_data, service_info):
 
 
 def main():
-    # ===== SEONI PRIORITY + ROTATION =====
-    # Har run me Seoni ka 1 blog GUARANTEED
     seoni_day_index = datetime.datetime.now().day % len(SEONI_SERVICES)
     seoni_service = SEONI_SERVICES[seoni_day_index]
 
-    # Doosra blog rotation se (Seoni ke alawa)
     other_services = [s for s in SERVICES if s["city"] != PRIORITY_CITY]
     other_index = datetime.datetime.now().day % len(other_services)
     other_service = other_services[other_index]
@@ -568,22 +623,20 @@ def main():
     all_services = [seoni_service, other_service]
 
     for idx, svc in enumerate(all_services, 1):
-        # ===== ENGLISH POST =====
-        print(f"🤖 [EN] Blog {idx}: {svc['name']} - {svc['city']} - ₹{svc['visit_charge']}")
+        print(f"🤖 [EN] Blog {idx}: {svc['name']} - {svc['city']} - ₹{svc['visit_charge']} - Warranty: {svc['warranty_eligible']}")
         data_en = generate_blog_post(
             svc["name"], svc["keyword"], svc["city"],
             "en", svc["city_hi"], svc["visit_charge"],
-            svc["localities_en"], svc["landmarks"]
+            svc["localities_en"], svc["landmarks"], svc["warranty_eligible"]
         )
         if data_en:
             publish_to_wordpress(data_en, svc)
 
-        # ===== HINDI POST =====
         print(f"🤖 [HI] Blog {idx}: {SERVICES_HI[svc['name']]} - {svc['city']}")
         data_hi = generate_blog_post(
             svc["name"], svc["keyword"], svc["city"],
             "hi", svc["city_hi"], svc["visit_charge"],
-            svc["localities_hi"], svc["landmarks"]
+            svc["localities_hi"], svc["landmarks"], svc["warranty_eligible"]
         )
         if data_hi:
             service_hi = svc.copy()
