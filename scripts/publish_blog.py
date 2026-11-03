@@ -40,7 +40,7 @@ SOCIAL_LINKS = {
 # ===== SEONI = PRIORITY CITY =====
 PRIORITY_CITY = "Seoni"
 
-# ===== CITIES (with visit charge + localities) =====
+# ===== CITIES (visit charge + localities + landmarks) =====
 CITIES = [
     {
         "name": "Seoni", "slug": "seoni", "hi": "सिवनी", "visit_charge": 49,
@@ -126,38 +126,6 @@ SERVICES_HI_KEYWORD_TEMPLATE = {
 def get_hindi_keyword(service_name, city_hi):
     template = SERVICES_HI_KEYWORD_TEMPLATE.get(service_name, "{city} में " + service_name)
     return template.format(city=city_hi)
-
-HINDI_TITLE_TEMPLATES = {
-    "Electrician": "{city} में बेस्ट इलेक्ट्रीशियन सर्विस | विजिट चार्ज ₹{charge} | 30 दिन वारंटी",
-    "AC Repair": "{city} में एसी रिपेयर एंड सर्विस | विजिट चार्ज ₹{charge} + 30 दिन वारंटी",
-    "Plumber": "{city} में प्लंबर सर्विस | विजिट चार्ज ₹{charge} | लीकेज फिक्स",
-    "Home Cleaning": "{city} में होम क्लीनिंग सर्विस | विजिट चार्ज ₹{charge}",
-    "Appliance Repair": "{city} में अप्लायंस रिपेयर | विजिट चार्ज ₹{charge} + 30 दिन वारंटी",
-    "Carpenter": "{city} में कारपेंटर सर्विस | विजिट चार्ज ₹{charge}",
-    "Painting": "{city} में होम पेंटिंग सर्विस | फ्री इंस्पेक्शन",
-    "Water Purifier": "{city} में वॉटर प्यूरीफायर सर्विस | विजिट चार्ज ₹{charge}",
-    "Sofa Cleaning": "{city} में सोफा क्लीनिंग | विजिट चार्ज ₹{charge}",
-    "Gas Stove Repair": "{city} में गैस स्टोव रिपेयर | विजिट चार्ज ₹{charge}",
-    "Carpet Cleaning": "{city} में कार्पेट क्लीनिंग | विजिट चार्ज ₹{charge}",
-    "Commercial Cleaning": "{city} में कमर्शियल क्लीनिंग | फ्री साइट विजिट",
-    "Pick & Drop Service": "{city} में पिक एंड ड्रॉप सर्विस | सेम-डे डिलीवरी"
-}
-
-EN_TITLE_TEMPLATES = {
-    "Electrician": "Best Electrician in {city} | Visit Charge ₹{charge} | 30-Day Warranty",
-    "AC Repair": "AC Repair in {city} | Visit Charge ₹{charge} + 30-Day Warranty",
-    "Plumber": "Plumber in {city} | Visit Charge ₹{charge} | Leakage Fix 24x7",
-    "Home Cleaning": "Home Deep Cleaning in {city} | Visit Charge ₹{charge}",
-    "Appliance Repair": "Appliance Repair in {city} | Visit Charge ₹{charge} + 30-Day Warranty",
-    "Carpenter": "Carpenter in {city} | Visit Charge ₹{charge}",
-    "Painting": "Home Painting in {city} | Free Inspection & 30-Day Warranty",
-    "Water Purifier": "Water Purifier Service in {city} | Visit Charge ₹{charge}",
-    "Sofa Cleaning": "Sofa Cleaning in {city} | Visit Charge ₹{charge}",
-    "Gas Stove Repair": "Gas Stove Repair in {city} | Visit Charge ₹{charge}",
-    "Carpet Cleaning": "Carpet Cleaning in {city} | Visit Charge ₹{charge}",
-    "Commercial Cleaning": "Commercial Cleaning in {city} | Free Site Visit",
-    "Pick & Drop Service": "Pick & Drop Service in {city} | Same-Day Delivery"
-}
 
 # ===== BACKLINK SOURCES =====
 BACKLINK_SOURCES = [
@@ -499,7 +467,7 @@ def publish_to_wordpress(blog_data, service_info):
     '''
     full_content = image_html + full_content
 
-    # Internal links (safe — only city page + related)
+    # Internal links
     internal_links = f"""
     <h2>🔗 Explore More Services in {service_info['city']}</h2>
     <ul>
@@ -536,4 +504,93 @@ def publish_to_wordpress(blog_data, service_info):
                     tag_ids.append(response.json()[0]["id"])
                 else:
                     data = {"name": tag_name}
-                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_P
+                    response = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
+                    if response.status_code == 201:
+                        tag_ids.append(response.json()["id"])
+            except:
+                pass
+
+    keyword = service_info.get("keyword", service_info["name"])
+
+    # Yoast meta
+    wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
+    post_data = {
+        "title": blog_data["title"],
+        "content": full_content,
+        "status": "publish",
+        "slug": blog_data["slug"],
+        "categories": [category_id],
+        "tags": tag_ids,
+        "meta": {
+            "_yoast_wpseo_metadesc": blog_data.get("meta_description", ""),
+            "_yoast_wpseo_title": blog_data["title"],
+            "_yoast_wpseo_focuskw": keyword,
+            "_yoast_wpseo_linkdex": "good",
+            "_yoast_wpseo_content_score": "90"
+        }
+    }
+
+    try:
+        response = requests.post(
+            wp_api_url,
+            auth=(WP_USERNAME, WP_APP_PASSWORD),
+            json=post_data,
+            headers={"Content-Type": "application/json"}
+        )
+        if response.status_code == 201:
+            result = response.json()
+            print(f"✅ Published: {blog_data['title']}")
+            print(f"   URL: {result.get('link', '')}")
+            print(f"   Category: {service_info['category']}")
+            print(f"   Keyphrase: {keyword}")
+            print(f"   Visit Charge: ₹{visit_charge} | Warranty: 30 days (T&C)")
+            return result
+        else:
+            print(f"❌ WordPress Error: {response.status_code}")
+            print(response.text)
+            return None
+    except Exception as e:
+        print(f"❌ WordPress Error: {e}")
+        return None
+
+
+def main():
+    # ===== SEONI PRIORITY + ROTATION =====
+    # Har run me Seoni ka 1 blog GUARANTEED
+    seoni_day_index = datetime.datetime.now().day % len(SEONI_SERVICES)
+    seoni_service = SEONI_SERVICES[seoni_day_index]
+
+    # Doosra blog rotation se (Seoni ke alawa)
+    other_services = [s for s in SERVICES if s["city"] != PRIORITY_CITY]
+    other_index = datetime.datetime.now().day % len(other_services)
+    other_service = other_services[other_index]
+
+    all_services = [seoni_service, other_service]
+
+    for idx, svc in enumerate(all_services, 1):
+        # ===== ENGLISH POST =====
+        print(f"🤖 [EN] Blog {idx}: {svc['name']} - {svc['city']} - ₹{svc['visit_charge']}")
+        data_en = generate_blog_post(
+            svc["name"], svc["keyword"], svc["city"],
+            "en", svc["city_hi"], svc["visit_charge"],
+            svc["localities_en"], svc["landmarks"]
+        )
+        if data_en:
+            publish_to_wordpress(data_en, svc)
+
+        # ===== HINDI POST =====
+        print(f"🤖 [HI] Blog {idx}: {SERVICES_HI[svc['name']]} - {svc['city']}")
+        data_hi = generate_blog_post(
+            svc["name"], svc["keyword"], svc["city"],
+            "hi", svc["city_hi"], svc["visit_charge"],
+            svc["localities_hi"], svc["landmarks"]
+        )
+        if data_hi:
+            service_hi = svc.copy()
+            service_hi["category"] = svc["category"] + "-HI"
+            service_hi["keyword"] = get_hindi_keyword(svc["name"], svc["city_hi"])
+            publish_to_wordpress(data_hi, service_hi)
+
+
+if __name__ == "__main__":
+    main()
