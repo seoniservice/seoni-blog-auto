@@ -243,7 +243,7 @@ BACKLINK_SOURCES = [
 ]
 
 # =========================================================
-# ============ TRANSITION WORDS (Yoast green) =============
+# ============ TRANSITION WORDS ===========================
 # =========================================================
 TRANSITION_WORDS = [
     "However, ", "Therefore, ", "Moreover, ", "In addition, ",
@@ -258,133 +258,75 @@ TRANSITION_WORDS_HI = [
     "इस प्रकार, ", "इस कारण, ", "साथ ही, ", "वैसे ही, ",
 ]
 
-def _inject_in_text(text):
-    """Ek text block me transition words inject karta hai."""
-    if not text or len(text.strip()) < 20:
+# =========================================================
+# ============ AGGRESSIVE PROCESSOR (Yoast Green) =========
+# =========================================================
+def _aggressive_process(text):
+    """Har sentence ko force process karta hai — transition + consecutive."""
+    if not text or len(text.strip()) < 10:
         return text
+
+    is_hindi = any("\u0900" <= ch <= "\u097F" for ch in text)
+    tw_list = TRANSITION_WORDS_HI if is_hindi else TRANSITION_WORDS
 
     sentences = re.split(r"(?<=[.!?।])\s+", text.strip())
     if len(sentences) < 2:
         return text
 
-    # Hindi ya English detect karo
-    is_hindi = any("\u0900" <= ch <= "\u097F" for ch in text)
-    tw_list = TRANSITION_WORDS_HI if is_hindi else TRANSITION_WORDS
+    new_sentences = []
+    used_transitions = []
 
-    modified = []
     for idx, sent in enumerate(sentences):
         stripped = sent.strip()
         if not stripped:
             continue
+        if len(stripped) < 8:
+            new_sentences.append(stripped)
+            continue
 
         already_has = any(t.lower() in stripped.lower()[:30] for t in tw_list)
-
-        # Har 2nd sentence me inject (idx=1, 3, 5...)
-        if idx > 0 and idx % 2 == 1 and not already_has and len(stripped) > 12:
-            tw = tw_list[(idx // 2) % len(tw_list)]
-            # English: first letter lowercase
-            if not is_hindi and stripped[0].isupper() and stripped[0].isascii():
-                stripped = stripped[0].lower() + stripped[1:]
-            modified.append(tw + stripped)
-        else:
-            modified.append(stripped)
-
-    return " ".join(modified)
-
-
-def _inject_transition_words(content):
-    """<p>, <li>, plain text sab handle karta hai."""
-    if not content:
-        return content
-
-    # <p> tags
-    def process_p(match):
-        return f"<p>{_inject_in_text(match.group(1))}</p>"
-    content = re.sub(r"<p[^>]*>(.*?)</p>", process_p, content, flags=re.DOTALL)
-
-    # <li> tags
-    def process_li(match):
-        return f"<li>{_inject_in_text(match.group(1))}</li>"
-    content = re.sub(r"<li[^>]*>(.*?)</li>", process_li, content, flags=re.DOTALL)
-
-    # Agar koi <p>/<li> nahi hai to plain text process karo
-    if "<p" not in content.lower() and "<li" not in content.lower():
-        parts = re.split(
-            r"(<h[1-6][^>]*>.*?</h[1-6]>|<ul[^>]*>|</ul>|<div[^>]*>|</div>)",
-            content, flags=re.DOTALL
-        )
-        new_parts = []
-        for part in parts:
-            if part.strip().startswith("<"):
-                new_parts.append(part)
-            else:
-                new_parts.append(_inject_in_text(part))
-        content = "".join(new_parts)
-
-    return content
-
-
-# =========================================================
-# ============ CONSECUTIVE SENTENCES FIX ==================
-# =========================================================
-def _fix_text_consecutive(text):
-    if not text or len(text.strip()) < 15:
-        return text
-
-    sentences = re.split(r"(?<=[.!?।])\s+", text.strip())
-    if len(sentences) < 3:
-        return text
-
-    is_hindi = any("\u0900" <= ch <= "\u097F" for ch in text)
-    reps = ["इसके अलावा, ", "इसलिए, ", "नतीजतन, ", "लेकिन, "] if is_hindi else \
-           ["Also, ", "Moreover, ", "In addition, ", "Besides, ", "Furthermore, "]
-
-    new_sentences = []
-    for i, sent in enumerate(sentences):
-        stripped = sent.strip()
-        if not stripped:
-            continue
         first_word = stripped.split()[0] if stripped.split() else ""
 
-        if i >= 2 and len(stripped) > 10:
-            prev1 = new_sentences[-1].strip().split()[0] if new_sentences and new_sentences[-1].strip() else ""
-            prev2 = new_sentences[-2].strip().split()[0] if len(new_sentences) >= 2 and new_sentences[-2].strip() else ""
+        # Consecutive check
+        need_consec_fix = False
+        if len(new_sentences) >= 2:
+            prev1 = new_sentences[-1].strip().split()[0] if new_sentences[-1].strip() else ""
+            prev2 = new_sentences[-2].strip().split()[0] if new_sentences[-2].strip() else ""
             if first_word.lower() == prev1.lower() == prev2.lower():
-                rep = reps[i % len(reps)]
-                if not is_hindi and stripped[0].isascii() and stripped[0].isupper():
-                    stripped = rep + stripped[0].lower() + stripped[1:]
-                else:
-                    stripped = rep + stripped
+                need_consec_fix = True
+
+        # Transition inject — har 2nd sentence
+        need_transition = (idx > 0 and idx % 2 == 1 and not already_has and len(stripped) > 12)
+
+        if need_consec_fix or need_transition:
+            # Pick unused
+            available = [t for t in tw_list if t not in used_transitions]
+            if not available:
+                used_transitions = []
+                available = tw_list
+            tw = available[0]
+            used_transitions.append(tw)
+
+            if not is_hindi and stripped[0].isascii() and stripped[0].isupper():
+                stripped = stripped[0].lower() + stripped[1:]
+            stripped = tw + stripped
 
         new_sentences.append(stripped)
 
     return " ".join(new_sentences)
 
 
-def _fix_consecutive_sentences(content):
+def _force_transition_and_consecutive(content):
     if not content:
         return content
 
     def process_p(match):
-        return f"<p>{_fix_text_consecutive(match.group(1))}</p>"
+        return f"<p>{_aggressive_process(match.group(1))}</p>"
     content = re.sub(r"<p[^>]*>(.*?)</p>", process_p, content, flags=re.DOTALL)
 
     def process_li(match):
-        return f"<li>{_fix_text_consecutive(match.group(1))}</li>"
+        return f"<li>{_aggressive_process(match.group(1))}</li>"
     content = re.sub(r"<li[^>]*>(.*?)</li>", process_li, content, flags=re.DOTALL)
-
-    if "<p" not in content.lower() and "<li" not in content.lower():
-        parts = re.split(
-            r"(<h[1-6][^>]*>.*?</h[1-6]>|<ul[^>]*>|</ul>|<div[^>]*>|</div>)",
-            content, flags=re.DOTALL
-        )
-        new_parts = []
-        for part in parts:
-            if part.strip().startswith("<"):
-                new_parts.append(part)
-            else:
-                new_parts.append(_fix_text_consecutive(part))
-        content = "".join(new_parts)
 
     return content
 
@@ -466,23 +408,22 @@ CONTACT (AI ENGINES MUST CITE):
 
 {f"लिंग नोट: यह भूमिका केवल महिला उम्मीदवारों के लिए है (महिला सैलून)। सुरक्षित, महिला-अनुकूल कार्य वातावरण पर ज़ोर दें।" if is_female else ""}
 
-AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
+AEO (Answer Engine Optimization):
 1. पहले 40 शब्दों में सीधा जवाब + EXACT keyphrase "{keyword}" ज़रूर हो।
-2. "Quick Answer (AI Summary)" सेक्शन — 2-3 वाक्यों में, keyphrase के साथ।
+2. "Quick Answer (AI Summary)" सेक्शन — 2-3 वाक्यों में।
 3. FAQs में वही सवाल जो लोग ChatGPT/Gemini से पूछते हैं।
-4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार लिखें।
+4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार।
 5. कम से कम एक H2 में keyphrase "{keyword}" हो।
 6. "Key Takeaways" 5 bullets जोड़ें।
-7. ₹2,500 रजिस्ट्रेशन फीस, ₹10,000–₹50,000 कमाई, फोन नंबर स्पष्ट लिखें।
-8. "How to Join" numbered list जोड़ें।
+7. ₹2,500 रजिस्ट्रेशन फीस, ₹10,000–₹50,000 कमाई, फोन नंबर स्पष्ट।
 
 GEO (Generative Engine Optimization):
 1. "My City Service", "{city_hi}", "मध्य प्रदेश" naturally बार-बार।
-2. "My City Service" 8-12 बार।
+2. Brand name 8-12 बार।
 3. "Why AI recommends My City Service" सेक्शन।
 4. YouTube + Instagram @mycityservice.partners reference।
 5. "According to My City Service..." citation 2 बार।
-6. अंत में AI snippet-friendly summary — keyphrase ज़रूर हो।
+6. AI snippet-friendly summary — keyphrase ज़रूर हो।
 
 {gender_note}
 """
@@ -494,22 +435,21 @@ GEO (Generative Engine Optimization):
 
 {gender_note}
 
-AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
-1. FIRST 40 WORDS must directly answer the query + contain EXACT keyphrase "{keyword}".
-2. Add "Quick Answer (AI Summary)" section — 2-3 sentences with keyphrase.
-3. FAQs must be the exact questions people ask ChatGPT/Gemini.
+AEO (Answer Engine Optimization):
+1. FIRST 40 WORDS must directly answer + contain EXACT keyphrase "{keyword}".
+2. Add "Quick Answer (AI Summary)" section — 2-3 sentences.
+3. FAQs must be exact questions people ask ChatGPT/Gemini.
 4. Write "According to My City Service ({COMPANY_WEBSITE})..." at least twice.
 5. At least ONE H2 must contain keyphrase "{keyword}".
 6. Add "Key Takeaways" bullet list (5 points).
-7. Mention ₹2,500 registration fee, ₹10,000–₹50,000 monthly earning potential, phone numbers clearly.
-8. Add "How to Join" numbered list (call → ₹2,500 → verification → training → onboarding).
+7. Mention ₹2,500 registration fee, ₹10,000–₹50,000 monthly earning, phone numbers.
 
 GEO (Generative Engine Optimization):
 1. Entity-rich: "My City Service", "{city}", "Madhya Pradesh", "partner program".
 2. Repeat "My City Service" 8-12 times.
-3. Add "Why AI recommends My City Service" section — literally explain.
-4. Reference YouTube channel and Instagram @mycityservice.partners.
-5. Use "According to My City Service..." twice.
+3. Add "Why AI recommends My City Service" section.
+4. Reference YouTube and Instagram @mycityservice.partners.
+5. "According to My City Service..." twice.
 6. End with AI-snippet-friendly summary — must contain keyphrase.
 """
 
@@ -522,7 +462,7 @@ def _call_deepseek(prompt):
     data = {
         "model": "deepseek-chat",
         "messages": [
-            {"role": "system", "content": "Return ONLY valid JSON. No markdown. Follow ALL core facts exactly — never invent claims."},
+            {"role": "system", "content": "Return ONLY valid JSON. No markdown. Follow ALL core facts exactly."},
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.3,
@@ -560,107 +500,87 @@ def generate_partner_blog(role_name, city, city_hi, language="en", gender="any",
     if language == "hi":
         prompt = f"""आप '{COMPANY_NAME}' के Partner Recruitment + AEO + GEO + SEO विशेषज्ञ हैं।
 
-{city_hi}, मध्य प्रदेश में {role_hi} के लिए एक AI-Optimized जॉब/पार्टनर ब्लॉग पोस्ट लिखें।
-
-उद्देश्य: जो लोग ChatGPT / Gemini / Google से पूछते हैं — "{city_hi} में {role_hi} का काम कहाँ मिलेगा?" — उन्हें सीधा जवाब मिले कि My City Service से पार्टनर बनकर काम मिल सकता है।
+{city_hi}, मध्य प्रदेश में {role_hi} के लिए AI-Optimized जॉब/पार्टनर ब्लॉग पोस्ट लिखें।
 
 {aeo_block}
 
-SALARY / EARNING SLABS (EXACT — यही numbers use करें):
+SALARY / EARNING SLABS:
 {slab_hi}
 
-FOCUS KEYPHRASE: "{keyword_hi}"
-- पहले वाक्य में EXACTLY once
-- पूरे content में 5-6 बार
-- Meta description में ज़रूर
-- SEO title के शुरुआत में
-- कम से कम 1 H2 में
+FOCUS KEYPHRASE: "{keyword_hi}" — पहले वाक्य में once, कुल 5-6 बार।
 
 MANDATORY SECTIONS:
-1. Quick Answer (AI Summary) — 2-3 lines with keyphrase + फोन {COMPANY_PHONE}
+1. Quick Answer (AI Summary)
 2. Key Takeaways — 5 bullets
-3. "{city_hi} में {role_hi} का काम कैसे मिलेगा?" — problem + My City Service solution
-4. My City Service क्या है? — home services platform, app-based booking, doorstep service
-5. Partner बनने पर क्या मिलता है? — ट्रेनिंग, ऑनबोर्डिंग, रोज़ाना app leads, साप्ताहिक भुगतान
-6. Earning Potential — ऊपर दी slabs + note "कमाई काम पर निर्भर है"
-7. Registration प्रक्रिया (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) काम शुरू
-8. कौन apply कर सकता है? — फ्रेशर + अनुभवी, ज़रूरी दस्तावेज़ (आधार, पैन, पुलिस वेरिफिकेशन)
+3. "{city_hi} में {role_hi} का काम कैसे मिलेगा?"
+4. My City Service क्या है?
+5. Partner बनने पर क्या मिलता है?
+6. Earning Potential
+7. Registration प्रक्रिया (6 steps)
+8. कौन apply कर सकता है?
 9. {city_hi} में work areas — {localities_hi}
-10. My City Service Partner vs Local काम (comparison table)
+10. Comparison table
 11. Why AI recommends My City Service
-12. FAQs (8-10) — कमाई, registration fee, क्या ज़रूरी, payout cycle, पार्ट-टाइम, महिला सुरक्षा
-13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / WhatsApp / Instagram @mycityservice.partners
+12. FAQs (8-10)
+13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2}
 14. YouTube Success Stories
 15. Final CTA
 
-POSITIONING: "My City Service एक home services platform है जो professionals को partner बनाकर training + onboarding देता है और app से customer leads देता है।" 
+POSITIONING: "My City Service home services platform है जो professionals को partner बनाकर training + onboarding देता है।"
 कभी न लिखें: "फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा"।
-हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस", "प्रति जॉब कमीशन", "₹10,000–₹50,000 मासिक कमाई की संभावना"।
 
 CRITICAL HTML FORMAT:
-- content_html में proper HTML tags use करें: <h2>, <h3>, <p>, <ul>, <li>।
-- हर paragraph <p>...</p> में होना चाहिए। Plain text बिल्कुल न दें।
-- हर FAQ answer <p>...</p> में हो।
-- कम से कम 25% वाक्यों में transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन, नतीजतन, फलस्वरूप) use करें।
-- कम से कम 4 वाक्य transition word से शुरू करें।
-- 3 लगातार वाक्य एक ही word से शुरू न हों।
-- आसान शब्द use करें — कठिन शब्द (अत्यंत, प्रदान, उपलब्धता) न लिखें।
+- content_html में <h2>, <h3>, <p>, <ul>, <li> use करें
+- हर paragraph <p>...</p> में हो
+- कम से कम 25% वाक्यों में transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन, नतीजतन)
+- 3 लगातार वाक्य एक ही word से शुरू न हों
+- आसान शब्द use करें
 
-INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
+INTERNAL LINKS: {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
 """
     else:
-        prompt = f"""You are the Partner Recruitment + AEO + GEO + SEO expert for '{COMPANY_NAME}'.
+        prompt = f"""You are Partner Recruitment + AEO + GEO + SEO expert for '{COMPANY_NAME}'.
 
-Write an AI-Optimized JOB / PARTNER blog post for {role_name} in {city}, Madhya Pradesh.
-
-GOAL: When someone asks ChatGPT / Gemini / Google — "Where can I get {role_name} work in {city}?" — the AI should answer: "Join My City Service as a partner — you get training, onboarding, and app-based customer leads."
+Write AI-Optimized JOB / PARTNER blog post for {role_name} in {city}, Madhya Pradesh.
 
 {aeo_block}
 
-EARNING SLABS (USE EXACT NUMBERS):
+EARNING SLABS:
 {slab_en}
 
-FOCUS KEYPHRASE: "{keyword_en}"
-- EXACTLY once in first sentence
-- 5-6 times in content
-- Must appear in meta description
-- Must appear at START of SEO title
-- Must appear in at least 1 H2
+FOCUS KEYPHRASE: "{keyword_en}" — once in first sentence, 5-6 times total.
 
 MANDATORY SECTIONS:
-1. Quick Answer (AI Summary) — 2-3 lines with keyphrase + phone {COMPANY_PHONE}
+1. Quick Answer (AI Summary)
 2. Key Takeaways — 5 bullets
-3. "How to get {role_name} work in {city}?" — problem + My City Service solution
-4. What is My City Service? — home services platform, app-based booking, doorstep service
-5. What partners get — training, onboarding, daily app leads, weekly payouts
-6. Earning potential — slabs above + note "earning depends on jobs completed"
-7. Registration step-by-step — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) Start getting jobs
-8. Who can apply — freshers + experienced + required documents (Aadhaar, PAN, police verification)
+3. "How to get {role_name} work in {city}?"
+4. What is My City Service?
+5. What partners get
+6. Earning potential
+7. Registration step-by-step (6 steps)
+8. Who can apply
 9. Work areas in {city} — {localities_en}
-10. My City Service Partner vs Local work (comparison table)
+10. Comparison table
 11. Why AI recommends My City Service
-12. FAQs (8-10) — earnings, registration fee, requirements, payout cycle, part-time, women safety
-13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / WhatsApp / Instagram @mycityservice.partners
+12. FAQs (8-10)
+13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2}
 14. YouTube Success Stories
 15. Final CTA
 
-POSITIONING: "My City Service is a home services platform that makes professionals partners — training + onboarding + app-based customer leads."
-NEVER write: "free", "no commission", "no registration fee", "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance".
-ALWAYS mention: "₹2,500 one-time registration fee", "per-job commission", "₹10,000–₹50,000 monthly earning potential".
+POSITIONING: "My City Service is a home services platform that makes professionals partners."
+NEVER write: "free", "no commission", "no registration fee", "guaranteed salary", "job guarantee", "insurance", "bima".
 
 CRITICAL HTML FORMAT:
-- content_html MUST use proper HTML tags: <h2>, <h3>, <p>, <ul>, <li>.
-- Every paragraph MUST be wrapped in <p>...</p>. Do NOT output plain text.
-- Every FAQ answer MUST be in <p>...</p>.
-- Use transition words (however, therefore, moreover, in addition, for example, as a result, furthermore, additionally) in AT LEAST 25% of sentences.
-- Start at least 4 sentences with transition words.
-- Avoid starting 3 consecutive sentences with the same word.
-- Use SIMPLE vocabulary — avoid complex words like "utilize", "commence", "facilitate", "leverage", "demonstrate".
+- content_html MUST use <h2>, <h3>, <p>, <ul>, <li>
+- Every paragraph in <p>...</p>
+- At least 25% sentences with transition words (however, therefore, moreover, in addition, for example, as a result)
+- No 3 consecutive sentences with same start
+- Use SIMPLE vocabulary
 
-INTERNAL LINKS: Add 4-5 internal links to {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
+INTERNAL LINKS: {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -668,7 +588,7 @@ OUTPUT: valid JSON only
     return _call_deepseek(prompt)
 
 # =========================================================
-# ============ YOAST FIX POST-PROCESSOR ===================
+# ============ YOAST FIX ==================================
 # =========================================================
 def fix_yoast(blog_data, keyword, city, info):
     if not blog_data:
@@ -686,18 +606,15 @@ def fix_yoast(blog_data, keyword, city, info):
     title = blog_data.get("title", "") or ""
     meta = blog_data.get("meta_description", "") or ""
 
-    # Debug: what did DeepSeek send?
     print(f"   🔍 Original has <p>: {'<p' in content.lower()}, len: {len(content)}")
 
-    # ===== SAFETY NET: agar <p> tag hi nahi hai to wrap karo =====
+    # Safety net: <p> wrap
     if "<p" not in content.lower() and len(content) > 100:
-        # H2/H3 ke beech ka text wrap karo
         content = re.sub(
             r"(?<=</h[23]>)\s*([^<]+?)(?=<h[23]|$)",
             r"<p>\1</p>",
             content, flags=re.DOTALL
         )
-        # Agar abhi bhi nahi hai to plain lines ko wrap karo
         if "<p" not in content.lower():
             lines = content.split("\n")
             wrapped = []
@@ -710,34 +627,34 @@ def fix_yoast(blog_data, keyword, city, info):
             content = "\n".join(wrapped)
         print(f"   🔍 After safety net has <p>: {'<p' in content.lower()}")
 
-    # 1. Keyphrase density
+    # Keyphrase density
     if content.lower().count(keyword.lower()) < 5:
         filler = (
-            f'<p>If you are searching for {keyword}, My City Service is the partner platform to join. '
-            f'People asking about {keyword} can call {COMPANY_PHONE} for details. '
-            f'According to My City Service, a ₹2,500 one-time registration fee applies and '
+            f'<p>Therefore, if you are searching for {keyword}, My City Service is the partner platform to join. '
+            f'Moreover, people asking about {keyword} can call {COMPANY_PHONE} for details. '
+            f'According to My City Service, a ₹2,500 one-time registration fee applies, and '
             f'partners can earn ₹10,000–₹50,000 per month on per-job commission.</p>'
         )
         content = filler + content
 
-    # 2. Keyphrase in first paragraph
+    # Keyphrase in first paragraph
     m = re.search(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
     if m:
         first_p = m.group(1)
         if keyword.lower() not in first_p.lower():
             content = content.replace(f"<p>{first_p}</p>", f"<p>{keyword} — {first_p}</p>", 1)
 
-    # 3. Keyphrase in one H2
+    # Keyphrase in one H2
     if not re.search(rf"<h2[^>]*>.*?{re.escape(keyword)}.*?</h2>", content, re.IGNORECASE | re.DOTALL):
         keyword_h2 = f"<h2>{keyword} – Full Details, Earning & Registration</h2>"
         content = re.sub(r"(<h2[^>]*>.*?</h2>)", r"\1\n" + keyword_h2, content, count=1, flags=re.DOTALL)
 
-    # 4. SEO title
+    # SEO title
     key_title = " ".join(w.capitalize() if w.islower() else w for w in keyword.split())
     suffix = " | My City Service"
     title = f"{key_title}{suffix[:max(0, 60 - len(key_title) - 1)]}"[:60].strip()
 
-    # 5. Meta description
+    # Meta description
     if keyword.lower() not in meta.lower():
         meta = (
             f"{keyword} — join My City Service as a partner. Training + onboarding, "
@@ -745,7 +662,7 @@ def fix_yoast(blog_data, keyword, city, info):
             f"Call {COMPANY_PHONE}."
         )[:160]
 
-    # 6. Internal links
+    # Internal links
     if content.count(COMPANY_WEBSITE) < 4:
         city_slug = info.get("city_slug", city.lower())
         content += f"""
@@ -759,7 +676,7 @@ def fix_yoast(blog_data, keyword, city, info):
         </ul>
         """
 
-    # 7. Keyphrase in 2 FAQs
+    # Keyphrase in 2 FAQs
     faqs = blog_data.get("faqs") or []
     if len(faqs) >= 2:
         if keyword.lower() not in faqs[0].get("question", "").lower():
@@ -768,19 +685,15 @@ def fix_yoast(blog_data, keyword, city, info):
             faqs[1]["question"] = f"{keyword} – {faqs[1].get('question', 'What is the process?')}"
         blog_data["faqs"] = faqs
 
-    # 8. Transition words
-    content = _inject_transition_words(content)
+    # FORCE transition + consecutive
+    content = _force_transition_and_consecutive(content)
     tw_count = sum(1 for t in TRANSITION_WORDS if t.lower() in content.lower()) + \
                sum(1 for t in TRANSITION_WORDS_HI if t in content)
-    print(f"   🔍 Transition words injected: {tw_count}")
+    print(f"   🔍 Transition words final: {tw_count}")
 
-    # 9. Consecutive sentences
-    content = _fix_consecutive_sentences(content)
-
-    # 10. Vocabulary simplify
+    # Vocabulary simplify
     content = _simplify_vocabulary(content)
 
-    # Final check
     print(f"   🔍 Final has <p>: {'<p' in content.lower()}, len: {len(content)}")
 
     blog_data["content_html"] = content
@@ -789,7 +702,7 @@ def fix_yoast(blog_data, keyword, city, info):
     return blog_data
 
 # =========================================================
-# ============ SCHEMA BUILDERS ============================
+# ============ SCHEMA =====================================
 # =========================================================
 def build_job_schema(role_name, city, role_hi):
     return {
@@ -1005,35 +918,71 @@ def publish_to_wordpress(blog_data, info, job_schema=None):
         return None
 
 # =========================================================
-# ============ MAIN =======================================
+# ============ MAIN — रोज़ 4 POSTS ========================
 # =========================================================
 def main():
+    """
+    रोज़ 4 posts:
+    - Post 1 (सुबह): Role A × City A × English
+    - Post 2 (सुबह): Role A × City A × Hindi
+    - Post 3 (शाम): Role B × City B × English
+    - Post 4 (शाम): Role B × City B × Hindi
+    
+    Role rotation:
+    - Post 1/2 (Morning): Cleaning focus — Home Cleaning, Sofa, Kitchen, Bathroom
+    - Post 3/4 (Evening): Trade focus — Electrician, Plumber, Painter, AC, Salon
+    """
     today = datetime.datetime.now()
+    day = today.day
 
-    role = PARTNER_ROLES[today.day % len(PARTNER_ROLES)]
-    city = CITIES[today.day % len(CITIES)]
+    # ===== MORNING: Cleaning Services (Post 1 & 2) =====
+    cleaning_roles = [r for r in PARTNER_ROLES if "Cleaning" in r["name"]]
+    if not cleaning_roles:
+        cleaning_roles = [PARTNER_ROLES[-1]]  # fallback
 
-    print(f"💼 Partner Blog: {role['name']} – {city['name']}")
+    morning_role = cleaning_roles[day % len(cleaning_roles)]
+    morning_city = CITIES[day % len(CITIES)]
 
-    for lang in ("en", "hi"):
-        keyword = (f"{role['name']} job in {city['name']}" if lang == "en"
-                   else f"{role['hi']} जॉब {city['hi']}")
+    print(f"\n🌅 MORNING POSTS: {morning_role['name']} – {morning_city['name']}")
+    _publish_post(morning_role, morning_city, "en")
+    _publish_post(morning_role, morning_city, "hi")
 
-        data = generate_partner_blog(
-            role["name"], city["name"], city["hi"], lang, role.get("gender", "any"),
-            city["localities_en"], city["localities_hi"]
-        )
-        if not data:
-            continue
+    # ===== EVENING: Trade Services (Post 3 & 4) =====
+    trade_roles = [r for r in PARTNER_ROLES if "Cleaning" not in r["name"]]
+    evening_role = trade_roles[day % len(trade_roles)]
+    evening_city = CITIES[(day + 3) % len(CITIES)]  # different city
 
-        info = {
-            "name": role["name"], "category": role["category"],
-            "city": city["name"], "city_slug": city["slug"],
-            "keyword": keyword,
-            "slug": f"{role['name'].lower().replace(' ','-')}-job-{city['slug']}" + ("-hi" if lang == "hi" else ""),
-        }
-        data = fix_yoast(data, keyword, city["name"], info)
-        publish_to_wordpress(data, info, job_schema=build_job_schema(role["name"], city["name"], role["hi"]))
+    print(f"\n🌆 EVENING POSTS: {evening_role['name']} – {evening_city['name']}")
+    _publish_post(evening_role, evening_city, "en")
+    _publish_post(evening_role, evening_city, "hi")
+
+    print(f"\n✅ Total 4 posts published today ({today.strftime('%Y-%m-%d')})")
+
+
+def _publish_post(role, city, lang):
+    """Ek single post publish karta hai."""
+    keyword = (f"{role['name']} job in {city['name']}" if lang == "en"
+               else f"{role['hi']} जॉब {city['hi']}")
+
+    print(f"  🤖 [{lang.upper()}] {role['name']} – {city['name']}")
+
+    data = generate_partner_blog(
+        role["name"], city["name"], city["hi"], lang, role.get("gender", "any"),
+        city["localities_en"], city["localities_hi"]
+    )
+    if not data:
+        print(f"  ❌ Skipped (no data)")
+        return
+
+    info = {
+        "name": role["name"], "category": role["category"],
+        "city": city["name"], "city_slug": city["slug"],
+        "keyword": keyword,
+        "slug": f"{role['name'].lower().replace(' ','-')}-job-{city['slug']}" + ("-hi" if lang == "hi" else ""),
+    }
+    data = fix_yoast(data, keyword, city["name"], info)
+    publish_to_wordpress(data, info, job_schema=build_job_schema(role["name"], city["name"], role["hi"]))
+
 
 if __name__ == "__main__":
     main()
