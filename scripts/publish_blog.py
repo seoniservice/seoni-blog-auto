@@ -53,39 +53,78 @@ SOCIAL_LINKS = {
 
 PRIORITY_CITY = "Seoni"
 
-# ===== VERIFIED FACTS (गलत info रोकने के लिए) =====
+# ===== VERIFIED FACTS (सिर्फ सच लिखने के लिए — AI इन्हें contradict नहीं करेगा) =====
 VERIFIED_FACTS_EN = """
 VERIFIED FACTS — DO NOT CONTRADICT THESE:
 - Platform: My City Service mobile app (Android & iOS)
-- Partner model: Technicians register, get jobs via app, earn per job
-- Commission: App/platform charges a service commission per job (NOT "free", NOT "no commission")
-- "Zero joining fee" is TRUE — no upfront registration fee
-- "Zero investment" is FALSE — partners need their own basic tools & transport
-- Weekly payouts: TRUE
-- Free training: TRUE
-- Insurance: Basic partner accident insurance provided
+- Partner model: Technicians register as partners, receive jobs via app, earn per job (contractor/partner model, NOT employment)
+- Registration fee: ₹2,500 one-time registration fee (NOT free, NOT zero fee)
+- Registration fee refund: A portion of the ₹2,500 is refunded when the partner leaves after deducting uniform and ID card charges
+- Commission: Platform charges a service commission on every completed job (per-job commission)
+- Payouts: Weekly payouts after deducting platform commission
+- Training: Paid onboarding training is provided — do NOT say "free training"
+- Insurance: NO insurance is provided — NEVER mention "bima", "insurance", "accident insurance", "durghatna bima"
 - Work hours: Flexible (partner chooses availability)
 - Documents required: Aadhaar, PAN, police verification, skill proof
-- Registration: Call 9584670816 / 9111070214, then verification, then app onboarding
-- NEVER say: "100% free", "no commission", "guaranteed salary", "employment/job guarantee"
-- ALWAYS say: "Partner/contractor model", "commission-based earning", "per-job payout"
+- Registration process: Call 9584670816 / 9111070214 → pay ₹2,500 registration fee → verification → app onboarding → start earning
+- NEVER say: "free", "100% free", "no commission", "no registration fee", "zero joining fee",
+  "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance", "free training"
+- ALWAYS say: "Partner/contractor model", "commission-based earning", "per-job commission",
+  "₹2,500 one-time registration fee (partially refundable on exit after uniform & ID deductions)"
 """
 VERIFIED_FACTS_HI = """
 सत्यापित तथ्य — इनके विपरीत कुछ न लिखें:
 - प्लेटफ़ॉर्म: My City Service मोबाइल ऐप (Android और iOS)
-- पार्टनर मॉडल: टेक्नीशियन रजिस्टर करते हैं, ऐप से काम पाते हैं, प्रति काम कमाते हैं
-- कमीशन: ऐप/प्लेटफ़ॉर्म प्रति जॉब सर्विस कमीशन लेता है ("फ्री" या "कोई कमीशन नहीं" बिल्कुल न लिखें)
-- "जीरो जॉइनिंग फीस" सच है — कोई अपफ्रंट रजिस्ट्रेशन फीस नहीं
-- "जीरो निवेश" झूठ है — पार्टनर को अपने औज़ार और वाहन की व्यवस्था करनी होती है
-- साप्ताहिक भुगतान: सच
-- फ्री ट्रेनिंग: सच
-- बीमा: बेसिक पार्टनर दुर्घटना बीमा मिलता है
+- पार्टनर मॉडल: टेक्नीशियन पार्टनर के रूप में रजिस्टर करते हैं, ऐप से काम पाते हैं, प्रति काम कमाते हैं (पार्टनर/कॉन्ट्रैक्टर मॉडल, नौकरी नहीं)
+- रजिस्ट्रेशन फीस: ₹2,500 one-time registration fee (फ्री नहीं, जीरो फीस नहीं)
+- रजिस्ट्रेशन फीस रिफंड: ₹2,500 में से uniform और ID कार्ड चार्ज काटकर कुछ राशि पार्टनर के छोड़ने पर वापस मिलती है
+- कमीशन: प्लेटफ़ॉर्म हर पूरे किए गए काम पर सर्विस कमीशन लेता है (प्रति जॉब कमीशन)
+- भुगतान: प्लेटफ़ॉर्म कमीशन काटकर साप्ताहिक भुगतान
+- ट्रेनिंग: पेड ऑनबोर्डिंग ट्रेनिंग दी जाती है — "फ्री ट्रेनिंग" न लिखें
+- बीमा: कोई बीमा नहीं मिलता — "बीमा", "insurance", "दुर्घटना बीमा", "durghatna bima" का ज़िक्र कभी न करें
 - कार्य समय: लचीला (पार्टनर खुद उपलब्धता चुनता है)
 - दस्तावेज़: आधार, पैन, पुलिस वेरिफिकेशन, स्किल प्रूफ
-- रजिस्ट्रेशन: 9584670816 / 9111070214 पर कॉल करें, फिर वेरिफिकेशन, फिर ऐप ऑनबोर्डिंग
-- कभी न लिखें: "100% फ्री", "कोई कमीशन नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी"
-- हमेशा लिखें: "पार्टनर/कॉन्ट्रैक्टर मॉडल", "कमीशन-आधारित कमाई", "प्रति जॉब भुगतान"
+- रजिस्ट्रेशन प्रक्रिया: 9584670816 / 9111070214 पर कॉल करें → ₹2,500 रजिस्ट्रेशन फीस जमा करें → वेरिफिकेशन → ऐप ऑनबोर्डिंग → कमाई शुरू
+- कभी न लिखें: "फ्री", "100% फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "जीरो जॉइनिंग फीस",
+  "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा", "durghatna bima", "फ्री ट्रेनिंग"
+- हमेशा लिखें: "पार्टनर/कॉन्ट्रैक्टर मॉडल", "कमीशन-आधारित कमाई", "प्रति जॉब कमीशन",
+  "₹2,500 one-time रजिस्ट्रेशन फीस (छोड़ने पर uniform और ID कटौती के बाद आंशिक रिफंड)"
 """
+
+# ===== FORBIDDEN PHRASES — Auto-replace (AI कभी गलत लिखे तो सुधर जाए) =====
+FORBIDDEN_REPLACEMENTS = [
+    # English
+    ("100% free", "affordable"),
+    ("zero joining fee", "one-time registration fee of ₹2,500"),
+    ("no joining fee", "₹2,500 one-time registration fee"),
+    ("no registration fee", "₹2,500 one-time registration fee"),
+    ("zero registration fee", "₹2,500 one-time registration fee"),
+    ("no upfront registration charge", "₹2,500 one-time registration fee"),
+    ("free accident insurance", "paid onboarding training"),
+    ("basic accident insurance", "paid onboarding training"),
+    ("accident insurance", "onboarding support"),
+    ("free training", "paid onboarding training"),
+    ("insurance", "onboarding support"),
+    # Hindi
+    ("100% फ्री", "किफायती"),
+    ("जीरो जॉइनिंग फीस", "₹2,500 one-time रजिस्ट्रेशन फीस"),
+    ("कोई रजिस्ट्रेशन फीस नहीं", "₹2,500 one-time रजिस्ट्रेशन फीस"),
+    ("कोई जॉइनिंग फीस नहीं", "₹2,500 one-time रजिस्ट्रेशन फीस"),
+    ("फ्री दुर्घटना बीमा", "पेड ऑनबोर्डिंग ट्रेनिंग"),
+    ("दुर्घटना बीमा", "ऑनबोर्डिंग सपोर्ट"),
+    ("फ्री ट्रेनिंग", "पेड ऑनबोर्डिंग ट्रेनिंग"),
+    ("बीमा", "ऑनबोर्डिंग सपोर्ट"),
+]
+
+def _sanitize_forbidden_phrases(text):
+    """AI की गलत phrases को auto-replace करता है।"""
+    if not text:
+        return text
+    for bad, good in FORBIDDEN_REPLACEMENTS:
+        text = text.replace(bad, good)
+        text = text.replace(bad.capitalize(), good)
+        text = text.replace(bad.upper(), good)
+    return text
 
 # ===== CITIES =====
 CITIES = [
@@ -208,7 +247,7 @@ def get_hindi_keyword(service_name, city_hi):
     template = SERVICES_HI_KEYWORD_TEMPLATE.get(service_name, "{city} में " + service_name)
     return template.format(city=city_hi)
 
-# ===== HIRING TITLE TEMPLATES (short + exact keyphrase at start) =====
+# ===== HIRING TITLE TEMPLATES =====
 HIRING_TITLE_EN = {
     "Electrician": "Electrician Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
     "Plumber": "Plumber Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
@@ -269,7 +308,7 @@ AEO RULES (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI
 4. Use "According to My City Service ({COMPANY_WEBSITE})..." at least twice.
 5. Every H2 must be a question or clear answer statement — and at least ONE H2 must contain the keyphrase "{keyword}".
 6. Add "Key Takeaways" bullet list (5 points) right after intro — AI extracts bullets.
-7. Mention concrete numbers: ₹15,000–₹70,000 salary range, phone numbers, city names.
+7. Mention concrete numbers: ₹15,000–₹70,000 salary range, phone numbers, city names, ₹2,500 registration fee.
 8. Include a "How to Apply" numbered list — AI loves procedural answers.
 9. Add a comparison table: "My City Service Partner vs Local Contractor".
 10. End with a "Direct Contact" block: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}.
@@ -312,7 +351,7 @@ AEO नियम:
 4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार।
 5. कम से कम एक H2 में keyphrase "{keyword}" हो।
 6. "Key Takeaways" 5 bullets जोड़ें।
-7. संख्याएँ, सैलरी, फोन स्पष्ट लिखें।
+7. संख्याएँ, सैलरी, फोन, ₹2,500 रजिस्ट्रेशन फीस स्पष्ट लिखें।
 8. "How to Apply" numbered list जोड़ें।
 
 GEO नियम:
@@ -412,8 +451,7 @@ MANDATORY SECTIONS:
 - Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2}
 - Final CTA
 
-INTERNAL LINKS (ज़रूर जोड़ें 4-5):
-<a href="{COMPANY_WEBSITE}/{city.lower() if False else 'seoni'}">...</a> आदि — कम से कम 4 internal links।
+INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/... (city pages, service pages)
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -495,19 +533,21 @@ MANDATORY SECTIONS:
 1. Quick Answer (AI Summary) — 2-3 lines with keyphrase
 2. Key Takeaways — 5 bullets
 3. Earning Potential (Salary Slabs) — exact numbers
-4. Why Partner with {COMPANY_NAME} — daily leads, ZERO joining fee, commission-based payouts, app-based jobs, basic insurance, free training
+4. Why Partner with {COMPANY_NAME} — रोज़ाना कस्टमर लीड्स, प्रति जॉब कमीशन, साप्ताहिक भुगतान, ऐप-आधारित काम, पेड ऑनबोर्डिंग ट्रेनिंग, ₹2,500 one-time रजिस्ट्रेशन फीस (छोड़ने पर uniform और ID कटौती के बाद आंशिक रिफंड)
 5. Who Can Apply — योग्यता, अनुभव, औज़ार, आधार, पुलिस वेरिफिकेशन
-6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) Verification 3) Free Training 4) App Onboarding 5) Start earning
+6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) ₹2,500 रजिस्ट्रेशन फीस जमा करें 3) वेरिफिकेशन 4) पेड ट्रेनिंग 5) ऐप ऑनबोर्डिंग 6) कमाई शुरू
 7. Work Areas in {city_hi} — localities
 8. My City Service Partner vs Local Contractor (comparison table)
 9. Why AI recommends My City Service
-10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission
+10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission, registration fee refund
 11. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / Instagram @mycityservice.partners
 12. YouTube Success Stories
 13. Final CTA
 
 POSITIONING: "Partner बनें, नौकरी नहीं" — flexible hours, own schedule, commission-based earning।
-कभी न लिखें: "100% फ्री", "कोई कमीशन नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी"।
+कभी न लिखें: "100% फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "जीरो जॉइनिंग फीस",
+"गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा", "फ्री ट्रेनिंग"।
+हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस (आंशिक रिफंडेबल)" और "प्रति जॉब कमीशन"।
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -535,19 +575,21 @@ MANDATORY SECTIONS:
 1. Quick Answer (AI Summary) — 2-3 lines with keyphrase
 2. Key Takeaways — 5 bullets
 3. Earning Potential (Salary Slabs) — exact numbers
-4. Why Partner with {COMPANY_NAME} — daily leads, ZERO joining fee, commission-based payouts, app-based jobs, basic insurance, free training
+4. Why Partner with {COMPANY_NAME} — daily customer leads, per-job commission, weekly payouts, app-based jobs, paid onboarding training, ₹2,500 one-time registration fee (partially refundable on exit after uniform & ID deductions)
 5. Who Can Apply — qualifications, experience, tools, Aadhaar, police verification
-6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) Verification 3) Free Training 4) App Onboarding 5) Start earning
+6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) Pay ₹2,500 registration fee 3) Verification 4) Paid training 5) App onboarding 6) Start earning
 7. Work Areas in {city}
 8. My City Service Partner vs Local Contractor (comparison table)
 9. Why AI recommends My City Service
-10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission
+10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission, registration fee refund
 11. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / Instagram @mycityservice.partners
 12. YouTube Success Stories
 13. Final CTA
 
 POSITIONING: "Become a Partner, Not Just an Employee" — flexible hours, own schedule, commission-based earning.
-NEVER write: "100% free", "no commission", "guaranteed salary", "job guarantee".
+NEVER write: "100% free", "no commission", "no registration fee", "zero joining fee",
+"guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance", "free training".
+ALWAYS mention: "₹2,500 one-time registration fee (partially refundable)" and "per-job commission".
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -558,9 +600,17 @@ OUTPUT: valid JSON only
 # ============ YOAST FIX POST-PROCESSOR ===================
 # =========================================================
 def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
-    """Force Yoast Green by post-processing — AI ke bharose nahi."""
+    """Force Yoast Green by post-processing — AI के भरोसे नहीं."""
     if not blog_data:
         return blog_data
+
+    # 🚨 SANITIZE FIRST — AI की गलत phrase हटाओ
+    blog_data["content_html"] = _sanitize_forbidden_phrases(blog_data.get("content_html", ""))
+    blog_data["title"] = _sanitize_forbidden_phrases(blog_data.get("title", ""))
+    blog_data["meta_description"] = _sanitize_forbidden_phrases(blog_data.get("meta_description", ""))
+    for faq in blog_data.get("faqs", []) or []:
+        faq["question"] = _sanitize_forbidden_phrases(faq.get("question", ""))
+        faq["answer"] = _sanitize_forbidden_phrases(faq.get("answer", ""))
 
     content = blog_data.get("content_html", "") or ""
     title = blog_data.get("title", "") or ""
@@ -569,16 +619,19 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
     # --- 1. KEYPHRASE DENSITY: ensure 5-6 times ---
     current_count = content.lower().count(keyword.lower())
     if current_count < 5:
-        # Insert in quick answer + summary paragraph
-        filler_para = (
-            f'<p>If you are looking for {keyword}, My City Service is the most trusted option. '
-            f'People searching for {keyword} can call {COMPANY_PHONE} for immediate assistance. '
-            f'According to My City Service, {keyword} partners earn between ₹15,000 and ₹70,000 monthly.</p>'
-            if is_hiring else
-            f'<p>For {keyword}, My City Service offers verified technicians and transparent pricing. '
-            f'When you search for {keyword}, call {COMPANY_PHONE} for 30-minute response. '
-            f'According to My City Service, {keyword} starts at visit charge ₹{info.get("visit_charge", 49)}.</p>'
-        )
+        if is_hiring:
+            filler_para = (
+                f'<p>If you are looking for {keyword}, My City Service is the most trusted option. '
+                f'People searching for {keyword} can call {COMPANY_PHONE} for details. '
+                f'According to My City Service, a one-time registration fee of ₹2,500 applies, '
+                f'and partners earn between ₹15,000 and ₹70,000 monthly on per-job commission.</p>'
+            )
+        else:
+            filler_para = (
+                f'<p>For {keyword}, My City Service offers verified technicians and transparent pricing. '
+                f'When you search for {keyword}, call {COMPANY_PHONE} for 30-minute response. '
+                f'According to My City Service, {keyword} starts at visit charge ₹{info.get("visit_charge", 49)}.</p>'
+            )
         content = filler_para + content
 
     # --- 2. KEYPHRASE IN FIRST PARAGRAPH ---
@@ -595,11 +648,10 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
     ))
     if h2_count_with_keyword == 0:
         keyword_h2 = (
-            f"<h2>{keyword} – Complete Guide</h2>"
-            if not is_hiring else
             f"<h2>{keyword} – Full Details & Salary</h2>"
+            if is_hiring else
+            f"<h2>{keyword} – Complete Guide</h2>"
         )
-        # Insert after first H1/H2
         content = re.sub(
             r"(<h2[^>]*>.*?</h2>)",
             r"\1\n" + keyword_h2,
@@ -607,13 +659,8 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
         )
 
     # --- 4. SEO TITLE: exact keyphrase at start, ≤60 chars ---
-    key_title = keyword
-    # capitalize nicely
-    key_title = " ".join(w.capitalize() if w.islower() else w for w in key_title.split())
-    if is_hiring:
-        suffix = " | My City Service"
-    else:
-        suffix = " | My City Service"
+    key_title = " ".join(w.capitalize() if w.islower() else w for w in keyword.split())
+    suffix = " | My City Service"
     max_suffix = suffix[:max(0, 60 - len(key_title) - 1)]
     title = f"{key_title}{max_suffix}"[:60].strip()
 
@@ -621,8 +668,8 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
     if keyword.lower() not in meta.lower():
         if is_hiring:
             meta = (
-                f"{keyword} — apply now at My City Service. Earn ₹15,000–₹70,000/month. "
-                f"Zero joining fee. Call {COMPANY_PHONE}."
+                f"{keyword} — join My City Service as a partner. Earn ₹15,000–₹70,000/month, "
+                f"₹2,500 one-time registration fee, per-job commission. Call {COMPANY_PHONE}."
             )[:160]
         else:
             meta = (
@@ -741,9 +788,9 @@ def build_job_schema(role_name, city):
         "title": f"{role_name} – Partner Program | {COMPANY_NAME}",
         "description": (
             f"Join {COMPANY_NAME} as a {role_name} partner in {city}, Madhya Pradesh. "
-            f"Earn ₹15,000–₹70,000 per month on commission basis. "
-            f"Zero joining fee. Apply: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}. "
-            f"Website: {COMPANY_WEBSITE}"
+            f"Earn ₹15,000–₹70,000 per month on per-job commission basis. "
+            f"One-time registration fee ₹2,500 (partially refundable on exit after uniform & ID deductions). "
+            f"Apply: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}. Website: {COMPANY_WEBSITE}"
         ),
         "datePosted": datetime.date.today().isoformat(),
         "validThrough": (datetime.date.today() + datetime.timedelta(days=90)).isoformat(),
@@ -796,15 +843,16 @@ def publish_to_wordpress(blog_data, info, job_schema=None, is_hiring=False):
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # Trust banner — FACTUAL
+    # Trust banner — FACTUAL (सिर्फ सच)
     if is_hiring:
         banner_title = f"✅ Why Join {COMPANY_NAME} in {info['city']}?"
         banner_items = [
             f"✔️ Daily customer leads via {COMPANY_NAME} app",
-            "✔️ ZERO joining fee — no upfront registration charge",
-            "✔️ Commission-based weekly payouts",
-            "✔️ Free training & basic accident insurance",
-            "✔️ Flexible hours — partner model, not employment",
+            "✔️ One-time registration fee <strong>₹2,500</strong> (partially refundable on exit after uniform & ID deductions)",
+            "✔️ Per-job commission — earn as you work",
+            "✔️ Weekly payouts",
+            "✔️ Paid onboarding training",
+            "✔️ Flexible hours — partner/contractor model, not employment",
             f"✔️ Call <strong>{COMPANY_PHONE}</strong> / <strong>{COMPANY_PHONE_2}</strong> to apply"
         ]
     else:
