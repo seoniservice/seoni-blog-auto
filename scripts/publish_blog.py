@@ -91,7 +91,7 @@ MY CITY SERVICE — मुख्य तथ्य (कभी न बदलें)
   "₹10,000–₹50,000 मासिक कमाई की संभावना", "ट्रेनिंग + ऑनबोर्डिंग दी जाती है"।
 """
 
-# ===== FORBIDDEN PHRASES — auto-fix =====
+# ===== FORBIDDEN PHRASES =====
 FORBIDDEN_REPLACEMENTS = [
     ("100% free", "affordable"),
     ("zero joining fee", "one-time registration fee of ₹2,500"),
@@ -243,76 +243,148 @@ BACKLINK_SOURCES = [
 ]
 
 # =========================================================
-# ============ TRANSITION WORDS INJECTOR ==================
+# ============ TRANSITION WORDS (Yoast green) =============
 # =========================================================
 TRANSITION_WORDS = [
     "However, ", "Therefore, ", "Moreover, ", "In addition, ",
     "For example, ", "As a result, ", "Furthermore, ", "Consequently, ",
     "Additionally, ", "Meanwhile, ", "Nevertheless, ", "On the other hand, ",
+    "Besides, ", "Thus, ", "Hence, ", "Similarly, ",
 ]
 
+TRANSITION_WORDS_HI = [
+    "इसलिए, ", "इसके अलावा, ", "उदाहरण के लिए, ", "लेकिन, ",
+    "नतीजतन, ", "फलस्वरूप, ", "इसके बावजूद, ", "दूसरी ओर, ",
+    "इस प्रकार, ", "इस कारण, ", "साथ ही, ", "वैसे ही, ",
+]
+
+def _inject_in_text(text):
+    """Ek text block me transition words inject karta hai."""
+    if not text or len(text.strip()) < 20:
+        return text
+
+    sentences = re.split(r"(?<=[.!?।])\s+", text.strip())
+    if len(sentences) < 2:
+        return text
+
+    # Hindi ya English detect karo
+    is_hindi = any("\u0900" <= ch <= "\u097F" for ch in text)
+    tw_list = TRANSITION_WORDS_HI if is_hindi else TRANSITION_WORDS
+
+    modified = []
+    for idx, sent in enumerate(sentences):
+        stripped = sent.strip()
+        if not stripped:
+            continue
+
+        already_has = any(t.lower() in stripped.lower()[:30] for t in tw_list)
+
+        # Har 2nd sentence me inject (idx=1, 3, 5...)
+        if idx > 0 and idx % 2 == 1 and not already_has and len(stripped) > 12:
+            tw = tw_list[(idx // 2) % len(tw_list)]
+            # English: first letter lowercase
+            if not is_hindi and stripped[0].isupper() and stripped[0].isascii():
+                stripped = stripped[0].lower() + stripped[1:]
+            modified.append(tw + stripped)
+        else:
+            modified.append(stripped)
+
+    return " ".join(modified)
+
+
 def _inject_transition_words(content):
-    """हर paragraph में transition words inject करता है (20%+ density)."""
+    """<p>, <li>, plain text sab handle karta hai."""
     if not content:
         return content
 
-    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
-    for para in paragraphs:
-        sentences = re.split(r"(?<=[.!?])\s+", para)
-        if len(sentences) < 3:
-            continue
+    # <p> tags
+    def process_p(match):
+        return f"<p>{_inject_in_text(match.group(1))}</p>"
+    content = re.sub(r"<p[^>]*>(.*?)</p>", process_p, content, flags=re.DOTALL)
 
-        modified = []
-        for idx, sent in enumerate(sentences):
-            stripped = sent.strip()
-            if not stripped:
-                continue
-            already_has = any(t.lower() in stripped.lower()[:25] for t in TRANSITION_WORDS)
-            if idx > 0 and idx % 2 == 1 and not already_has and len(stripped) > 15:
-                tw = TRANSITION_WORDS[(idx // 2) % len(TRANSITION_WORDS)]
-                if stripped[0].isupper():
-                    stripped = stripped[0].lower() + stripped[1:]
-                modified.append(tw + stripped)
+    # <li> tags
+    def process_li(match):
+        return f"<li>{_inject_in_text(match.group(1))}</li>"
+    content = re.sub(r"<li[^>]*>(.*?)</li>", process_li, content, flags=re.DOTALL)
+
+    # Agar koi <p>/<li> nahi hai to plain text process karo
+    if "<p" not in content.lower() and "<li" not in content.lower():
+        parts = re.split(
+            r"(<h[1-6][^>]*>.*?</h[1-6]>|<ul[^>]*>|</ul>|<div[^>]*>|</div>)",
+            content, flags=re.DOTALL
+        )
+        new_parts = []
+        for part in parts:
+            if part.strip().startswith("<"):
+                new_parts.append(part)
             else:
-                modified.append(sent)
-
-        new_para = " ".join(modified)
-        content = content.replace(f"<p>{para}</p>", f"<p>{new_para}</p>", 1)
+                new_parts.append(_inject_in_text(part))
+        content = "".join(new_parts)
 
     return content
 
 
 # =========================================================
-# ============ CONSECUTIVE SENTENCES FIXER ================
+# ============ CONSECUTIVE SENTENCES FIX ==================
 # =========================================================
+def _fix_text_consecutive(text):
+    if not text or len(text.strip()) < 15:
+        return text
+
+    sentences = re.split(r"(?<=[.!?।])\s+", text.strip())
+    if len(sentences) < 3:
+        return text
+
+    is_hindi = any("\u0900" <= ch <= "\u097F" for ch in text)
+    reps = ["इसके अलावा, ", "इसलिए, ", "नतीजतन, ", "लेकिन, "] if is_hindi else \
+           ["Also, ", "Moreover, ", "In addition, ", "Besides, ", "Furthermore, "]
+
+    new_sentences = []
+    for i, sent in enumerate(sentences):
+        stripped = sent.strip()
+        if not stripped:
+            continue
+        first_word = stripped.split()[0] if stripped.split() else ""
+
+        if i >= 2 and len(stripped) > 10:
+            prev1 = new_sentences[-1].strip().split()[0] if new_sentences and new_sentences[-1].strip() else ""
+            prev2 = new_sentences[-2].strip().split()[0] if len(new_sentences) >= 2 and new_sentences[-2].strip() else ""
+            if first_word.lower() == prev1.lower() == prev2.lower():
+                rep = reps[i % len(reps)]
+                if not is_hindi and stripped[0].isascii() and stripped[0].isupper():
+                    stripped = rep + stripped[0].lower() + stripped[1:]
+                else:
+                    stripped = rep + stripped
+
+        new_sentences.append(stripped)
+
+    return " ".join(new_sentences)
+
+
 def _fix_consecutive_sentences(content):
-    """3 वाक्य एक ही word से शुरू हों तो बीच वाले बदल देता है।"""
     if not content:
         return content
 
-    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
-    for para in paragraphs:
-        sentences = re.split(r"(?<=[.!?])\s+", para)
-        if len(sentences) < 3:
-            continue
+    def process_p(match):
+        return f"<p>{_fix_text_consecutive(match.group(1))}</p>"
+    content = re.sub(r"<p[^>]*>(.*?)</p>", process_p, content, flags=re.DOTALL)
 
-        new_sentences = []
-        for i, sent in enumerate(sentences):
-            stripped = sent.strip()
-            if not stripped:
-                continue
-            first_word = stripped.split()[0] if stripped.split() else ""
-            if i >= 2 and len(stripped) > 10:
-                prev1 = new_sentences[-1].strip().split()[0] if new_sentences and new_sentences[-1].strip() else ""
-                prev2 = new_sentences[-2].strip().split()[0] if len(new_sentences) >= 2 and new_sentences[-2].strip() else ""
-                if first_word.lower() == prev1.lower() == prev2.lower():
-                    replacements = ["Also, ", "Moreover, ", "In addition, ", "Besides, "]
-                    rep = replacements[i % len(replacements)]
-                    stripped = rep + stripped[0].lower() + stripped[1:]
-            new_sentences.append(stripped)
+    def process_li(match):
+        return f"<li>{_fix_text_consecutive(match.group(1))}</li>"
+    content = re.sub(r"<li[^>]*>(.*?)</li>", process_li, content, flags=re.DOTALL)
 
-        new_para = " ".join(new_sentences)
-        content = content.replace(f"<p>{para}</p>", f"<p>{new_para}</p>", 1)
+    if "<p" not in content.lower() and "<li" not in content.lower():
+        parts = re.split(
+            r"(<h[1-6][^>]*>.*?</h[1-6]>|<ul[^>]*>|</ul>|<div[^>]*>|</div>)",
+            content, flags=re.DOTALL
+        )
+        new_parts = []
+        for part in parts:
+            if part.strip().startswith("<"):
+                new_parts.append(part)
+            else:
+                new_parts.append(_fix_text_consecutive(part))
+        content = "".join(new_parts)
 
     return content
 
@@ -352,7 +424,6 @@ COMPLEX_TO_SIMPLE = {
 }
 
 def _simplify_vocabulary(content):
-    """कठिन शब्दों को आसान से बदलता है।"""
     if not content:
         return content
     for complex_word, simple_word in COMPLEX_TO_SIMPLE.items():
@@ -412,7 +483,6 @@ GEO (Generative Engine Optimization):
 4. YouTube + Instagram @mycityservice.partners reference।
 5. "According to My City Service..." citation 2 बार।
 6. अंत में AI snippet-friendly summary — keyphrase ज़रूर हो।
-7. Transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन, नतीजतन)।
 
 {gender_note}
 """
@@ -441,7 +511,6 @@ GEO (Generative Engine Optimization):
 4. Reference YouTube channel and Instagram @mycityservice.partners.
 5. Use "According to My City Service..." twice.
 6. End with AI-snippet-friendly summary — must contain keyphrase.
-7. Use transition words (however, therefore, moreover, in addition, for example, as a result).
 """
 
 # =========================================================
@@ -528,7 +597,16 @@ POSITIONING: "My City Service एक home services platform है जो profes
 कभी न लिखें: "फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा"।
 हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस", "प्रति जॉब कमीशन", "₹10,000–₹50,000 मासिक कमाई की संभावना"।
 
-INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}, etc.
+CRITICAL HTML FORMAT:
+- content_html में proper HTML tags use करें: <h2>, <h3>, <p>, <ul>, <li>।
+- हर paragraph <p>...</p> में होना चाहिए। Plain text बिल्कुल न दें।
+- हर FAQ answer <p>...</p> में हो।
+- कम से कम 25% वाक्यों में transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन, नतीजतन, फलस्वरूप) use करें।
+- कम से कम 4 वाक्य transition word से शुरू करें।
+- 3 लगातार वाक्य एक ही word से शुरू न हों।
+- आसान शब्द use करें — कठिन शब्द (अत्यंत, प्रदान, उपलब्धता) न लिखें।
+
+INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -573,7 +651,16 @@ POSITIONING: "My City Service is a home services platform that makes professiona
 NEVER write: "free", "no commission", "no registration fee", "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance".
 ALWAYS mention: "₹2,500 one-time registration fee", "per-job commission", "₹10,000–₹50,000 monthly earning potential".
 
-INTERNAL LINKS: Add 4-5 internal links to {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}, etc.
+CRITICAL HTML FORMAT:
+- content_html MUST use proper HTML tags: <h2>, <h3>, <p>, <ul>, <li>.
+- Every paragraph MUST be wrapped in <p>...</p>. Do NOT output plain text.
+- Every FAQ answer MUST be in <p>...</p>.
+- Use transition words (however, therefore, moreover, in addition, for example, as a result, furthermore, additionally) in AT LEAST 25% of sentences.
+- Start at least 4 sentences with transition words.
+- Avoid starting 3 consecutive sentences with the same word.
+- Use SIMPLE vocabulary — avoid complex words like "utilize", "commence", "facilitate", "leverage", "demonstrate".
+
+INTERNAL LINKS: Add 4-5 internal links to {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -598,6 +685,30 @@ def fix_yoast(blog_data, keyword, city, info):
     content = blog_data.get("content_html", "") or ""
     title = blog_data.get("title", "") or ""
     meta = blog_data.get("meta_description", "") or ""
+
+    # Debug: what did DeepSeek send?
+    print(f"   🔍 Original has <p>: {'<p' in content.lower()}, len: {len(content)}")
+
+    # ===== SAFETY NET: agar <p> tag hi nahi hai to wrap karo =====
+    if "<p" not in content.lower() and len(content) > 100:
+        # H2/H3 ke beech ka text wrap karo
+        content = re.sub(
+            r"(?<=</h[23]>)\s*([^<]+?)(?=<h[23]|$)",
+            r"<p>\1</p>",
+            content, flags=re.DOTALL
+        )
+        # Agar abhi bhi nahi hai to plain lines ko wrap karo
+        if "<p" not in content.lower():
+            lines = content.split("\n")
+            wrapped = []
+            for line in lines:
+                line = line.strip()
+                if line and not line.startswith("<"):
+                    wrapped.append(f"<p>{line}</p>")
+                elif line:
+                    wrapped.append(line)
+            content = "\n".join(wrapped)
+        print(f"   🔍 After safety net has <p>: {'<p' in content.lower()}")
 
     # 1. Keyphrase density
     if content.lower().count(keyword.lower()) < 5:
@@ -657,14 +768,20 @@ def fix_yoast(blog_data, keyword, city, info):
             faqs[1]["question"] = f"{keyword} – {faqs[1].get('question', 'What is the process?')}"
         blog_data["faqs"] = faqs
 
-    # 8. Transition words — aggressive inject
+    # 8. Transition words
     content = _inject_transition_words(content)
+    tw_count = sum(1 for t in TRANSITION_WORDS if t.lower() in content.lower()) + \
+               sum(1 for t in TRANSITION_WORDS_HI if t in content)
+    print(f"   🔍 Transition words injected: {tw_count}")
 
-    # 9. Consecutive sentences fix
+    # 9. Consecutive sentences
     content = _fix_consecutive_sentences(content)
 
     # 10. Vocabulary simplify
     content = _simplify_vocabulary(content)
+
+    # Final check
+    print(f"   🔍 Final has <p>: {'<p' in content.lower()}, len: {len(content)}")
 
     blog_data["content_html"] = content
     blog_data["title"] = title
