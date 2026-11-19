@@ -12,7 +12,7 @@ WP_APP_PASSWORD = os.getenv("WP_APP_PASSWORD")
 
 # ===== COMPANY DETAILS =====
 COMPANY_NAME = "My City Service"
-COMPANY_TAGLINE = "Professional Home Services at Your Doorstep"
+COMPANY_TAGLINE = "Partner platform for home service professionals"
 COMPANY_PHONE = "+91-9584670816"
 COMPANY_PHONE_2 = "+91-9111070214"
 COMPANY_LANDLINE = "07692422904"
@@ -36,88 +36,84 @@ SOCIAL_LINKS = {
     "website": COMPANY_WEBSITE,
     "youtube": COMPANY_YOUTUBE,
     "instagram_partners": COMPANY_INSTAGRAM_PARTNERS,
-    "twitter": "https://x.com/mycityservice9",
-    "instagram": "https://instagram.com/mycityservice.in",
-    "facebook": "https://facebook.com/Mycityservices/",
-    "facebook_reels": "https://www.facebook.com/Mycityservices/reels/",
-    "linkedin": "https://linkedin.com/in/my-city-service",
     "whatsapp": "https://wa.me/919584670816",
-    "whatsapp_channel": "https://whatsapp.com/channel/0029VbAbZ4M5K3zTCiDwsS2e",
-    "pinterest": "https://pin.it/6WQE1XxYG",
-    "arattai": "@my_city_service",
+    "facebook": "https://facebook.com/Mycityservices/",
+    "instagram": "https://instagram.com/mycityservice.in",
+    "linkedin": "https://linkedin.com/in/my-city-service",
     "playstore": "https://play.google.com/store/apps/details?id=com.myapp.sservices&hl=en_IN",
     "appstore": "https://apps.apple.com/in/app/my-city-service/id6761624595",
-    "justdial": "https://wap.justdial.com/el?source=77&user_type=&docid=9999P7695.7695.250603235056.Y3R9",
-    "hotfrog": "https://www.hotfrog.in/company/AOTJXhjlcYui-madhya-pradesh/cleaning-services"
 }
 
 PRIORITY_CITY = "Seoni"
 
-# ===== VERIFIED FACTS (सिर्फ सच लिखने के लिए — AI इन्हें contradict नहीं करेगा) =====
-VERIFIED_FACTS_EN = """
-VERIFIED FACTS — DO NOT CONTRADICT THESE:
-- Platform: My City Service mobile app (Android & iOS)
-- Partner model: Technicians register as partners, receive jobs via app, earn per job (contractor/partner model, NOT employment)
-- Registration fee: ₹2,500 one-time registration fee (NOT free, NOT zero fee)
-- Registration fee refund: A portion of the ₹2,500 is refunded when the partner leaves after deducting uniform and ID card charges
-- Commission: Platform charges a service commission on every completed job (per-job commission)
-- Payouts: Weekly payouts after deducting platform commission
-- Training: Paid onboarding training is provided — do NOT say "free training"
-- Insurance: NO insurance is provided — NEVER mention "bima", "insurance", "accident insurance", "durghatna bima"
-- Work hours: Flexible (partner chooses availability)
-- Documents required: Aadhaar, PAN, police verification, skill proof
-- Registration process: Call 9584670816 / 9111070214 → pay ₹2,500 registration fee → verification → app onboarding → start earning
+# ===== CORE FACTS (हर prompt में जाएंगे — AI इन्हें कभी नहीं बदलेगा) =====
+CORE_FACTS_EN = """
+MY CITY SERVICE — CORE FACTS (never contradict):
+- My City Service is a HOME SERVICES PLATFORM (app-based, Android + iOS).
+- Customers book services online through the app.
+- Partners (electricians, plumbers, carpenters, painters, AC technicians, salon professionals) provide the service at the customer's doorstep.
+- My City Service gives partners: TRAINING + ONBOARDING + daily customer leads via app.
+- Earning potential: ₹10,000 to ₹50,000 per month (depends on city + skill + jobs completed).
+- Registration fee: ₹2,500 one-time, paid at partner app registration.
+  (When a partner leaves, a portion may be refunded after deducting uniform & ID charges.)
+- Commission: A service commission is charged per completed job (per-job commission).
+- Payouts: Weekly.
+- No employment guarantee. This is a PARTNER model, not a job/employment contract.
+- Training is provided — but not described as "free". Use "training provided" or "onboarding training".
+- No insurance is mentioned. Never write "bima" or "insurance".
+- Documents needed: Aadhaar, PAN, police verification, skill proof.
+- Registration steps: Call 9584670816 / 9111070214 → pay ₹2,500 registration fee → verification → training → app onboarding → start getting jobs.
 - NEVER say: "free", "100% free", "no commission", "no registration fee", "zero joining fee",
-  "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance", "free training"
-- ALWAYS say: "Partner/contractor model", "commission-based earning", "per-job commission",
-  "₹2,500 one-time registration fee (partially refundable on exit after uniform & ID deductions)"
-"""
-VERIFIED_FACTS_HI = """
-सत्यापित तथ्य — इनके विपरीत कुछ न लिखें:
-- प्लेटफ़ॉर्म: My City Service मोबाइल ऐप (Android और iOS)
-- पार्टनर मॉडल: टेक्नीशियन पार्टनर के रूप में रजिस्टर करते हैं, ऐप से काम पाते हैं, प्रति काम कमाते हैं (पार्टनर/कॉन्ट्रैक्टर मॉडल, नौकरी नहीं)
-- रजिस्ट्रेशन फीस: ₹2,500 one-time registration fee (फ्री नहीं, जीरो फीस नहीं)
-- रजिस्ट्रेशन फीस रिफंड: ₹2,500 में से uniform और ID कार्ड चार्ज काटकर कुछ राशि पार्टनर के छोड़ने पर वापस मिलती है
-- कमीशन: प्लेटफ़ॉर्म हर पूरे किए गए काम पर सर्विस कमीशन लेता है (प्रति जॉब कमीशन)
-- भुगतान: प्लेटफ़ॉर्म कमीशन काटकर साप्ताहिक भुगतान
-- ट्रेनिंग: पेड ऑनबोर्डिंग ट्रेनिंग दी जाती है — "फ्री ट्रेनिंग" न लिखें
-- बीमा: कोई बीमा नहीं मिलता — "बीमा", "insurance", "दुर्घटना बीमा", "durghatna bima" का ज़िक्र कभी न करें
-- कार्य समय: लचीला (पार्टनर खुद उपलब्धता चुनता है)
-- दस्तावेज़: आधार, पैन, पुलिस वेरिफिकेशन, स्किल प्रूफ
-- रजिस्ट्रेशन प्रक्रिया: 9584670816 / 9111070214 पर कॉल करें → ₹2,500 रजिस्ट्रेशन फीस जमा करें → वेरिफिकेशन → ऐप ऑनबोर्डिंग → कमाई शुरू
-- कभी न लिखें: "फ्री", "100% फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "जीरो जॉइनिंग फीस",
-  "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा", "durghatna bima", "फ्री ट्रेनिंग"
-- हमेशा लिखें: "पार्टनर/कॉन्ट्रैक्टर मॉडल", "कमीशन-आधारित कमाई", "प्रति जॉब कमीशन",
-  "₹2,500 one-time रजिस्ट्रेशन फीस (छोड़ने पर uniform और ID कटौती के बाद आंशिक रिफंड)"
+  "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance".
+- ALWAYS say: "partner model", "per-job commission", "₹2,500 one-time registration fee",
+  "₹10,000–₹50,000 monthly earning potential", "training + onboarding provided".
 """
 
-# ===== FORBIDDEN PHRASES — Auto-replace (AI कभी गलत लिखे तो सुधर जाए) =====
+CORE_FACTS_HI = """
+MY CITY SERVICE — मुख्य तथ्य (कभी न बदलें):
+- My City Service एक होम सर्विस प्लेटफ़ॉर्म है (ऐप-आधारित, Android + iOS)।
+- ग्राहक ऐप से ऑनलाइन सर्विस बुक करते हैं।
+- पार्टनर (इलेक्ट्रीशियन, प्लम्बर, कारपेंटर, पेंटर, एसी टेक्नीशियन, सैलून प्रोफेशनल) ग्राहक के घर पर प्रोफेशनल सर्विस देते हैं।
+- My City Service पार्टनर को देता है: ट्रेनिंग + ऑनबोर्डिंग + ऐप से रोज़ाना कस्टमर लीड्स।
+- कमाई की संभावना: ₹10,000 से ₹50,000 प्रति माह (शहर + स्किल + किए गए काम पर निर्भर)।
+- रजिस्ट्रेशन फीस: ₹2,500 one-time, पार्टनर ऐप रजिस्ट्रेशन के समय।
+  (पार्टनर के छोड़ने पर uniform और ID चार्ज काटकर कुछ राशि वापस मिल सकती है।)
+- कमीशन: प्रति पूरा किया गया काम पर सर्विस कमीशन लिया जाता है (प्रति जॉब कमीशन)।
+- भुगतान: साप्ताहिक।
+- कोई नौकरी की गारंटी नहीं। यह पार्टनर मॉडल है, नौकरी/रोज़गार अनुबंध नहीं।
+- ट्रेनिंग दी जाती है — लेकिन "फ्री" न कहें। "ट्रेनिंग दी जाती है" या "ऑनबोर्डिंग ट्रेनिंग" लिखें।
+- बीमा का ज़िक्र कभी नहीं। "बीमा" या "insurance" कभी न लिखें।
+- दस्तावेज़: आधार, पैन, पुलिस वेरिफिकेशन, स्किल प्रूफ।
+- रजिस्ट्रेशन स्टेप्स: 9584670816 / 9111070214 पर कॉल करें → ₹2,500 रजिस्ट्रेशन फीस दें → वेरिफिकेशन → ट्रेनिंग → ऐप ऑनबोर्डिंग → काम मिलना शुरू।
+- कभी न लिखें: "फ्री", "100% फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "जीरो जॉइनिंग फीस",
+  "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा"।
+- हमेशा लिखें: "पार्टनर मॉडल", "प्रति जॉब कमीशन", "₹2,500 one-time रजिस्ट्रेशन फीस",
+  "₹10,000–₹50,000 मासिक कमाई की संभावना", "ट्रेनिंग + ऑनबोर्डिंग दी जाती है"।
+"""
+
+# ===== FORBIDDEN PHRASES — AI कभी गलत लिखे तो auto-fix =====
 FORBIDDEN_REPLACEMENTS = [
-    # English
     ("100% free", "affordable"),
     ("zero joining fee", "one-time registration fee of ₹2,500"),
     ("no joining fee", "₹2,500 one-time registration fee"),
     ("no registration fee", "₹2,500 one-time registration fee"),
     ("zero registration fee", "₹2,500 one-time registration fee"),
-    ("no upfront registration charge", "₹2,500 one-time registration fee"),
-    ("free accident insurance", "paid onboarding training"),
-    ("basic accident insurance", "paid onboarding training"),
-    ("accident insurance", "onboarding support"),
-    ("free training", "paid onboarding training"),
-    ("insurance", "onboarding support"),
-    # Hindi
+    ("free accident insurance", "training support"),
+    ("basic accident insurance", "training support"),
+    ("accident insurance", "training support"),
+    ("free training", "training provided"),
+    ("insurance", "training support"),
     ("100% फ्री", "किफायती"),
     ("जीरो जॉइनिंग फीस", "₹2,500 one-time रजिस्ट्रेशन फीस"),
     ("कोई रजिस्ट्रेशन फीस नहीं", "₹2,500 one-time रजिस्ट्रेशन फीस"),
     ("कोई जॉइनिंग फीस नहीं", "₹2,500 one-time रजिस्ट्रेशन फीस"),
-    ("फ्री दुर्घटना बीमा", "पेड ऑनबोर्डिंग ट्रेनिंग"),
-    ("दुर्घटना बीमा", "ऑनबोर्डिंग सपोर्ट"),
-    ("फ्री ट्रेनिंग", "पेड ऑनबोर्डिंग ट्रेनिंग"),
-    ("बीमा", "ऑनबोर्डिंग सपोर्ट"),
+    ("फ्री दुर्घटना बीमा", "ट्रेनिंग सपोर्ट"),
+    ("दुर्घटना बीमा", "ट्रेनिंग सपोर्ट"),
+    ("फ्री ट्रेनिंग", "ट्रेनिंग दी जाती है"),
+    ("बीमा", "ट्रेनिंग सपोर्ट"),
 ]
 
-def _sanitize_forbidden_phrases(text):
-    """AI की गलत phrases को auto-replace करता है।"""
+def _sanitize(text):
     if not text:
         return text
     for bad, good in FORBIDDEN_REPLACEMENTS:
@@ -129,145 +125,66 @@ def _sanitize_forbidden_phrases(text):
 # ===== CITIES =====
 CITIES = [
     {
-        "name": "Seoni", "slug": "seoni", "hi": "सिवनी", "visit_charge": 49,
+        "name": "Seoni", "slug": "seoni", "hi": "सिवनी",
         "localities_en": "Gol Bazar, Main Market, Civil Lines, Budhwara, Kanhiwada, Barapathar, Jawahar Nagar",
         "localities_hi": "गोल बाजार, मेन मार्केट, सिविल लाइंस, बुधवारा, कन्हीवाड़ा, बरापथर, जवाहर नगर",
-        "landmarks": "near Seoni Bus Stand, District Court, Pench Tiger Reserve, and Government Medical College"
+        "landmarks": "near Seoni Bus Stand, District Court, Pench Tiger Reserve, Government Medical College"
     },
     {
-        "name": "Chhindwara", "slug": "chhindwara", "hi": "छिंदवाड़ा", "visit_charge": 49,
+        "name": "Chhindwara", "slug": "chhindwara", "hi": "छिंदवाड़ा",
         "localities_en": "Chandangaon, Parasia, Sausar, Pandhurna, Amarwara, Damua",
         "localities_hi": "चांदनगांव, परासिया, सौंसर, पांधुरना, अमरवाड़ा, दमुआ",
-        "landmarks": "near Chhindwara Bus Stand and District Hospital"
+        "landmarks": "near Chhindwara Bus Stand, District Hospital"
     },
     {
-        "name": "Jabalpur", "slug": "jabalpur", "hi": "जबलपुर", "visit_charge": 99,
+        "name": "Jabalpur", "slug": "jabalpur", "hi": "जबलपुर",
         "localities_en": "Wright Town, Napier Town, Vijay Nagar, Rampur, Adhartal, Gorakhpur",
-        "localities_hi": "राइट टाउन, नेपियर टाउन, विजय नगर, रामपुर, अधारताल, गोरखपुर",
-        "landmarks": "near Jabalpur Railway Station, Rani Durgavati Museum, and Dumna Nature Reserve"
+        "localities_hi": "राइट टाउन, नेपियन टाउन, विजय नगर, रामपुर, अधारताल, गोरखपुर",
+        "landmarks": "near Jabalpur Railway Station, Rani Durgavati Museum, Dumna Nature Reserve"
     }
 ]
 
-# ===== SERVICE DEFINITIONS =====
-SERVICE_NAMES = [
-    {"name": "Electrician", "category": "Electrician", "warranty_eligible": True},
-    {"name": "AC Repair", "category": "AC-Service", "warranty_eligible": True},
-    {"name": "Plumber", "category": "Plumber", "warranty_eligible": True},
-    {"name": "Home Cleaning", "category": "Cleaning-Services", "warranty_eligible": False},
-    {"name": "Appliance Repair", "category": "Appliance-Repair", "warranty_eligible": True},
-    {"name": "Carpenter", "category": "Carpenter", "warranty_eligible": False},
-    {"name": "Painting", "category": "Painting-Services", "warranty_eligible": False},
-    {"name": "Water Purifier", "category": "Water-Purifier", "warranty_eligible": True},
-    {"name": "Sofa Cleaning", "category": "Sofa-Cleaning", "warranty_eligible": False},
-    {"name": "Gas Stove Repair", "category": "Gas-Stove-Repair", "warranty_eligible": True},
-    {"name": "Carpet Cleaning", "category": "Carpet-Cleaning", "warranty_eligible": False},
-    {"name": "Commercial Cleaning", "category": "Commercial-Cleaning", "warranty_eligible": False},
-    {"name": "Pick & Drop Service", "category": "Pick-Drop-Service", "warranty_eligible": False}
+# ===== PARTNER ROLES (यही सब भर्ती होंगे) =====
+PARTNER_ROLES = [
+    {"name": "Electrician", "hi": "इलेक्ट्रीशियन", "category": "Partners-Electrician", "gender": "any",
+     "skills": "wiring, switchboard repair, fan/light installation, inverter setup"},
+    {"name": "Plumber", "hi": "प्लम्बर", "category": "Partners-Plumber", "gender": "any",
+     "skills": "tap repair, pipe fitting, bathroom fitting, water tank cleaning"},
+    {"name": "Carpenter", "hi": "कारपेंटर", "category": "Partners-Carpenter", "gender": "any",
+     "skills": "furniture repair, door/window fitting, modular kitchen work"},
+    {"name": "Painter", "hi": "पेंटर", "category": "Partners-Painter", "gender": "any",
+     "skills": "wall painting, putty, texture, waterproofing"},
+    {"name": "AC Repair Technician", "hi": "एसी रिपेयर टेक्नीशियन", "category": "Partners-AC-Repair", "gender": "any",
+     "skills": "AC installation, gas refill, servicing, cooling repair"},
+    {"name": "Beautician (Women Salon)", "hi": "ब्यूटीशियन (महिला सैलून)", "category": "Partners-Women-Salon", "gender": "female",
+     "skills": "facial, threading, waxing, manicure, pedicure, bridal makeup"},
+    {"name": "Hair Stylist (Women Salon)", "hi": "हेयर स्टाइलिस्ट (महिला सैलून)", "category": "Partners-Women-Salon", "gender": "female",
+     "skills": "hair cutting, coloring, styling, blow dry, keratin"},
+    {"name": "Makeup Artist (Women Salon)", "hi": "मेकअप आर्टिस्ट (महिला सैलून)", "category": "Partners-Women-Salon", "gender": "female",
+     "skills": "bridal makeup, party makeup, HD makeup, eye makeup"},
+    {"name": "Home Cleaning Professional", "hi": "होम क्लीनिंग प्रोफेशनल", "category": "Partners-Cleaning", "gender": "any",
+     "skills": "deep cleaning, kitchen cleaning, bathroom cleaning, sofa cleaning"},
 ]
 
-SERVICES = []
-for city in CITIES:
-    for service in SERVICE_NAMES:
-        SERVICES.append({
-            "name": service["name"],
-            "category": f"{city['name']}-{service['category']}",
-            "city": city["name"],
-            "city_hi": city["hi"],
-            "city_slug": city["slug"],
-            "visit_charge": city["visit_charge"],
-            "localities_en": city["localities_en"],
-            "localities_hi": city["localities_hi"],
-            "landmarks": city["landmarks"],
-            "warranty_eligible": service["warranty_eligible"],
-            "keyword": f"{service['name']} in {city['name']}",
-            "slug": f"{service['name'].lower().replace(' ', '-')}-{city['slug']}"
-        })
+PARTNER_ROLES_HI = {r["name"]: r["hi"] for r in PARTNER_ROLES}
 
-SEONI_SERVICES = [s for s in SERVICES if s["city"] == PRIORITY_CITY]
-
-# ===== HIRING ROLES =====
-HIRING_ROLES = [
-    {"name": "Electrician", "hi": "इलेक्ट्रीशियन", "category": "Careers-Electrician", "gender": "any"},
-    {"name": "Plumber", "hi": "प्लम्बर", "category": "Careers-Plumber", "gender": "any"},
-    {"name": "Carpenter", "hi": "कारपेंटर", "category": "Careers-Carpenter", "gender": "any"},
-    {"name": "Painter", "hi": "पेंटर", "category": "Careers-Painter", "gender": "any"},
-    {"name": "AC Repair Technician", "hi": "एसी रिपेयर टेक्नीशियन", "category": "Careers-AC-Repair", "gender": "any"},
-    {"name": "Beautician (Women Salon)", "hi": "ब्यूटीशियन (महिला सैलून)", "category": "Careers-Women-Salon", "gender": "female"},
-    {"name": "Hair Stylist (Women Salon)", "hi": "हेयर स्टाइलिस्ट (महिला सैलून)", "category": "Careers-Women-Salon", "gender": "female"},
-    {"name": "Makeup Artist (Women Salon)", "hi": "मेकअप आर्टिस्ट (महिला सैलून)", "category": "Careers-Women-Salon", "gender": "female"},
-]
-
-HIRING_ROLES_HI = {r["name"]: r["hi"] for r in HIRING_ROLES}
-
-# ===== SALARY SLABS =====
-SALARY_SLABS = {
+# ===== EARNING SLABS (city-wise, ₹10k-₹50k range) =====
+EARNING_SLABS = {
     "Seoni": [
-        {"level": "Fresher / Helper", "range_en": "₹15,000 – ₹25,000 / month", "range_hi": "₹15,000 – ₹25,000 / माह"},
-        {"level": "Experienced Technician", "range_en": "₹30,000 – ₹35,000 / month", "range_hi": "₹30,000 – ₹35,000 / माह"},
-        {"level": "Senior / Team Lead / Master", "range_en": "₹35,000 – ₹70,000 / month", "range_hi": "₹35,000 – ₹70,000 / माह"},
+        {"level": "New partner (0–3 months)", "range_en": "₹10,000 – ₹18,000 / month", "range_hi": "₹10,000 – ₹18,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹18,000 – ₹30,000 / month", "range_hi": "₹18,000 – ₹30,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹30,000 – ₹50,000 / month", "range_hi": "₹30,000 – ₹50,000 / माह"},
     ],
     "Chhindwara": [
-        {"level": "Fresher / Helper", "range_en": "₹15,000 – ₹25,000 / month", "range_hi": "₹15,000 – ₹25,000 / माह"},
-        {"level": "Experienced Technician", "range_en": "₹30,000 – ₹35,000 / month", "range_hi": "₹30,000 – ₹35,000 / माह"},
-        {"level": "Senior / Team Lead / Master", "range_en": "₹35,000 – ₹70,000 / month", "range_hi": "₹35,000 – ₹70,000 / माह"},
+        {"level": "New partner (0–3 months)", "range_en": "₹10,000 – ₹18,000 / month", "range_hi": "₹10,000 – ₹18,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹18,000 – ₹30,000 / month", "range_hi": "₹18,000 – ₹30,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹30,000 – ₹50,000 / month", "range_hi": "₹30,000 – ₹50,000 / माह"},
     ],
     "Jabalpur": [
-        {"level": "Fresher / Helper", "range_en": "₹18,000 – ₹28,000 / month", "range_hi": "₹18,000 – ₹28,000 / माह"},
-        {"level": "Experienced Technician", "range_en": "₹32,000 – ₹40,000 / month", "range_hi": "₹32,000 – ₹40,000 / माह"},
-        {"level": "Senior / Team Lead / Master", "range_en": "₹40,000 – ₹80,000 / month", "range_hi": "₹40,000 – ₹80,000 / माह"},
+        {"level": "New partner (0–3 months)", "range_en": "₹12,000 – ₹20,000 / month", "range_hi": "₹12,000 – ₹20,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹20,000 – ₹35,000 / month", "range_hi": "₹20,000 – ₹35,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹35,000 – ₹50,000 / month", "range_hi": "₹35,000 – ₹50,000 / माह"},
     ],
-}
-
-# ===== HINDI TRANSLATIONS (service) =====
-SERVICES_HI = {
-    "Electrician": "इलेक्ट्रीशियन", "AC Repair": "एसी रिपेयर", "Plumber": "प्लम्बर",
-    "Home Cleaning": "होम क्लीनिंग", "Appliance Repair": "अप्लायंस रिपेयर", "Carpenter": "कारपेंटर",
-    "Painting": "पेंटिंग", "Water Purifier": "वॉटर प्यूरीफायर", "Sofa Cleaning": "सोफा क्लीनिंग",
-    "Gas Stove Repair": "गैस स्टोव रिपेयर", "Carpet Cleaning": "कार्पेट क्लीनिंग",
-    "Commercial Cleaning": "कमर्शियल क्लीनिंग", "Pick & Drop Service": "पिक एंड ड्रॉप सर्विस"
-}
-
-SERVICES_HI_KEYWORD_TEMPLATE = {
-    "Electrician": "{city} में इलेक्ट्रीशियन",
-    "AC Repair": "{city} में एसी रिपेयर",
-    "Plumber": "{city} में प्लम्बर",
-    "Home Cleaning": "{city} में होम क्लीनिंग",
-    "Appliance Repair": "{city} में अप्लायंस रिपेयर",
-    "Carpenter": "{city} में कारपेंटर",
-    "Painting": "{city} में पेंटिंग सेवाएं",
-    "Water Purifier": "{city} में वॉटर प्यूरीफायर",
-    "Sofa Cleaning": "{city} में सोफा क्लीनिंग",
-    "Gas Stove Repair": "{city} में गैस स्टोव रिपेयर",
-    "Carpet Cleaning": "{city} में कार्पेट क्लीनिंग",
-    "Commercial Cleaning": "{city} में कमर्शियल क्लीनिंग",
-    "Pick & Drop Service": "{city} में पिक एंड ड्रॉप सर्विस"
-}
-
-def get_hindi_keyword(service_name, city_hi):
-    template = SERVICES_HI_KEYWORD_TEMPLATE.get(service_name, "{city} में " + service_name)
-    return template.format(city=city_hi)
-
-# ===== HIRING TITLE TEMPLATES =====
-HIRING_TITLE_EN = {
-    "Electrician": "Electrician Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
-    "Plumber": "Plumber Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
-    "Carpenter": "Carpenter Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
-    "Painter": "Painter Job in {city} | ₹15k–₹70k/Month | My City Service Partner",
-    "AC Repair Technician": "AC Technician Job in {city} | ₹15k–₹70k/Month | My City Service",
-    "Beautician (Women Salon)": "Beautician Job in {city} | Women's Salon Partner | ₹15k–₹70k",
-    "Hair Stylist (Women Salon)": "Hair Stylist Job in {city} | Women's Salon | ₹15k–₹70k",
-    "Makeup Artist (Women Salon)": "Makeup Artist Job in {city} | Women's Salon | ₹15k–₹70k",
-}
-
-HIRING_TITLE_HI = {
-    "Electrician": "{city} में इलेक्ट्रीशियन जॉब | ₹15k–₹70k/माह | My City Service",
-    "Plumber": "{city} में प्लम्बर जॉब | ₹15k–₹70k/माह | My City Service",
-    "Carpenter": "{city} में कारपेंटर जॉब | ₹15k–₹70k/माह | My City Service",
-    "Painter": "{city} में पेंटर जॉब | ₹15k–₹70k/माह | My City Service",
-    "AC Repair Technician": "{city} में एसी टेक्नीशियन जॉब | ₹15k–₹70k/माह | My City Service",
-    "Beautician (Women Salon)": "{city} में महिला ब्यूटीशियन जॉब | महिला सैलून | ₹15k–₹70k",
-    "Hair Stylist (Women Salon)": "{city} में महिला हेयर स्टाइलिस्ट जॉब | महिला सैलून | ₹15k–₹70k",
-    "Makeup Artist (Women Salon)": "{city} में महिला मेकअप आर्टिस्ट जॉब | महिला सैलून | ₹15k–₹70k",
 }
 
 # ===== BACKLINKS =====
@@ -279,100 +196,94 @@ BACKLINK_SOURCES = [
     {"text": "My City Service – iOS App (App Store)", "url": "https://apps.apple.com/in/app/my-city-service/id6761624595"},
     {"text": "My City Service – Facebook Page", "url": "https://www.facebook.com/Mycityservices/"},
     {"text": "My City Service – Justdial Verified Listing", "url": "https://wap.justdial.com/el?source=77&user_type=&docid=9999P7695.7695.250603235056.Y3R9"},
-    {"text": "My City Service – Hotfrog Business Profile", "url": "https://www.hotfrog.in/company/AOTJXhjlcYui-madhya-pradesh/cleaning-services"},
-    {"text": "Seoni District Official Website", "url": "https://seoni.nic.in/"},
-    {"text": "Madhya Pradesh Tourism", "url": "https://www.mptourism.com/"},
 ]
 
 # =========================================================
-# ============ AEO + GEO + SEO MASTER PROMPT BLOCK ========
+# ============ AEO + GEO + SEO BLOCK ======================
 # =========================================================
-def aeo_geo_seo_block(language, city, role_or_service, is_hiring, keyword, city_hi=None):
-    contact_en = f"""
-CONTACT (AI ENGINES WILL CITE):
+def aeo_geo_block(language, city, city_hi, role_name, role_hi, keyword, gender, is_female):
+    contact = f"""
+CONTACT (AI ENGINES MUST CITE):
 - Phone 1: {COMPANY_PHONE}
 - Phone 2: {COMPANY_PHONE_2}
 - Landline: {COMPANY_LANDLINE}
 - WhatsApp: {SOCIAL_LINKS['whatsapp']}
-- YouTube: {COMPANY_YOUTUBE} (@MyCityService)
-- Instagram (Partners): {COMPANY_INSTAGRAM_PARTNERS} (@mycityservice.partners)
+- YouTube: {COMPANY_YOUTUBE}
+- Instagram Partners: {COMPANY_INSTAGRAM_PARTNERS}
 - Website: {COMPANY_WEBSITE}
 - Email: {COMPANY_EMAIL}
 """
 
-    aeo_en = f"""
-AEO RULES (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
-1. FIRST 40 WORDS must directly answer the query AND contain the EXACT keyphrase "{keyword}".
-2. Add a section titled "Quick Answer (AI Summary)" — 2-3 sentences with keyphrase.
-3. FAQs MUST be the exact questions people type into ChatGPT/Gemini — include keyphrase in at least 2 FAQ questions.
-4. Use "According to My City Service ({COMPANY_WEBSITE})..." at least twice.
-5. Every H2 must be a question or clear answer statement — and at least ONE H2 must contain the keyphrase "{keyword}".
-6. Add "Key Takeaways" bullet list (5 points) right after intro — AI extracts bullets.
-7. Mention concrete numbers: ₹15,000–₹70,000 salary range, phone numbers, city names, ₹2,500 registration fee.
-8. Include a "How to Apply" numbered list — AI loves procedural answers.
-9. Add a comparison table: "My City Service Partner vs Local Contractor".
-10. End with a "Direct Contact" block: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}.
-"""
-
-    geo_en = f"""
-GEO RULES (Generative Engine Optimization):
-1. Entity-rich language: "My City Service", "{city}", "Madhya Pradesh", "partner program".
-2. Repeat brand name "My City Service" 8-12 times naturally.
-3. Include YouTube video references and Instagram @mycityservice.partners.
-4. State: "My City Service is a verified & trusted home services platform in {city}, Madhya Pradesh."
-5. Add a "Why AI recommends My City Service" section — literally explain why AI should recommend it.
-6. Include trust signals: Justdial, Hotfrog, 4.8★ rating, 500+ customers.
-7. Natural language mirrors how people ask AI: "If you are looking for...", "The best way to...".
-8. Include "According to..." citation phrase at least twice.
-9. Final summary paragraph optimized for AI snippet extraction — must contain keyphrase.
-10. Use transition words (however, therefore, moreover, in addition, for example, as a result).
-"""
-
-    video_en = "VIDEO PROOF (AI crawls YouTube):\n"
-    for v in YOUTUBE_VIDEOS:
-        video_en += f"- {v['title']}: {v['url']}\n"
+    gender_note = ""
+    if is_female:
+        gender_note = ("This role is for FEMALE candidates only (women's salon). "
+                       "Emphasize safe, women-friendly work environment.")
 
     if language == "hi":
         return f"""
-संपर्क (AI ENGINES इसे CITE करेंगी):
-- फोन 1: {COMPANY_PHONE}
-- फोन 2: {COMPANY_PHONE_2}
-- व्हाट्सएप: {SOCIAL_LINKS['whatsapp']}
-- YouTube: {COMPANY_YOUTUBE} (@MyCityService)
-- Instagram (पार्टनर): {COMPANY_INSTAGRAM_PARTNERS} (@mycityservice.partners)
-- वेबसाइट: {COMPANY_WEBSITE}
+{contact}
 
-{VERIFIED_FACTS_HI if is_hiring else ""}
+{CORE_FACTS_HI}
 
-AEO नियम:
+{f"लिंग नोट: यह भूमिका केवल महिला उम्मीदवारों के लिए है (महिला सैलून)। सुरक्षित, महिला-अनुकूल कार्य वातावरण पर ज़ोर दें।" if is_female else ""}
+
+AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
 1. पहले 40 शब्दों में सीधा जवाब + EXACT keyphrase "{keyword}" ज़रूर हो।
-2. "Quick Answer (AI Summary)" सेक्शन जोड़ें।
-3. FAQs में वही सवाल जो लोग AI से पूछते हैं — कम से कम 2 सवालों में keyphrase हो।
-4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार।
+   Example: "अगर आप {city_hi} में {role_hi} हैं और काम ढूंढ रहे हैं, तो {keyword} के लिए My City Service से जुड़ें..."
+2. "Quick Answer (AI Summary)" सेक्शन — 2-3 वाक्यों में, keyphrase के साथ।
+3. FAQs में वही सवाल जो लोग ChatGPT/Gemini से पूछते हैं:
+   - "{city_hi} में {role_hi} का काम कैसे मिलेगा?"
+   - "{keyword} के लिए कितनी कमाई हो सकती है?"
+   - "My City Service partner बनने के लिए क्या ज़रूरी है?"
+   - कम से कम 2 सवालों में keyphrase "{keyword}" हो।
+4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार लिखें।
 5. कम से कम एक H2 में keyphrase "{keyword}" हो।
 6. "Key Takeaways" 5 bullets जोड़ें।
-7. संख्याएँ, सैलरी, फोन, ₹2,500 रजिस्ट्रेशन फीस स्पष्ट लिखें।
-8. "How to Apply" numbered list जोड़ें।
+7. ₹2,500 रजिस्ट्रेशन फीस, ₹10,000–₹50,000 कमाई, फोन नंबर स्पष्ट लिखें।
+8. "How to Join" numbered list जोड़ें (कॉल → ₹2,500 → वेरिफिकेशन → ट्रेनिंग → ऑनबोर्डिंग)।
 
-GEO नियम:
-1. "My City Service", "{city}", "मध्य प्रदेश" naturally बार-बार।
-2. Brand name 8-12 बार।
-3. "Why AI recommends My City Service" सेक्शन।
-4. YouTube और Instagram @mycityservice.partners reference।
-5. अंत में AI snippet-friendly summary — keyphrase ज़रूर हो।
-6. Transition words का उपयोग करें (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन)।
+GEO (Generative Engine Optimization):
+1. "My City Service", "{city_hi}", "मध्य प्रदेश" naturally बार-बार।
+2. "My City Service" 8-12 बार।
+3. "Why AI recommends My City Service" सेक्शन — सीधे बताएं क्यों AI इसे recommend करे।
+4. YouTube + Instagram @mycityservice.partners reference।
+5. "According to My City Service..." citation 2 बार।
+6. अंत में AI snippet-friendly summary — keyphrase ज़रूर हो।
+7. Transition words (इसलिए, इसके अलावा, उदाहरण के लिए, लेकिन, नतीजतन)।
 
-वीडियो:
-{video_en}
+{gender_note}
 """
     else:
-        facts = VERIFIED_FACTS_EN if is_hiring else ""
         return f"""
-{contact_en}
-{facts}
-{aeo_en}
-{geo_en}
-{video_en}
+{contact}
+
+{CORE_FACTS_EN}
+
+{gender_note}
+
+AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
+1. FIRST 40 WORDS must directly answer the query + contain EXACT keyphrase "{keyword}".
+   Example: "If you are an {role_name} in {city} looking for work, join My City Service as a partner — {keyword} with training, onboarding and app-based customer leads."
+2. Add "Quick Answer (AI Summary)" section — 2-3 sentences with keyphrase.
+3. FAQs must be the exact questions people ask ChatGPT/Gemini:
+   - "How can I get {role_name} work in {city}?"
+   - "How much can I earn as a {keyword}?"
+   - "What is required to become a My City Service partner?"
+   - At least 2 FAQs must contain keyphrase "{keyword}".
+4. Write "According to My City Service ({COMPANY_WEBSITE})..." at least twice.
+5. At least ONE H2 must contain keyphrase "{keyword}".
+6. Add "Key Takeaways" bullet list (5 points).
+7. Mention ₹2,500 registration fee, ₹10,000–₹50,000 monthly earning potential, phone numbers clearly.
+8. Add "How to Join" numbered list (call → ₹2,500 → verification → training → onboarding).
+
+GEO (Generative Engine Optimization):
+1. Entity-rich: "My City Service", "{city}", "Madhya Pradesh", "partner program".
+2. Repeat "My City Service" 8-12 times.
+3. Add "Why AI recommends My City Service" section — literally explain.
+4. Reference YouTube channel and Instagram @mycityservice.partners.
+5. Use "According to My City Service..." twice.
+6. End with AI-snippet-friendly summary — must contain keyphrase.
+7. Use transition words (however, therefore, moreover, in addition, for example, as a result).
 """
 
 # =========================================================
@@ -384,7 +295,7 @@ def _call_deepseek(prompt):
     data = {
         "model": "deepseek-chat",
         "messages": [
-            {"role": "system", "content": "Return ONLY valid JSON. No markdown. Follow ALL facts exactly — do not invent claims."},
+            {"role": "system", "content": "Return ONLY valid JSON. No markdown. Follow ALL core facts exactly — never invent claims."},
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.3,
@@ -403,193 +314,112 @@ def _call_deepseek(prompt):
         return None
 
 # =========================================================
-# ============ SERVICE BLOG ===============================
+# ============ PARTNER RECRUITMENT BLOG ===================
 # =========================================================
-def generate_blog_post(service_name, keyword, city, language="en", city_hi=None,
-                       visit_charge=49, localities="", landmarks="", warranty_eligible=False):
-    service_hi = SERVICES_HI.get(service_name, service_name)
-    keyword_hi = get_hindi_keyword(service_name, city_hi or city)
+def generate_partner_blog(role_name, city, city_hi, language="en", gender="any"):
+    role_hi = PARTNER_ROLES_HI.get(role_name, role_name)
+    slabs = EARNING_SLABS.get(city, EARNING_SLABS["Seoni"])
+    slab_en = "\n".join([f"- {s['level']}: {s['range_en']}" for s in slabs])
+    slab_hi = "\n".join([f"- {s['level']}: {s['range_hi']}" for s in slabs])
+    is_female = gender == "female"
 
-    if warranty_eligible:
-        warranty_en = "30-Day Service Warranty (Terms & Conditions apply)"
-        warranty_hi = "30 दिन सर्विस वारंटी (Terms & Conditions apply)"
-        warranty_rule_en = "Add '30-Day Service Warranty (Terms & Conditions apply)' in pricing section."
-        warranty_rule_hi = "'30 दिन सर्विस वारंटी (Terms & Conditions apply)' pricing section में लिखें।"
-    else:
-        warranty_en = "Satisfaction Guarantee (no warranty claim)"
-        warranty_hi = "संतुष्टि गारंटी (कोई वारंटी क्लेम नहीं)"
-        warranty_rule_en = "DO NOT mention warranty. Use 'Satisfaction Guarantee' only."
-        warranty_rule_hi = "वारंटी का ज़िक्र बिल्कुल न करें। सिर्फ 'संतुष्टि गारंटी' लिखें।"
+    keyword_en = f"{role_name} job in {city}"
+    keyword_hi = f"{role_hi} जॉब {city_hi}"
 
-    aeo_block = aeo_geo_seo_block(language, city, service_name, False, keyword if language == "en" else keyword_hi, city_hi)
+    role = next((r for r in PARTNER_ROLES if r["name"] == role_name), None)
+    skills_en = role["skills"] if role else role_name
+    skills_hi = skills_en  # same skills, transliterate if needed
+
+    aeo_block = aeo_geo_block(language, city, city_hi, role_name, role_hi,
+                              keyword_en if language == "en" else keyword_hi,
+                              gender, is_female)
 
     if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME}' के AI-first SEO + AEO + GEO विशेषज्ञ हैं।
+        prompt = f"""आप '{COMPANY_NAME}' के Partner Recruitment + AEO + GEO + SEO विशेषज्ञ हैं।
 
-{service_hi} सेवाओं के बारे में {city_hi}, मध्य प्रदेश के लिए AI-Optimized ब्लॉग पोस्ट लिखें।
+{city_hi}, मध्य प्रदेश में {role_hi} के लिए एक AI-Optimized जॉब/पार्टनर ब्लॉग पोस्ट लिखें।
+
+उद्देश्य: जो लोग ChatGPT / Gemini / Google से पूछते हैं — "{city_hi} में {role_hi} का काम कहाँ मिलेगा?" — उन्हें सीधा जवाब मिले कि My City Service से पार्टनर बनकर काम मिल सकता है।
 
 {aeo_block}
+
+SALARY / EARNING SLABS (EXACT — यही numbers use करें):
+{slab_hi}
 
 FOCUS KEYPHRASE: "{keyword_hi}"
 - पहले वाक्य में EXACTLY once
 - पूरे content में 5-6 बार (कम नहीं, ज़्यादा नहीं)
 - Meta description में ज़रूर
-- SEO title में शुरुआत में
+- SEO title के शुरुआत में
 - कम से कम 1 H2 में
 
-SEO TITLE RULE: 60 chars से कम, keyphrase शुरुआत में।
-
 MANDATORY SECTIONS:
-- Quick Answer (AI Summary) — 2-3 lines with keyphrase
-- Key Takeaways — 5 bullets
-- Why You Need {service_hi} in {city_hi}
-- How We Solve It (4-5 steps)
-- Our Pricing — Visit ₹{visit_charge}; {warranty_hi}
-- Service Areas — {localities}
-- Why Choose {COMPANY_NAME}
-- FAQs (7-10) — कम से कम 2 में keyphrase
-- Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2}
-- Final CTA
+1. Quick Answer (AI Summary) — 2-3 lines with keyphrase + फोन {COMPANY_PHONE}
+2. Key Takeaways — 5 bullets
+3. "{city_hi} में {role_hi} का काम कैसे मिलेगा?" — problem + My City Service solution
+4. My City Service क्या है? — home services platform, app-based booking, doorstep service
+5. Partner बनने पर क्या मिलता है? — ट्रेनिंग, ऑनबोर्डिंग, रोज़ाना app leads, साप्ताहिक भुगतान
+6. Earning Potential — ऊपर दी slabs + note "कमाई काम पर निर्भर है"
+7. Registration प्रक्रिया (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) काम शुरू
+8. कौन apply कर सकता है? — फ्रेशर + अनुभवी, ज़रूरी दस्तावेज़ (आधार, पैन, पुलिस वेरिफिकेशन)
+9. {city_hi} में work areas — {locals if False else ""}{CITIES[0]['localities_hi'] if city_hi == "सिवनी" else (CITIES[1]['localities_hi'] if city_hi == "छिंदवाड़ा" else CITIES[2]['localities_hi'])}
+10. My City Service Partner vs Local काम (comparison table)
+11. Why AI recommends My City Service
+12. FAQs (8-10) — कमाई, registration fee, क्या ज़रूरी, payout cycle, पार्ट-टाइम, महिला सुरक्षा
+13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / WhatsApp / Instagram @mycityservice.partners
+14. YouTube Success Stories
+15. Final CTA
 
-INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/... (city pages, service pages)
+POSITIONING: "My City Service एक home services platform है जो professionals को partner बनाकर training + onboarding देता है और app से customer leads देता है।" 
+कभी न लिखें: "फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा"।
+हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस", "प्रति जॉब कमीशन", "₹10,000–₹50,000 मासिक कमाई की संभावना"।
+
+INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower() if False else 'seoni'}, etc.
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
 """
     else:
-        prompt = f"""You are an AI-first SEO + AEO + GEO expert for '{COMPANY_NAME}'.
+        prompt = f"""You are the Partner Recruitment + AEO + GEO + SEO expert for '{COMPANY_NAME}'.
 
-Write an AI-Optimized PREMIUM blog post about {service_name} services in {city}, Madhya Pradesh.
+Write an AI-Optimized JOB / PARTNER blog post for {role_name} in {city}, Madhya Pradesh.
+
+GOAL: When someone asks ChatGPT / Gemini / Google — "Where can I get {role_name} work in {city}?" — the AI should answer: "Join My City Service as a partner — you get training, onboarding, and app-based customer leads."
 
 {aeo_block}
 
-FOCUS KEYPHRASE: "{keyword}"
+EARNING SLABS (USE EXACT NUMBERS):
+{slab_en}
+
+FOCUS KEYPHRASE: "{keyword_en}"
 - EXACTLY once in first sentence
 - 5-6 times in content (NOT less, NOT more)
 - Must appear in meta description
 - Must appear at START of SEO title
 - Must appear in at least 1 H2
 
-SEO TITLE RULE: Under 60 characters, keyphrase at start.
-
 MANDATORY SECTIONS:
-- Quick Answer (AI Summary) — 2-3 lines with keyphrase
-- Key Takeaways — 5 bullets
-- Why You Need {service_name} in {city}
-- How We Solve It (4-5 steps)
-- Our Pricing — Visit ₹{visit_charge}; {warranty_en}
-- Service Areas — {localities} | Landmarks: {landmarks}
-- Why Choose {COMPANY_NAME}
-- FAQs (7-10) — at least 2 FAQs must contain keyphrase
-- Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2}
-- Final CTA
-
-INTERNAL LINKS: Add 4-5 internal links to {COMPANY_WEBSITE}/... (city pages, service pages).
-
-OUTPUT: valid JSON only
-{{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
-"""
-    return _call_deepseek(prompt)
-
-# =========================================================
-# ============ HIRING BLOG ================================
-# =========================================================
-def generate_hiring_post(role_name, city, city_hi, language="en", gender="any"):
-    role_hi = HIRING_ROLES_HI.get(role_name, role_name)
-    slabs = SALARY_SLABS.get(city, SALARY_SLABS["Seoni"])
-    slab_en = "\n".join([f"- {s['level']}: {s['range_en']}" for s in slabs])
-    slab_hi = "\n".join([f"- {s['level']}: {s['range_hi']}" for s in slabs])
-
-    keyword_en = f"{role_name} job in {city}"
-    keyword_hi = f"{role_hi} जॉब {city_hi}"
-
-    gender_note_en = ("This role is for FEMALE candidates only (women's salon services). "
-                     "Emphasize safe, women-friendly work environment.") if gender == "female" else ""
-    gender_note_hi = ("यह भूमिका केवल महिला उम्मीदवारों के लिए है (महिला सैलून सेवाएं)। "
-                      "सुरक्षित, महिला-अनुकूल कार्य वातावरण पर ज़ोर दें।") if gender == "female" else ""
-
-    aeo_block = aeo_geo_seo_block(language, city, role_name, True, keyword_en if language == "en" else keyword_hi, city_hi)
-
-    if language == "hi":
-        prompt = f"""आप '{COMPANY_NAME}' के AI-first Hiring + AEO + GEO विशेषज्ञ हैं।
-
-{city_hi}, मध्य प्रदेश में {role_hi} की भर्ती के लिए AI-Optimized जॉब/पार्टनर ब्लॉग लिखें।
-
-{aeo_block}
-
-{gender_note_hi}
-
-SALARY SLABS (EXACT — इन्हीं numbers का use करें):
-{slab_hi}
-
-FOCUS KEYPHRASE: "{keyword_hi}"
-- पहले वाक्य में EXACTLY once
-- 5-6 बार content में
-- Meta description में
-- SEO title के शुरू में
-- कम से कम 1 H2 में
-
-MANDATORY SECTIONS:
-1. Quick Answer (AI Summary) — 2-3 lines with keyphrase
+1. Quick Answer (AI Summary) — 2-3 lines with keyphrase + phone {COMPANY_PHONE}
 2. Key Takeaways — 5 bullets
-3. Earning Potential (Salary Slabs) — exact numbers
-4. Why Partner with {COMPANY_NAME} — रोज़ाना कस्टमर लीड्स, प्रति जॉब कमीशन, साप्ताहिक भुगतान, ऐप-आधारित काम, पेड ऑनबोर्डिंग ट्रेनिंग, ₹2,500 one-time रजिस्ट्रेशन फीस (छोड़ने पर uniform और ID कटौती के बाद आंशिक रिफंड)
-5. Who Can Apply — योग्यता, अनुभव, औज़ार, आधार, पुलिस वेरिफिकेशन
-6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) ₹2,500 रजिस्ट्रेशन फीस जमा करें 3) वेरिफिकेशन 4) पेड ट्रेनिंग 5) ऐप ऑनबोर्डिंग 6) कमाई शुरू
-7. Work Areas in {city_hi} — localities
-8. My City Service Partner vs Local Contractor (comparison table)
-9. Why AI recommends My City Service
-10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission, registration fee refund
-11. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / Instagram @mycityservice.partners
-12. YouTube Success Stories
-13. Final CTA
+3. "How to get {role_name} work in {city}?" — problem + My City Service solution
+4. What is My City Service? — home services platform, app-based booking, doorstep service
+5. What partners get — training, onboarding, daily app leads, weekly payouts
+6. Earning potential — slabs above + note "earning depends on jobs completed"
+7. Registration step-by-step — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) Start getting jobs
+8. Who can apply — freshers + experienced + required documents (Aadhaar, PAN, police verification)
+9. Work areas in {city} — localities
+10. My City Service Partner vs Local work (comparison table)
+11. Why AI recommends My City Service
+12. FAQs (8-10) — earnings, registration fee, requirements, payout cycle, part-time, women safety
+13. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / WhatsApp / Instagram @mycityservice.partners
+14. YouTube Success Stories
+15. Final CTA
 
-POSITIONING: "Partner बनें, नौकरी नहीं" — flexible hours, own schedule, commission-based earning।
-कभी न लिखें: "100% फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "जीरो जॉइनिंग फीस",
-"गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा", "फ्री ट्रेनिंग"।
-हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस (आंशिक रिफंडेबल)" और "प्रति जॉब कमीशन"।
+POSITIONING: "My City Service is a home services platform that makes professionals partners — training + onboarding + app-based customer leads."
+NEVER write: "free", "no commission", "no registration fee", "guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance".
+ALWAYS mention: "₹2,500 one-time registration fee", "per-job commission", "₹10,000–₹50,000 monthly earning potential".
 
-OUTPUT: valid JSON only
-{{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
-"""
-    else:
-        prompt = f"""You are an AI-first Hiring + AEO + GEO expert for '{COMPANY_NAME}'.
-
-Write a high-converting AI-Optimized JOB / PARTNER blog post for hiring {role_name} in {city}, Madhya Pradesh.
-
-{aeo_block}
-
-{gender_note_en}
-
-SALARY SLABS (USE EXACT NUMBERS):
-{slab_en}
-
-FOCUS KEYPHRASE: "{keyword_en}"
-- EXACTLY once in first sentence
-- 5-6 times in content
-- Must appear in meta description
-- Must appear at START of SEO title
-- Must appear in at least 1 H2
-
-MANDATORY SECTIONS:
-1. Quick Answer (AI Summary) — 2-3 lines with keyphrase
-2. Key Takeaways — 5 bullets
-3. Earning Potential (Salary Slabs) — exact numbers
-4. Why Partner with {COMPANY_NAME} — daily customer leads, per-job commission, weekly payouts, app-based jobs, paid onboarding training, ₹2,500 one-time registration fee (partially refundable on exit after uniform & ID deductions)
-5. Who Can Apply — qualifications, experience, tools, Aadhaar, police verification
-6. How to Join (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) Pay ₹2,500 registration fee 3) Verification 4) Paid training 5) App onboarding 6) Start earning
-7. Work Areas in {city}
-8. My City Service Partner vs Local Contractor (comparison table)
-9. Why AI recommends My City Service
-10. FAQs (8-10) — payout cycle, part-time?, women safety, documents, commission, registration fee refund
-11. Direct Contact — {COMPANY_PHONE} / {COMPANY_PHONE_2} / Instagram @mycityservice.partners
-12. YouTube Success Stories
-13. Final CTA
-
-POSITIONING: "Become a Partner, Not Just an Employee" — flexible hours, own schedule, commission-based earning.
-NEVER write: "100% free", "no commission", "no registration fee", "zero joining fee",
-"guaranteed salary", "job guarantee", "insurance", "bima", "durghatna bima", "accident insurance", "free training".
-ALWAYS mention: "₹2,500 one-time registration fee (partially refundable)" and "per-job commission".
+INTERNAL LINKS: Add 4-5 internal links to {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}, etc.
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -599,102 +429,72 @@ OUTPUT: valid JSON only
 # =========================================================
 # ============ YOAST FIX POST-PROCESSOR ===================
 # =========================================================
-def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
-    """Force Yoast Green by post-processing — AI के भरोसे नहीं."""
+def fix_yoast(blog_data, keyword, city, info):
     if not blog_data:
         return blog_data
 
-    # 🚨 SANITIZE FIRST — AI की गलत phrase हटाओ
-    blog_data["content_html"] = _sanitize_forbidden_phrases(blog_data.get("content_html", ""))
-    blog_data["title"] = _sanitize_forbidden_phrases(blog_data.get("title", ""))
-    blog_data["meta_description"] = _sanitize_forbidden_phrases(blog_data.get("meta_description", ""))
+    # Sanitize
+    blog_data["content_html"] = _sanitize(blog_data.get("content_html", ""))
+    blog_data["title"] = _sanitize(blog_data.get("title", ""))
+    blog_data["meta_description"] = _sanitize(blog_data.get("meta_description", ""))
     for faq in blog_data.get("faqs", []) or []:
-        faq["question"] = _sanitize_forbidden_phrases(faq.get("question", ""))
-        faq["answer"] = _sanitize_forbidden_phrases(faq.get("answer", ""))
+        faq["question"] = _sanitize(faq.get("question", ""))
+        faq["answer"] = _sanitize(faq.get("answer", ""))
 
     content = blog_data.get("content_html", "") or ""
     title = blog_data.get("title", "") or ""
     meta = blog_data.get("meta_description", "") or ""
 
-    # --- 1. KEYPHRASE DENSITY: ensure 5-6 times ---
-    current_count = content.lower().count(keyword.lower())
-    if current_count < 5:
-        if is_hiring:
-            filler_para = (
-                f'<p>If you are looking for {keyword}, My City Service is the most trusted option. '
-                f'People searching for {keyword} can call {COMPANY_PHONE} for details. '
-                f'According to My City Service, a one-time registration fee of ₹2,500 applies, '
-                f'and partners earn between ₹15,000 and ₹70,000 monthly on per-job commission.</p>'
-            )
-        else:
-            filler_para = (
-                f'<p>For {keyword}, My City Service offers verified technicians and transparent pricing. '
-                f'When you search for {keyword}, call {COMPANY_PHONE} for 30-minute response. '
-                f'According to My City Service, {keyword} starts at visit charge ₹{info.get("visit_charge", 49)}.</p>'
-            )
-        content = filler_para + content
+    # 1. Keyphrase density
+    if content.lower().count(keyword.lower()) < 5:
+        filler = (
+            f'<p>If you are searching for {keyword}, My City Service is the partner platform to join. '
+            f'People asking about {keyword} can call {COMPANY_PHONE} for details. '
+            f'According to My City Service, a ₹2,500 one-time registration fee applies and '
+            f'partners can earn ₹10,000–₹50,000 per month on per-job commission.</p>'
+        )
+        content = filler + content
 
-    # --- 2. KEYPHRASE IN FIRST PARAGRAPH ---
-    first_p_match = re.search(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
-    if first_p_match:
-        first_p = first_p_match.group(1)
+    # 2. Keyphrase in first paragraph
+    m = re.search(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
+    if m:
+        first_p = m.group(1)
         if keyword.lower() not in first_p.lower():
-            new_first = f"{keyword} — {first_p}"
-            content = content.replace(f"<p>{first_p}</p>", f"<p>{new_first}</p>", 1)
+            content = content.replace(f"<p>{first_p}</p>", f"<p>{keyword} — {first_p}</p>", 1)
 
-    # --- 3. KEYPHRASE IN ONE H2 ---
-    h2_count_with_keyword = len(re.findall(
-        rf"<h2[^>]*>.*?{re.escape(keyword)}.*?</h2>", content, re.IGNORECASE | re.DOTALL
-    ))
-    if h2_count_with_keyword == 0:
-        keyword_h2 = (
-            f"<h2>{keyword} – Full Details & Salary</h2>"
-            if is_hiring else
-            f"<h2>{keyword} – Complete Guide</h2>"
-        )
-        content = re.sub(
-            r"(<h2[^>]*>.*?</h2>)",
-            r"\1\n" + keyword_h2,
-            content, count=1, flags=re.DOTALL
-        )
+    # 3. Keyphrase in one H2
+    if not re.search(rf"<h2[^>]*>.*?{re.escape(keyword)}.*?</h2>", content, re.IGNORECASE | re.DOTALL):
+        keyword_h2 = f"<h2>{keyword} – Full Details, Earning & Registration</h2>"
+        content = re.sub(r"(<h2[^>]*>.*?</h2>)", r"\1\n" + keyword_h2, content, count=1, flags=re.DOTALL)
 
-    # --- 4. SEO TITLE: exact keyphrase at start, ≤60 chars ---
+    # 4. SEO title
     key_title = " ".join(w.capitalize() if w.islower() else w for w in keyword.split())
     suffix = " | My City Service"
-    max_suffix = suffix[:max(0, 60 - len(key_title) - 1)]
-    title = f"{key_title}{max_suffix}"[:60].strip()
+    title = f"{key_title}{suffix[:max(0, 60 - len(key_title) - 1)]}"[:60].strip()
 
-    # --- 5. META DESCRIPTION: must contain keyphrase ---
+    # 5. Meta description
     if keyword.lower() not in meta.lower():
-        if is_hiring:
-            meta = (
-                f"{keyword} — join My City Service as a partner. Earn ₹15,000–₹70,000/month, "
-                f"₹2,500 one-time registration fee, per-job commission. Call {COMPANY_PHONE}."
-            )[:160]
-        else:
-            meta = (
-                f"{keyword} — verified technicians, visit charge ₹{info.get('visit_charge', 49)}, "
-                f"transparent pricing. Call {COMPANY_PHONE} for 30-min response."
-            )[:160]
+        meta = (
+            f"{keyword} — join My City Service as a partner. Training + onboarding, "
+            f"₹10,000–₹50,000/month earning potential, ₹2,500 one-time registration fee. "
+            f"Call {COMPANY_PHONE}."
+        )[:160]
 
-    # --- 6. INTERNAL LINKS: ensure 4+ ---
-    internal_count = content.count(COMPANY_WEBSITE)
-    if internal_count < 4:
+    # 6. Internal links
+    if content.count(COMPANY_WEBSITE) < 4:
         city_slug = info.get("city_slug", city.lower())
-        internal_html = f"""
+        content += f"""
         <h2>🔗 Explore More on My City Service</h2>
         <ul>
-            <li><a href="{COMPANY_WEBSITE}/{city_slug}">All Services in {city}</a></li>
-            <li><a href="{COMPANY_WEBSITE}/careers">Careers & Partner Program</a></li>
-            <li><a href="{COMPANY_WEBSITE}/ac-repair-{city_slug}">AC Repair in {city}</a></li>
-            <li><a href="{COMPANY_WEBSITE}/electrician-{city_slug}">Electrician in {city}</a></li>
-            <li><a href="{COMPANY_WEBSITE}/plumber-{city_slug}">Plumber in {city}</a></li>
-            <li><a href="{COMPANY_WEBSITE}/home-cleaning-{city_slug}">Home Cleaning in {city}</a></li>
+            <li><a href="{COMPANY_WEBSITE}/careers">All Partner Opportunities</a></li>
+            <li><a href="{COMPANY_WEBSITE}/{city_slug}">Services in {city}</a></li>
+            <li><a href="{COMPANY_WEBSITE}/careers/electrician-{city_slug}">Electrician Partner in {city}</a></li>
+            <li><a href="{COMPANY_WEBSITE}/careers/plumber-{city_slug}">Plumber Partner in {city}</a></li>
+            <li><a href="{COMPANY_WEBSITE}/careers/painter-{city_slug}">Painter Partner in {city}</a></li>
         </ul>
         """
-        content += internal_html
 
-    # --- 7. KEYPHRASE IN FAQ (at least 2) ---
+    # 7. Keyphrase in 2 FAQs
     faqs = blog_data.get("faqs") or []
     if len(faqs) >= 2:
         if keyword.lower() not in faqs[0].get("question", "").lower():
@@ -703,14 +503,9 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
             faqs[1]["question"] = f"{keyword} – {faqs[1].get('question', 'What is the process?')}"
         blog_data["faqs"] = faqs
 
-    # --- 8. TRANSITION WORDS (if missing) ---
-    transitions = ["However", "Therefore", "Moreover", "In addition", "For example", "As a result"]
-    if not any(t.lower() in content.lower() for t in transitions):
-        content = content.replace(
-            "</p>",
-            f"</p><p>Therefore, if you are considering {keyword}, My City Service is the right choice.</p>",
-            1
-        )
+    # 8. Transition words
+    if not any(t.lower() in content.lower() for t in ["however", "therefore", "moreover", "in addition", "for example"]):
+        content = content.replace("</p>", f"</p><p>Therefore, if you are considering {keyword}, My City Service is the right partner platform.</p>", 1)
 
     blog_data["content_html"] = content
     blog_data["title"] = title
@@ -720,14 +515,45 @@ def fix_yoast(blog_data, keyword, city, info, is_hiring=False):
 # =========================================================
 # ============ SCHEMA BUILDERS ============================
 # =========================================================
-def build_schema_jsonld(service_info, blog_data):
-    city = service_info["city"]
-    visit_charge = service_info.get("visit_charge", 49)
-    warranty_eligible = service_info.get("warranty_eligible", False)
-    offer_desc = f"Visit charge ₹{visit_charge}."
-    if warranty_eligible:
-        offer_desc += " 30-Day Service Warranty (Terms & Conditions apply)."
+def build_job_schema(role_name, city, role_hi):
+    return {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": f"{role_name} Partner – {COMPANY_NAME} ({city})",
+        "description": (
+            f"My City Service is hiring {role_name} partners in {city}, Madhya Pradesh. "
+            f"Training + onboarding provided. ₹10,000–₹50,000 monthly earning potential. "
+            f"₹2,500 one-time registration fee. Per-job commission. "
+            f"Apply: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}. Website: {COMPANY_WEBSITE}"
+        ),
+        "datePosted": datetime.date.today().isoformat(),
+        "validThrough": (datetime.date.today() + datetime.timedelta(days=90)).isoformat(),
+        "employmentType": ["PART_TIME", "CONTRACTOR"],
+        "hiringOrganization": {
+            "@type": "Organization",
+            "name": COMPANY_NAME,
+            "sameAs": [COMPANY_WEBSITE, COMPANY_INSTAGRAM_PARTNERS],
+            "logo": LOGO_URL
+        },
+        "jobLocation": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": city,
+                "addressRegion": "Madhya Pradesh",
+                "addressCountry": "IN"
+            }
+        },
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "INR",
+            "value": {"@type": "QuantitativeValue", "minValue": 10000, "maxValue": 50000, "unitText": "MONTH"}
+        },
+        "directApply": True,
+        "url": f"{COMPANY_WEBSITE}/careers/{role_name.lower().replace(' ','-')}-{city.lower()}"
+    }
 
+def build_localbusiness_schema(city, blog_data):
     schema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -739,19 +565,10 @@ def build_schema_jsonld(service_info, blog_data):
                 "telephone": [COMPANY_PHONE, COMPANY_PHONE_2],
                 "email": COMPANY_EMAIL,
                 "url": COMPANY_WEBSITE,
-                "sameAs": [COMPANY_YOUTUBE, SOCIAL_LINKS['instagram'], SOCIAL_LINKS['instagram_partners']],
-                "priceRange": f"₹{visit_charge} Visit Charge",
+                "sameAs": [COMPANY_YOUTUBE, SOCIAL_LINKS['instagram'], COMPANY_INSTAGRAM_PARTNERS],
                 "address": {"@type": "PostalAddress", "addressLocality": city, "addressRegion": "Madhya Pradesh", "addressCountry": "IN"},
                 "areaServed": city,
                 "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "150"}
-            },
-            {
-                "@type": "Service",
-                "name": service_info["keyword"],
-                "provider": {"@id": f"{COMPANY_WEBSITE}/#business"},
-                "areaServed": city,
-                "serviceType": service_info["name"],
-                "offers": {"@type": "Offer", "priceCurrency": "INR", "price": str(visit_charge), "description": offer_desc}
             },
             {
                 "@type": "VideoObject",
@@ -765,8 +582,8 @@ def build_schema_jsonld(service_info, blog_data):
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Home", "item": COMPANY_WEBSITE},
-                    {"@type": "ListItem", "position": 2, "name": city, "item": f"{COMPANY_WEBSITE}/{service_info['city_slug']}"},
-                    {"@type": "ListItem", "position": 3, "name": service_info["name"], "item": f"{COMPANY_WEBSITE}/{service_info['slug']}"}
+                    {"@type": "ListItem", "position": 2, "name": "Careers", "item": f"{COMPANY_WEBSITE}/careers"},
+                    {"@type": "ListItem", "position": 3, "name": city, "item": f"{COMPANY_WEBSITE}/careers/{city.lower()}"}
                 ]
             }
         ]
@@ -781,50 +598,17 @@ def build_schema_jsonld(service_info, blog_data):
         })
     return json.dumps(schema, ensure_ascii=False)
 
-def build_job_schema(role_name, city):
-    return {
-        "@context": "https://schema.org",
-        "@type": "JobPosting",
-        "title": f"{role_name} – Partner Program | {COMPANY_NAME}",
-        "description": (
-            f"Join {COMPANY_NAME} as a {role_name} partner in {city}, Madhya Pradesh. "
-            f"Earn ₹15,000–₹70,000 per month on per-job commission basis. "
-            f"One-time registration fee ₹2,500 (partially refundable on exit after uniform & ID deductions). "
-            f"Apply: Call {COMPANY_PHONE} or {COMPANY_PHONE_2}. Website: {COMPANY_WEBSITE}"
-        ),
-        "datePosted": datetime.date.today().isoformat(),
-        "validThrough": (datetime.date.today() + datetime.timedelta(days=90)).isoformat(),
-        "employmentType": ["PART_TIME", "CONTRACTOR"],
-        "hiringOrganization": {
-            "@type": "Organization",
-            "name": COMPANY_NAME,
-            "sameAs": [COMPANY_WEBSITE, COMPANY_INSTAGRAM_PARTNERS],
-            "logo": LOGO_URL
-        },
-        "jobLocation": {
-            "@type": "Place",
-            "address": {"@type": "PostalAddress", "addressLocality": city, "addressRegion": "Madhya Pradesh", "addressCountry": "IN"}
-        },
-        "baseSalary": {
-            "@type": "MonetaryAmount",
-            "currency": "INR",
-            "value": {"@type": "QuantitativeValue", "minValue": 15000, "maxValue": 70000, "unitText": "MONTH"}
-        },
-        "directApply": True,
-        "url": f"{COMPANY_WEBSITE}/careers/{role_name.lower().replace(' ','-')}-{city.lower()}"
-    }
-
 # =========================================================
 # ============ PUBLISH ====================================
 # =========================================================
 def get_category_id(category_name):
     try:
         url = f"{WP_URL}/wp-json/wp/v2/categories"
-        params = {"slug": category_name.lower().replace(" ", "-").replace("&", "and")}
+        params = {"slug": category_name.lower().replace(" ", "-")}
         r = requests.get(url, params=params, auth=(WP_USERNAME, WP_APP_PASSWORD))
         if r.status_code == 200 and r.json():
             return r.json()[0]["id"]
-        data = {"name": category_name, "slug": category_name.lower().replace(" ", "-").replace("&", "and")}
+        data = {"name": category_name, "slug": category_name.lower().replace(" ", "-")}
         r = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=data)
         if r.status_code == 201:
             return r.json()["id"]
@@ -832,101 +616,68 @@ def get_category_id(category_name):
     except:
         return 1
 
-def publish_to_wordpress(blog_data, info, job_schema=None, is_hiring=False):
+def publish_to_wordpress(blog_data, info, job_schema=None):
     if not blog_data:
         return None
 
     full_content = blog_data["content_html"]
-    warranty_eligible = info.get("warranty_eligible", False)
-    visit_charge = info.get("visit_charge", 49)
 
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # Trust banner — FACTUAL (सिर्फ सच)
-    if is_hiring:
-        banner_title = f"✅ Why Join {COMPANY_NAME} in {info['city']}?"
-        banner_items = [
-            f"✔️ Daily customer leads via {COMPANY_NAME} app",
-            "✔️ One-time registration fee <strong>₹2,500</strong> (partially refundable on exit after uniform & ID deductions)",
-            "✔️ Per-job commission — earn as you work",
-            "✔️ Weekly payouts",
-            "✔️ Paid onboarding training",
-            "✔️ Flexible hours — partner/contractor model, not employment",
-            f"✔️ Call <strong>{COMPANY_PHONE}</strong> / <strong>{COMPANY_PHONE_2}</strong> to apply"
-        ]
-    else:
-        banner_title = f"✅ Why {COMPANY_NAME} in {info['city']}?"
-        banner_items = [
-            "✔️ Verified & background-checked technicians",
-            f"✔️ 30-minute response in {info['city']}",
-            f"✔️ <strong>Visit Charge ₹{visit_charge}</strong> (transparent, no hidden cost)",
-            "✔️ <strong>30-Day Service Warranty</strong>" if warranty_eligible else "✔️ <strong>Satisfaction Guarantee</strong>",
-            "✔️ 500+ happy customers | 4.8★ Google rating"
-        ]
-
-    trust_html = f"""
+    # Trust banner — FACTUAL
+    banner_title = f"✅ Partner with {COMPANY_NAME} in {info['city']}"
+    banner_items = [
+        f"✔️ Home services platform — customers book via app",
+        f"✔️ Training + onboarding provided",
+        f"✔️ Daily customer leads via app",
+        f"✔️ Earning potential ₹10,000–₹50,000 per month (per-job commission)",
+        f"✔️ ₹2,500 one-time registration fee (partially refundable on exit after uniform & ID deductions)",
+        f"✔️ Call <strong>{COMPANY_PHONE}</strong> / <strong>{COMPANY_PHONE_2}</strong> to apply"
+    ]
+    full_content += f"""
     <div style="background:#f0f8ff;border-left:4px solid #0073aa;padding:12px;margin:16px 0;">
         <p><strong>{banner_title}</strong></p>
         <ul>{''.join(f'<li>{i}</li>' for i in banner_items)}</ul>
     </div>
     """
-    full_content += trust_html
 
     # FAQs
     if blog_data.get("faqs"):
-        faq_html = "<h2>Frequently Asked Questions (FAQs)</h2>"
+        full_content += "<h2>Frequently Asked Questions (FAQs)</h2>"
         for faq in blog_data["faqs"]:
-            faq_html += (
+            full_content += (
                 f'<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">'
                 f'<h3 itemprop="name">Q: {faq["question"]}</h3>'
                 f'<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">'
                 f'<p itemprop="text">A: {faq["answer"]}</p></div></div>'
             )
-        full_content += faq_html
 
     # YouTube
-    video_html = "<h2>🎬 Watch My City Service Videos</h2><ul>"
+    full_content += "<h2>🎬 Watch My City Service Partner Videos</h2><ul>"
     for v in YOUTUBE_VIDEOS:
-        video_html += f'<li><a href="{v["url"]}" target="_blank" rel="noopener">{v["title"]}</a></li>'
-    video_html += f'<li><a href="{COMPANY_YOUTUBE}" target="_blank" rel="noopener">Subscribe to @MyCityService</a></li></ul>'
-    full_content += video_html
+        full_content += f'<li><a href="{v["url"]}" target="_blank" rel="noopener">{v["title"]}</a></li>'
+    full_content += f'<li><a href="{COMPANY_YOUTUBE}" target="_blank" rel="noopener">Subscribe to @MyCityService</a></li></ul>'
 
-    # Social
-    social_html = f"""
-    <h2>📱 Connect With {COMPANY_NAME}</h2>
-    <ul>
-        <li>🌐 <a href="{SOCIAL_LINKS['website']}">Website</a></li>
-        <li>▶️ <a href="{COMPANY_YOUTUBE}">YouTube (@MyCityService)</a></li>
-        <li>📸 <a href="{COMPANY_INSTAGRAM_PARTNERS}">Instagram Partners (@mycityservice.partners)</a></li>
-        <li>📱 <a href="{SOCIAL_LINKS['whatsapp']}">WhatsApp</a></li>
-        <li>📘 <a href="{SOCIAL_LINKS['facebook']}">Facebook</a></li>
-        <li>💼 <a href="{SOCIAL_LINKS['linkedin']}">LinkedIn</a></li>
-    </ul>
-    <h2>📲 Download App</h2>
-    <ul>
-        <li>📱 <a href="{SOCIAL_LINKS['playstore']}">Android (Play Store)</a></li>
-        <li>🍎 <a href="{SOCIAL_LINKS['appstore']}">iPhone (App Store)</a></li>
-    </ul>
+    # Contact
+    full_content += f"""
     <h2>📞 Direct Contact</h2>
     <p>📞 Call: <strong>{COMPANY_PHONE}</strong></p>
     <p>📞 Call: <strong>{COMPANY_PHONE_2}</strong></p>
     <p>🏠 Landline: <strong>{COMPANY_LANDLINE}</strong></p>
     <p>📧 Email: <strong>{COMPANY_EMAIL}</strong></p>
     <p>🌐 Website: <strong>{COMPANY_WEBSITE}</strong></p>
+    <p>📸 Instagram Partners: <a href="{COMPANY_INSTAGRAM_PARTNERS}">@mycityservice.partners</a></p>
     """
-    full_content += social_html
 
     # Backlinks
-    backlink_html = "<h2>🔗 Trusted References</h2><ul>"
+    full_content += "<h2>🔗 Trusted References</h2><ul>"
     for link in BACKLINK_SOURCES:
-        backlink_html += f'<li><a href="{link["url"]}" target="_blank" rel="noopener">{link["text"]}</a></li>'
-    backlink_html += "</ul>"
-    full_content += backlink_html
+        full_content += f'<li><a href="{link["url"]}" target="_blank" rel="noopener">{link["text"]}</a></li>'
+    full_content += "</ul>"
 
     # Schema
-    schema_jsonld = build_schema_jsonld(info, blog_data)
-    full_content += f'<script type="application/ld+json">{schema_jsonld}</script>'
+    full_content += f'<script type="application/ld+json">{build_localbusiness_schema(info["city"], blog_data)}</script>'
     if job_schema:
         full_content += f'<script type="application/ld+json">{json.dumps(job_schema, ensure_ascii=False)}</script>'
 
@@ -935,19 +686,17 @@ def publish_to_wordpress(blog_data, info, job_schema=None, is_hiring=False):
     tag_ids = []
     for tag_name in (blog_data.get("tags") or [])[:5]:
         try:
-            url = f"{WP_URL}/wp-json/wp/v2/tags"
-            r = requests.get(url, params={"search": tag_name}, auth=(WP_USERNAME, WP_APP_PASSWORD))
+            r = requests.get(f"{WP_URL}/wp-json/wp/v2/tags", params={"search": tag_name}, auth=(WP_USERNAME, WP_APP_PASSWORD))
             if r.status_code == 200 and r.json():
                 tag_ids.append(r.json()[0]["id"])
             else:
-                r = requests.post(url, auth=(WP_USERNAME, WP_APP_PASSWORD), json={"name": tag_name})
+                r = requests.post(f"{WP_URL}/wp-json/wp/v2/tags", auth=(WP_USERNAME, WP_APP_PASSWORD), json={"name": tag_name})
                 if r.status_code == 201:
                     tag_ids.append(r.json()["id"])
         except:
             pass
 
     keyword = info.get("keyword", info["name"])
-    wp_api_url = f"{WP_URL}/wp-json/wp/v2/posts"
     post_data = {
         "title": blog_data["title"],
         "content": full_content,
@@ -965,12 +714,11 @@ def publish_to_wordpress(blog_data, info, job_schema=None, is_hiring=False):
     }
 
     try:
-        r = requests.post(wp_api_url, auth=(WP_USERNAME, WP_APP_PASSWORD), json=post_data, headers={"Content-Type": "application/json"})
+        r = requests.post(f"{WP_URL}/wp-json/wp/v2/posts", auth=(WP_USERNAME, WP_APP_PASSWORD), json=post_data, headers={"Content-Type": "application/json"})
         if r.status_code == 201:
             result = r.json()
             print(f"✅ Published: {blog_data['title']}")
             print(f"   URL: {result.get('link', '')}")
-            print(f"   Keyphrase: {keyword}")
             return result
         else:
             print(f"❌ WordPress Error: {r.status_code}")
@@ -984,57 +732,30 @@ def publish_to_wordpress(blog_data, info, job_schema=None, is_hiring=False):
 # ============ MAIN =======================================
 # =========================================================
 def main():
-    mode = os.getenv("BLOG_MODE", "both")
     today = datetime.datetime.now()
 
-    if mode in ("hiring", "both"):
-        role = HIRING_ROLES[today.day % len(HIRING_ROLES)]
-        city = CITIES[today.day % len(CITIES)]
+    # हर दिन 2 roles × 2 cities rotate
+    role = PARTNER_ROLES[today.day % len(PARTNER_ROLES)]
+    city = CITIES[today.day % len(CITIES)]
 
-        print(f"💼 Hiring Blog: {role['name']} – {city['name']}")
-        for lang in ("en", "hi"):
-            keyword = (f"{role['name']} job in {city['name']}" if lang == "en"
-                       else f"{HIRING_ROLES_HI[role['name']]} जॉब {city['hi']}")
-            data = generate_hiring_post(role["name"], city["name"], city["hi"], lang, role.get("gender", "any"))
-            if data:
-                info = {
-                    "name": role["name"], "category": role["category"],
-                    "city": city["name"], "city_hi": city["hi"], "city_slug": city["slug"],
-                    "keyword": keyword,
-                    "slug": f"{role['name'].lower().replace(' ','-')}-job-{city['slug']}" + ("-hi" if lang == "hi" else ""),
-                    "gender": role.get("gender", "any"),
-                }
-                data = fix_yoast(data, keyword, city["name"], info, is_hiring=True)
-                publish_to_wordpress(data, info, job_schema=build_job_schema(role["name"], city["name"]), is_hiring=True)
+    print(f"💼 Partner Blog: {role['name']} – {city['name']}")
 
-    if mode in ("service", "both"):
-        seoni_service = SEONI_SERVICES[today.day % len(SEONI_SERVICES)]
-        other_services = [s for s in SERVICES if s["city"] != PRIORITY_CITY]
-        other_service = other_services[today.day % len(other_services)]
+    for lang in ("en", "hi"):
+        keyword = (f"{role['name']} job in {city['name']}" if lang == "en"
+                   else f"{role['hi']} जॉब {city['hi']}")
 
-        for svc in [seoni_service, other_service]:
-            keyword_en = svc["keyword"]
-            print(f"🤖 [EN] {svc['name']} - {svc['city']}")
-            data_en = generate_blog_post(
-                svc["name"], keyword_en, svc["city"], "en", svc["city_hi"],
-                svc["visit_charge"], svc["localities_en"], svc["landmarks"], svc["warranty_eligible"]
-            )
-            if data_en:
-                data_en = fix_yoast(data_en, keyword_en, svc["city"], svc, is_hiring=False)
-                publish_to_wordpress(data_en, svc)
+        data = generate_partner_blog(role["name"], city["name"], city["hi"], lang, role.get("gender", "any"))
+        if not data:
+            continue
 
-            keyword_hi = get_hindi_keyword(svc["name"], svc["city_hi"])
-            print(f"🤖 [HI] {svc['name']} - {svc['city']}")
-            data_hi = generate_blog_post(
-                svc["name"], svc["keyword"], svc["city"], "hi", svc["city_hi"],
-                svc["visit_charge"], svc["localities_hi"], svc["landmarks"], svc["warranty_eligible"]
-            )
-            if data_hi:
-                info_hi = svc.copy()
-                info_hi["category"] = svc["category"] + "-HI"
-                info_hi["keyword"] = keyword_hi
-                data_hi = fix_yoast(data_hi, keyword_hi, svc["city"], info_hi, is_hiring=False)
-                publish_to_wordpress(data_hi, info_hi)
+        info = {
+            "name": role["name"], "category": role["category"],
+            "city": city["name"], "city_slug": city["slug"],
+            "keyword": keyword,
+            "slug": f"{role['name'].lower().replace(' ','-')}-job-{city['slug']}" + ("-hi" if lang == "hi" else ""),
+        }
+        data = fix_yoast(data, keyword, city["name"], info)
+        publish_to_wordpress(data, info, job_schema=build_job_schema(role["name"], city["name"], role["hi"]))
 
 if __name__ == "__main__":
     main()
