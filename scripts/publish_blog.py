@@ -46,7 +46,7 @@ SOCIAL_LINKS = {
 
 PRIORITY_CITY = "Seoni"
 
-# ===== CORE FACTS (हर prompt में जाएंगे — AI इन्हें कभी नहीं बदलेगा) =====
+# ===== CORE FACTS =====
 CORE_FACTS_EN = """
 MY CITY SERVICE — CORE FACTS (never contradict):
 - My City Service is a HOME SERVICES PLATFORM (app-based, Android + iOS).
@@ -91,7 +91,7 @@ MY CITY SERVICE — मुख्य तथ्य (कभी न बदलें)
   "₹10,000–₹50,000 मासिक कमाई की संभावना", "ट्रेनिंग + ऑनबोर्डिंग दी जाती है"।
 """
 
-# ===== FORBIDDEN PHRASES — AI कभी गलत लिखे तो auto-fix =====
+# ===== FORBIDDEN PHRASES — auto-fix =====
 FORBIDDEN_REPLACEMENTS = [
     ("100% free", "affordable"),
     ("zero joining fee", "one-time registration fee of ₹2,500"),
@@ -141,10 +141,34 @@ CITIES = [
         "localities_en": "Wright Town, Napier Town, Vijay Nagar, Rampur, Adhartal, Gorakhpur",
         "localities_hi": "राइट टाउन, नेपियन टाउन, विजय नगर, रामपुर, अधारताल, गोरखपुर",
         "landmarks": "near Jabalpur Railway Station, Rani Durgavati Museum, Dumna Nature Reserve"
-    }
+    },
+    {
+        "name": "Balaghat", "slug": "balaghat", "hi": "बालाघाट",
+        "localities_en": "Main Market, Civil Lines, Waraseoni Road, Katangi Road, Bus Stand Area, Lalbarra, Kirnapur",
+        "localities_hi": "मेन मार्केट, सिविल लाइंस, वरासिवनी रोड, कटंगी रोड, बस स्टैंड एरिया, लालबर्रा, कीरनापुर",
+        "landmarks": "near Balaghat Bus Stand, District Court, Wainganga River, Government Medical College"
+    },
+    {
+        "name": "Mandla", "slug": "mandla", "hi": "मंडला",
+        "localities_en": "Main Market, Civil Lines, Rampur, Nainpur Road, Bus Stand Area, Bichhiya",
+        "localities_hi": "मेन मार्केट, सिविल लाइंस, रामपुर, नैनपुर रोड, बस स्टैंड एरिया, बिछिया",
+        "landmarks": "near Mandla Bus Stand, District Court, Kanha National Park, Narmada River"
+    },
+    {
+        "name": "Nagpur", "slug": "nagpur", "hi": "नागपुर",
+        "localities_en": "Dharampeth, Sadar, Sitabuldi, Manish Nagar, Wardha Road, Kamptee Road, Hudkeshwar",
+        "localities_hi": "धरमपेठ, सदर, सीताबर्डी, मनीष नगर, वर्धा रोड, कामठी रोड, हुडकेश्वर",
+        "landmarks": "near Nagpur Railway Station, Sitabuldi Market, Deekshabhoomi, Futala Lake"
+    },
+    {
+        "name": "Bhopal", "slug": "bhopal", "hi": "भोपाल",
+        "localities_en": "MP Nagar, Arera Colony, Kolar Road, Habibganj, BHEL, Ayodhya Bypass, Indrapuri",
+        "localities_hi": "एमपी नगर, अरेरा कॉलोनी, कोलार रोड, हबीबगंज, भेल, अयोध्या बायपास, इंद्रपुरी",
+        "landmarks": "near Bhopal Railway Station, Upper Lake, Van Vihar, AIIMS Bhopal"
+    },
 ]
 
-# ===== PARTNER ROLES (यही सब भर्ती होंगे) =====
+# ===== PARTNER ROLES =====
 PARTNER_ROLES = [
     {"name": "Electrician", "hi": "इलेक्ट्रीशियन", "category": "Partners-Electrician", "gender": "any",
      "skills": "wiring, switchboard repair, fan/light installation, inverter setup"},
@@ -168,7 +192,7 @@ PARTNER_ROLES = [
 
 PARTNER_ROLES_HI = {r["name"]: r["hi"] for r in PARTNER_ROLES}
 
-# ===== EARNING SLABS (city-wise, ₹10k-₹50k range) =====
+# ===== EARNING SLABS =====
 EARNING_SLABS = {
     "Seoni": [
         {"level": "New partner (0–3 months)", "range_en": "₹10,000 – ₹18,000 / month", "range_hi": "₹10,000 – ₹18,000 / माह"},
@@ -185,6 +209,26 @@ EARNING_SLABS = {
         {"level": "Experienced partner (3–12 months)", "range_en": "₹20,000 – ₹35,000 / month", "range_hi": "₹20,000 – ₹35,000 / माह"},
         {"level": "Top-rated partner (12+ months)", "range_en": "₹35,000 – ₹50,000 / month", "range_hi": "₹35,000 – ₹50,000 / माह"},
     ],
+    "Balaghat": [
+        {"level": "New partner (0–3 months)", "range_en": "₹10,000 – ₹18,000 / month", "range_hi": "₹10,000 – ₹18,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹18,000 – ₹30,000 / month", "range_hi": "₹18,000 – ₹30,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹30,000 – ₹50,000 / month", "range_hi": "₹30,000 – ₹50,000 / माह"},
+    ],
+    "Mandla": [
+        {"level": "New partner (0–3 months)", "range_en": "₹10,000 – ₹18,000 / month", "range_hi": "₹10,000 – ₹18,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹18,000 – ₹30,000 / month", "range_hi": "₹18,000 – ₹30,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹30,000 – ₹50,000 / month", "range_hi": "₹30,000 – ₹50,000 / माह"},
+    ],
+    "Nagpur": [
+        {"level": "New partner (0–3 months)", "range_en": "₹12,000 – ₹22,000 / month", "range_hi": "₹12,000 – ₹22,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹22,000 – ₹38,000 / month", "range_hi": "₹22,000 – ₹38,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹38,000 – ₹55,000 / month", "range_hi": "₹38,000 – ₹55,000 / माह"},
+    ],
+    "Bhopal": [
+        {"level": "New partner (0–3 months)", "range_en": "₹12,000 – ₹22,000 / month", "range_hi": "₹12,000 – ₹22,000 / माह"},
+        {"level": "Experienced partner (3–12 months)", "range_en": "₹22,000 – ₹38,000 / month", "range_hi": "₹22,000 – ₹38,000 / माह"},
+        {"level": "Top-rated partner (12+ months)", "range_en": "₹38,000 – ₹55,000 / month", "range_hi": "₹38,000 – ₹55,000 / माह"},
+    ],
 }
 
 # ===== BACKLINKS =====
@@ -197,6 +241,130 @@ BACKLINK_SOURCES = [
     {"text": "My City Service – Facebook Page", "url": "https://www.facebook.com/Mycityservices/"},
     {"text": "My City Service – Justdial Verified Listing", "url": "https://wap.justdial.com/el?source=77&user_type=&docid=9999P7695.7695.250603235056.Y3R9"},
 ]
+
+# =========================================================
+# ============ TRANSITION WORDS INJECTOR ==================
+# =========================================================
+TRANSITION_WORDS = [
+    "However, ", "Therefore, ", "Moreover, ", "In addition, ",
+    "For example, ", "As a result, ", "Furthermore, ", "Consequently, ",
+    "Additionally, ", "Meanwhile, ", "Nevertheless, ", "On the other hand, ",
+]
+
+def _inject_transition_words(content):
+    """हर paragraph में transition words inject करता है (20%+ density)."""
+    if not content:
+        return content
+
+    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
+    for para in paragraphs:
+        sentences = re.split(r"(?<=[.!?])\s+", para)
+        if len(sentences) < 3:
+            continue
+
+        modified = []
+        for idx, sent in enumerate(sentences):
+            stripped = sent.strip()
+            if not stripped:
+                continue
+            already_has = any(t.lower() in stripped.lower()[:25] for t in TRANSITION_WORDS)
+            if idx > 0 and idx % 2 == 1 and not already_has and len(stripped) > 15:
+                tw = TRANSITION_WORDS[(idx // 2) % len(TRANSITION_WORDS)]
+                if stripped[0].isupper():
+                    stripped = stripped[0].lower() + stripped[1:]
+                modified.append(tw + stripped)
+            else:
+                modified.append(sent)
+
+        new_para = " ".join(modified)
+        content = content.replace(f"<p>{para}</p>", f"<p>{new_para}</p>", 1)
+
+    return content
+
+
+# =========================================================
+# ============ CONSECUTIVE SENTENCES FIXER ================
+# =========================================================
+def _fix_consecutive_sentences(content):
+    """3 वाक्य एक ही word से शुरू हों तो बीच वाले बदल देता है।"""
+    if not content:
+        return content
+
+    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", content, re.DOTALL)
+    for para in paragraphs:
+        sentences = re.split(r"(?<=[.!?])\s+", para)
+        if len(sentences) < 3:
+            continue
+
+        new_sentences = []
+        for i, sent in enumerate(sentences):
+            stripped = sent.strip()
+            if not stripped:
+                continue
+            first_word = stripped.split()[0] if stripped.split() else ""
+            if i >= 2 and len(stripped) > 10:
+                prev1 = new_sentences[-1].strip().split()[0] if new_sentences and new_sentences[-1].strip() else ""
+                prev2 = new_sentences[-2].strip().split()[0] if len(new_sentences) >= 2 and new_sentences[-2].strip() else ""
+                if first_word.lower() == prev1.lower() == prev2.lower():
+                    replacements = ["Also, ", "Moreover, ", "In addition, ", "Besides, "]
+                    rep = replacements[i % len(replacements)]
+                    stripped = rep + stripped[0].lower() + stripped[1:]
+            new_sentences.append(stripped)
+
+        new_para = " ".join(new_sentences)
+        content = content.replace(f"<p>{para}</p>", f"<p>{new_para}</p>", 1)
+
+    return content
+
+
+# =========================================================
+# ============ VOCABULARY SIMPLIFIER ======================
+# =========================================================
+COMPLEX_TO_SIMPLE = {
+    "utilize": "use", "utilizing": "using", "utilization": "use",
+    "commence": "start", "commencing": "starting", "commenced": "started",
+    "terminate": "end", "terminating": "ending", "terminated": "ended",
+    "endeavor": "try", "endeavouring": "trying", "endeavored": "tried",
+    "facilitate": "help", "facilitating": "helping", "facilitated": "helped",
+    "demonstrate": "show", "demonstrating": "showing", "demonstrated": "showed",
+    "approximately": "about", "sufficient": "enough", "insufficient": "not enough",
+    "numerous": "many", "additional": "more", "prior to": "before",
+    "subsequent to": "after", "in order to": "to", "due to the fact that": "because",
+    "at this point in time": "now", "in the event that": "if", "in the near future": "soon",
+    "a majority of": "most", "in spite of": "despite", "on account of": "because of",
+    "with regard to": "about", "in reference to": "about", "ascertain": "find out",
+    "commensurate": "equal", "disseminate": "share", "expedite": "speed up",
+    "implement": "use", "implementing": "using", "implemented": "used",
+    "initiate": "start", "initiating": "starting", "initiated": "started",
+    "leverage": "use", "leveraging": "using", "leveraged": "used",
+    "necessitate": "need", "necessitates": "needs", "necessitated": "needed",
+    "optimal": "best", "optimize": "improve", "optimizing": "improving",
+    "procure": "get", "procuring": "getting", "procured": "got",
+    "regarding": "about", "requisite": "needed", "subsequently": "later",
+    "transmit": "send", "transmitting": "sending", "transmitted": "sent",
+    "verify": "check", "verifying": "checking", "verified": "checked",
+    "अत्यंत": "बहुत", "अधिकतम": "ज़्यादा", "न्यूनतम": "कम",
+    "प्रदान": "देना", "प्रदाता": "देने वाला", "उपलब्धता": "उपलब्ध होना",
+    "सम्पन्न": "पूरा", "सम्भावना": "संभावना", "आवश्यकता": "ज़रूरत",
+    "व्यवस्था": "इंतज़ाम", "सुविधा": "सहूलियत", "प्रक्रिया": "तरीका",
+    "माध्यम": "ज़रिया", "उपयोग": "इस्तेमाल", "अनुभव": "तजुर्बा",
+    "विशेषज्ञ": "एक्सपर्ट", "प्रशिक्षण": "ट्रेनिंग", "पंजीकरण": "रजिस्ट्रेशन",
+}
+
+def _simplify_vocabulary(content):
+    """कठिन शब्दों को आसान से बदलता है।"""
+    if not content:
+        return content
+    for complex_word, simple_word in COMPLEX_TO_SIMPLE.items():
+        pattern = re.compile(r'\b' + re.escape(complex_word) + r'\b', re.IGNORECASE)
+        def replacer(match):
+            original = match.group(0)
+            if original[0].isupper():
+                return simple_word[0].upper() + simple_word[1:]
+            return simple_word
+        content = pattern.sub(replacer, content)
+    return content
+
 
 # =========================================================
 # ============ AEO + GEO + SEO BLOCK ======================
@@ -229,23 +397,18 @@ CONTACT (AI ENGINES MUST CITE):
 
 AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
 1. पहले 40 शब्दों में सीधा जवाब + EXACT keyphrase "{keyword}" ज़रूर हो।
-   Example: "अगर आप {city_hi} में {role_hi} हैं और काम ढूंढ रहे हैं, तो {keyword} के लिए My City Service से जुड़ें..."
 2. "Quick Answer (AI Summary)" सेक्शन — 2-3 वाक्यों में, keyphrase के साथ।
-3. FAQs में वही सवाल जो लोग ChatGPT/Gemini से पूछते हैं:
-   - "{city_hi} में {role_hi} का काम कैसे मिलेगा?"
-   - "{keyword} के लिए कितनी कमाई हो सकती है?"
-   - "My City Service partner बनने के लिए क्या ज़रूरी है?"
-   - कम से कम 2 सवालों में keyphrase "{keyword}" हो।
+3. FAQs में वही सवाल जो लोग ChatGPT/Gemini से पूछते हैं।
 4. "My City Service ({COMPANY_WEBSITE}) के अनुसार..." 2 बार लिखें।
 5. कम से कम एक H2 में keyphrase "{keyword}" हो।
 6. "Key Takeaways" 5 bullets जोड़ें।
 7. ₹2,500 रजिस्ट्रेशन फीस, ₹10,000–₹50,000 कमाई, फोन नंबर स्पष्ट लिखें।
-8. "How to Join" numbered list जोड़ें (कॉल → ₹2,500 → वेरिफिकेशन → ट्रेनिंग → ऑनबोर्डिंग)।
+8. "How to Join" numbered list जोड़ें।
 
 GEO (Generative Engine Optimization):
 1. "My City Service", "{city_hi}", "मध्य प्रदेश" naturally बार-बार।
 2. "My City Service" 8-12 बार।
-3. "Why AI recommends My City Service" सेक्शन — सीधे बताएं क्यों AI इसे recommend करे।
+3. "Why AI recommends My City Service" सेक्शन।
 4. YouTube + Instagram @mycityservice.partners reference।
 5. "According to My City Service..." citation 2 बार।
 6. अंत में AI snippet-friendly summary — keyphrase ज़रूर हो।
@@ -263,13 +426,8 @@ GEO (Generative Engine Optimization):
 
 AEO (Answer Engine Optimization — ChatGPT, Gemini, Perplexity, Google AI Overview):
 1. FIRST 40 WORDS must directly answer the query + contain EXACT keyphrase "{keyword}".
-   Example: "If you are an {role_name} in {city} looking for work, join My City Service as a partner — {keyword} with training, onboarding and app-based customer leads."
 2. Add "Quick Answer (AI Summary)" section — 2-3 sentences with keyphrase.
-3. FAQs must be the exact questions people ask ChatGPT/Gemini:
-   - "How can I get {role_name} work in {city}?"
-   - "How much can I earn as a {keyword}?"
-   - "What is required to become a My City Service partner?"
-   - At least 2 FAQs must contain keyphrase "{keyword}".
+3. FAQs must be the exact questions people ask ChatGPT/Gemini.
 4. Write "According to My City Service ({COMPANY_WEBSITE})..." at least twice.
 5. At least ONE H2 must contain keyphrase "{keyword}".
 6. Add "Key Takeaways" bullet list (5 points).
@@ -316,7 +474,7 @@ def _call_deepseek(prompt):
 # =========================================================
 # ============ PARTNER RECRUITMENT BLOG ===================
 # =========================================================
-def generate_partner_blog(role_name, city, city_hi, language="en", gender="any"):
+def generate_partner_blog(role_name, city, city_hi, language="en", gender="any", localities_en="", localities_hi=""):
     role_hi = PARTNER_ROLES_HI.get(role_name, role_name)
     slabs = EARNING_SLABS.get(city, EARNING_SLABS["Seoni"])
     slab_en = "\n".join([f"- {s['level']}: {s['range_en']}" for s in slabs])
@@ -325,10 +483,6 @@ def generate_partner_blog(role_name, city, city_hi, language="en", gender="any")
 
     keyword_en = f"{role_name} job in {city}"
     keyword_hi = f"{role_hi} जॉब {city_hi}"
-
-    role = next((r for r in PARTNER_ROLES if r["name"] == role_name), None)
-    skills_en = role["skills"] if role else role_name
-    skills_hi = skills_en  # same skills, transliterate if needed
 
     aeo_block = aeo_geo_block(language, city, city_hi, role_name, role_hi,
                               keyword_en if language == "en" else keyword_hi,
@@ -348,7 +502,7 @@ SALARY / EARNING SLABS (EXACT — यही numbers use करें):
 
 FOCUS KEYPHRASE: "{keyword_hi}"
 - पहले वाक्य में EXACTLY once
-- पूरे content में 5-6 बार (कम नहीं, ज़्यादा नहीं)
+- पूरे content में 5-6 बार
 - Meta description में ज़रूर
 - SEO title के शुरुआत में
 - कम से कम 1 H2 में
@@ -362,7 +516,7 @@ MANDATORY SECTIONS:
 6. Earning Potential — ऊपर दी slabs + note "कमाई काम पर निर्भर है"
 7. Registration प्रक्रिया (Step-by-Step) — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) काम शुरू
 8. कौन apply कर सकता है? — फ्रेशर + अनुभवी, ज़रूरी दस्तावेज़ (आधार, पैन, पुलिस वेरिफिकेशन)
-9. {city_hi} में work areas — {locals if False else ""}{CITIES[0]['localities_hi'] if city_hi == "सिवनी" else (CITIES[1]['localities_hi'] if city_hi == "छिंदवाड़ा" else CITIES[2]['localities_hi'])}
+9. {city_hi} में work areas — {localities_hi}
 10. My City Service Partner vs Local काम (comparison table)
 11. Why AI recommends My City Service
 12. FAQs (8-10) — कमाई, registration fee, क्या ज़रूरी, payout cycle, पार्ट-टाइम, महिला सुरक्षा
@@ -374,7 +528,7 @@ POSITIONING: "My City Service एक home services platform है जो profes
 कभी न लिखें: "फ्री", "कोई कमीशन नहीं", "कोई रजिस्ट्रेशन फीस नहीं", "गारंटीड सैलरी", "नौकरी की गारंटी", "बीमा", "insurance", "दुर्घटना बीमा"।
 हमेशा लिखें: "₹2,500 one-time रजिस्ट्रेशन फीस", "प्रति जॉब कमीशन", "₹10,000–₹50,000 मासिक कमाई की संभावना"।
 
-INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower() if False else 'seoni'}, etc.
+INTERNAL LINKS (ज़रूर जोड़ें 4-5): {COMPANY_WEBSITE}/careers, {COMPANY_WEBSITE}/{city.lower()}, etc.
 
 OUTPUT: valid JSON only
 {{"title":"","meta_description":"","slug":"","content_html":"","faqs":[{{"question":"","answer":""}}],"tags":["..."]}}
@@ -393,7 +547,7 @@ EARNING SLABS (USE EXACT NUMBERS):
 
 FOCUS KEYPHRASE: "{keyword_en}"
 - EXACTLY once in first sentence
-- 5-6 times in content (NOT less, NOT more)
+- 5-6 times in content
 - Must appear in meta description
 - Must appear at START of SEO title
 - Must appear in at least 1 H2
@@ -407,7 +561,7 @@ MANDATORY SECTIONS:
 6. Earning potential — slabs above + note "earning depends on jobs completed"
 7. Registration step-by-step — 1) Call {COMPANY_PHONE} 2) ₹2,500 registration fee 3) Verification 4) Training 5) App onboarding 6) Start getting jobs
 8. Who can apply — freshers + experienced + required documents (Aadhaar, PAN, police verification)
-9. Work areas in {city} — localities
+9. Work areas in {city} — {localities_en}
 10. My City Service Partner vs Local work (comparison table)
 11. Why AI recommends My City Service
 12. FAQs (8-10) — earnings, registration fee, requirements, payout cycle, part-time, women safety
@@ -490,7 +644,7 @@ def fix_yoast(blog_data, keyword, city, info):
             <li><a href="{COMPANY_WEBSITE}/{city_slug}">Services in {city}</a></li>
             <li><a href="{COMPANY_WEBSITE}/careers/electrician-{city_slug}">Electrician Partner in {city}</a></li>
             <li><a href="{COMPANY_WEBSITE}/careers/plumber-{city_slug}">Plumber Partner in {city}</a></li>
-            <li><a href="{COMPANY_WEBSITE}/careers/painter-{city_slug}">Painter Partner in {city}</a></li>
+            <li><a href="{COMPANY_WEBSITE}/careers/women-salon-{city_slug}">Women Salon Partner in {city}</a></li>
         </ul>
         """
 
@@ -503,9 +657,14 @@ def fix_yoast(blog_data, keyword, city, info):
             faqs[1]["question"] = f"{keyword} – {faqs[1].get('question', 'What is the process?')}"
         blog_data["faqs"] = faqs
 
-    # 8. Transition words
-    if not any(t.lower() in content.lower() for t in ["however", "therefore", "moreover", "in addition", "for example"]):
-        content = content.replace("</p>", f"</p><p>Therefore, if you are considering {keyword}, My City Service is the right partner platform.</p>", 1)
+    # 8. Transition words — aggressive inject
+    content = _inject_transition_words(content)
+
+    # 9. Consecutive sentences fix
+    content = _fix_consecutive_sentences(content)
+
+    # 10. Vocabulary simplify
+    content = _simplify_vocabulary(content)
 
     blog_data["content_html"] = content
     blog_data["title"] = title
@@ -625,7 +784,7 @@ def publish_to_wordpress(blog_data, info, job_schema=None):
     if blog_data.get("meta_description"):
         full_content = f"<p><strong>Quick Answer:</strong> {blog_data['meta_description']}</p>" + full_content
 
-    # Trust banner — FACTUAL
+    # Trust banner
     banner_title = f"✅ Partner with {COMPANY_NAME} in {info['city']}"
     banner_items = [
         f"✔️ Home services platform — customers book via app",
@@ -734,7 +893,6 @@ def publish_to_wordpress(blog_data, info, job_schema=None):
 def main():
     today = datetime.datetime.now()
 
-    # हर दिन 2 roles × 2 cities rotate
     role = PARTNER_ROLES[today.day % len(PARTNER_ROLES)]
     city = CITIES[today.day % len(CITIES)]
 
@@ -744,7 +902,10 @@ def main():
         keyword = (f"{role['name']} job in {city['name']}" if lang == "en"
                    else f"{role['hi']} जॉब {city['hi']}")
 
-        data = generate_partner_blog(role["name"], city["name"], city["hi"], lang, role.get("gender", "any"))
+        data = generate_partner_blog(
+            role["name"], city["name"], city["hi"], lang, role.get("gender", "any"),
+            city["localities_en"], city["localities_hi"]
+        )
         if not data:
             continue
 
